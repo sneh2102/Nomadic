@@ -3,7 +3,7 @@
 - Date created: May 29, 2024
 - Last modification date: May 29, 2024
 - Group project main repository: https://git.cs.dal.ca/snehp/csci-5709-grp-10
-- Group project my branch: 
+- Group project personal branch: https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/blob/t2_smit/T2_SMIT_PATEL_README.md
 - Tutorial 2 repository: https://git.cs.dal.ca/patel33/csci-5709-b00963945-t2
 - Tutorial 2 deployment: https://csci-5709-b00963945-t2.netlify.app/
 
@@ -18,7 +18,9 @@ I have used Vite for javascript bundling and Netlify to deploy the application t
 
 ## Sources
 [1] “React.” https://react.dev/ (accessed May 29, 2024).
+
 [2] “Getting started,” _Vitejs_. https://vitejs.dev/guide/ (accessed May 29, 2024).
+
 [3] “Node.js — Run JavaScript everywhere.” https://nodejs.org/en (accessed May 29, 2024).
 
 ## Authors
