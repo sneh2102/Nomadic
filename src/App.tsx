@@ -1,4 +1,4 @@
-import { Box, Checkbox, Drawer, FormControlLabel } from "@mui/material";
+import { Box, Drawer } from "@mui/material";
 import Header from "./modules/Header/Header";
 import SearchSection from "./modules/SearchSection/SearchSection";
 import FilterSection from "./modules/Filters/FilterSection/FilterSection";
@@ -48,30 +48,27 @@ function App() {
                     />
                 </div>
                 <div className="xl:basis-10/12 px-10">
-                    <ListingHeader toggleDrawer={toggleDrawer}/>
+                    <ListingHeader toggleDrawer={toggleDrawer} />
                     <Listings />
                 </div>
             </div>
             <Drawer open={open} onClose={toggleDrawer(false)}>
-                <Box
-                    sx={{ width: 250 }}
-                    role="presentation"
-                >
+                <Box sx={{ width: 250 }} role="presentation">
                     <div className="p-8">
-                    <FilterSection
-                        filterName="Category Types"
-                        filterItems={categories}
-                    />
-                    <FilterSection filterName="Other" filterItems={other} />
-                    <FilterSliderSection
-                        min={0}
-                        max={1000}
-                        filterName="Price"
-                    />
-                    <FilterSection
-                        filterName="Duration"
-                        filterItems={duration}
-                    />
+                        <FilterSection
+                            filterName="Category Types"
+                            filterItems={categories}
+                        />
+                        <FilterSection filterName="Other" filterItems={other} />
+                        <FilterSliderSection
+                            min={0}
+                            max={1000}
+                            filterName="Price"
+                        />
+                        <FilterSection
+                            filterName="Duration"
+                            filterItems={duration}
+                        />
                     </div>
                 </Box>
             </Drawer>

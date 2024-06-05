@@ -1,4 +1,3 @@
-import React from 'react'
 import ListingItem from '../ListingItem/ListingItem'
 import { Pagination } from '@mui/material'
 
