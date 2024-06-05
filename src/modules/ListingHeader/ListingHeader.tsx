@@ -1,13 +1,16 @@
 import { Button, Divider } from "@mui/material";
 import SwapVertOutlinedIcon from "@mui/icons-material/SwapVertOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import { ListingsStateContext } from "../../providers/ListingsStateProvider";
+import { useContext } from "react";
 const ListingHeader: React.FC<any> = (props) => {
+    const {selectedCityName, selectedCityTourCount} = useContext(ListingsStateContext)
     return (
         <>
             <div className="mt-2 flex flex-wrap justify-between items-center mb-8">
                 <div className="text-lg">
-                    <span className="font-medium">1,234 properties</span> in
-                    Halifax
+                    <span className="font-medium">{selectedCityTourCount + " "} properties</span> in
+                    {" " + selectedCityName}
                 </div>
                 <div className="flex gap-1">
                     <div className="xl:hidden">

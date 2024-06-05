@@ -1,5 +1,6 @@
 import { Slider } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { ListingsStateContext } from "../../../providers/ListingsStateProvider";
 
 interface FilterSliderProps {
     min: number;
@@ -12,19 +13,21 @@ function valuetext(value: number) {
   }
 
 const FilterSlider: React.FC<FilterSliderProps> = (props) => {
-const [value, setValue] = React.useState<number[]>([props.min, props.max]);
+  const {selectedPriceRange, priceRangeChange} = useContext(ListingsStateContext);
 
 const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+    priceRangeChange(newValue as number[]);
   };
+
   return (
     <>
     <div>
-        {valuetext(value[0])} - {valuetext(value[1])}
+        {valuetext(selectedPriceRange[0])} - {valuetext(selectedPriceRange[1])}
     </div>
     <Slider
+      key={props.min + props.max}
         getAriaLabel={() => 'Price range'}
-        value={value}
+        value={selectedPriceRange}
         onChange={handleChange}
         valueLabelDisplay="auto"
         getAriaValueText={valuetext}

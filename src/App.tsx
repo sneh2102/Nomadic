@@ -6,26 +6,25 @@ import FilterSliderSection from "./modules/Filters/FilterSliderSection/FilterSli
 import ListingHeader from "./modules/ListingHeader/ListingHeader";
 import Listings from "./modules/Listings/Listings";
 import Footer from "./modules/Footer/Footer";
-import React from "react";
+import React, { useContext } from "react";
+import { ListingsStateContext } from "./providers/ListingsStateProvider";
 
 function App() {
-    const categories = [
-        { filterName: "Tour", count: 12 },
-        { filterName: "Atttractions", count: 18 },
-        { filterName: "Day Trips", count: 21 },
-        { filterName: "Outdoor Activities", count: 3 },
-    ];
-    const other = [{ filterName: "Free Cancellation", count: 28 }];
-    const duration = [
-        { filterName: "Up to 1 hour", count: 12 },
-        { filterName: "1 to 4 hours", count: 12 },
-        { filterName: "4 hours and above", count: 12 },
-    ];
+    const {
+        isLoading,
+        categoryData,
+        otherData,
+        durationData,
+        maxPrice,
+        minPrice,
+    } = useContext(ListingsStateContext);
     const [open, setOpen] = React.useState(false);
+
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
+    if (isLoading) return <div>Loading...</div>;
     return (
         <>
             <Header />
@@ -34,17 +33,17 @@ function App() {
                 <div className="hidden xl:block xl:basis-2/12">
                     <FilterSection
                         filterName="Category Types"
-                        filterItems={categories}
+                        filterItems={categoryData}
                     />
-                    <FilterSection filterName="Other" filterItems={other} />
+                    <FilterSection filterName="Other" filterItems={otherData} />
                     <FilterSliderSection
-                        min={0}
-                        max={1000}
+                        min={minPrice}
+                        max={maxPrice}
                         filterName="Price"
                     />
                     <FilterSection
                         filterName="Duration"
-                        filterItems={duration}
+                        filterItems={durationData}
                     />
                 </div>
                 <div className="xl:basis-10/12 px-10">
@@ -57,17 +56,20 @@ function App() {
                     <div className="p-8">
                         <FilterSection
                             filterName="Category Types"
-                            filterItems={categories}
+                            filterItems={categoryData}
                         />
-                        <FilterSection filterName="Other" filterItems={other} />
+                        <FilterSection
+                            filterName="Other"
+                            filterItems={otherData}
+                        />
                         <FilterSliderSection
-                            min={0}
-                            max={1000}
+                            min={minPrice}
+                            max={maxPrice}
                             filterName="Price"
                         />
                         <FilterSection
                             filterName="Duration"
-                            filterItems={duration}
+                            filterItems={durationData}
                         />
                     </div>
                 </Box>
