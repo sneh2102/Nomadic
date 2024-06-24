@@ -1,0 +1,14 @@
+stages:
+  - deploy
+
+deploy_to_github:
+  stage: deploy
+  script:
+    - git config --global user.name "GitLab CI"
+    - git config --global user.email "ci@example.com"
+    - git clone --mirror https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
+    - cd ${CI_PROJECT_NAME}.git
+    - git remote add github https://${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}@${GITHUB_REPO}
+    - git push --mirror github
+  only:
+    - main
