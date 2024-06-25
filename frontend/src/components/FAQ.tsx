@@ -8,6 +8,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
+import FaqImage from '../assets/faq.svg';
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -93,7 +94,7 @@ export default function FAQ() {
                     mb: { xs: 2, sm: 0 },
                 }}
                 alt="FAQ illustration"
-                src="/faq.svg"
+                src={FaqImage}
             />
             <Box sx={{ width: { xs: '100%', md: '60%' }, mx: isPhone ? 1 : 5 }}>
                 <Typography

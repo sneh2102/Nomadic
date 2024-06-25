@@ -40,11 +40,17 @@ const ContactUsText = styled(StyledTypography)({
   color: '#555',
 });
 
+const AboutUsGrid = styled(Grid)({
+  '@media (max-width: 900px)': {
+    flexDirection: 'column-reverse',
+  },
+});
+
 const ContactUsPage: React.FC = () => {
   return (
     <Box>
       <AboutSection>
-        <Grid container spacing={4} className="px-20">
+        <AboutUsGrid container spacing={4} className="px-20">
           <Grid item xs={12} md={6}>
             <StyledTypography variant="h4" gutterBottom>
               About Us
@@ -54,9 +60,9 @@ const ContactUsPage: React.FC = () => {
             </AboutUsText>
           </Grid>
           <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <img src={aboutUs} alt="About Us" style={{ width: '80%',  }}/>
+            <img src={aboutUs} alt="About Us" style={{ width: '80%' }} />
           </Grid>
-        </Grid>
+        </AboutUsGrid>
       </AboutSection>
       <ContactSection>
         <Grid container spacing={4} className="px-20">
