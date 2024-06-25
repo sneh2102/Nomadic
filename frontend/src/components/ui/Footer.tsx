@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { Link } from "react-router-dom";
 const Footer = () => {
     return (
@@ -21,17 +21,29 @@ const Footer = () => {
                 <div className="mt-8 md:mt-0 md:basis-4/12">
                     <div className="text-xl font-medium">Company</div>
                     <ul className="md:my-6">
-                        <li className="mb-2"><Link to="/">Home</Link></li>
-                        <li className="mb-2"><Link to="/faq">FAQ</Link></li>
-                        <li className="mb-2"><Link to="/contactus">Contact Us</Link></li>
+                        <li className="mb-2">
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li className="mb-2">
+                            <Link to="/faq">FAQ</Link>
+                        </li>
+                        <li className="mb-2">
+                            <Link to="/contactus">Contact Us</Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="mt-8  md:mt-0 md:basis-4/12">
                     <div className="text-xl font-medium">Support</div>
                     <ul className="md:my-6">
-                        <li className="mb-2"><a href="#">Terms and Conditions</a></li>
-                        <li className="mb-2"><a href="#">Privacy Policy</a></li>
-                        <li className="mb-2"><a href="#">Sitemap</a></li>
+                        <li className="mb-2">
+                            <a href="#">Terms and Conditions</a>
+                        </li>
+                        <li className="mb-2">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li className="mb-2">
+                            <a href="#">Sitemap</a>
+                        </li>
                     </ul>
                 </div>
             </div>

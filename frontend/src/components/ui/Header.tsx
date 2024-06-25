@@ -51,11 +51,13 @@ const Header = (props: HeaderProps) => {
             <div className="flex items-center">
                 <div className="flex items-center mr-8">
                     <div className="w-24 mr-2">
-                        <Link to="/"><img
-                            className="h-full w-full"
-                            src="/logo_white.png"
-                            alt="Palm Logo"
-                        /></Link>
+                        <Link to="/">
+                            <img
+                                className="h-full w-full"
+                                src="/logo_white.png"
+                                alt="Palm Logo"
+                            />
+                        </Link>
                     </div>
                 </div>
                 <ul className="gap-4 hidden md:flex">
@@ -103,10 +105,13 @@ const Header = (props: HeaderProps) => {
                                 },
                             ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
-                                    <Link to={menu.href} style={{
-                                        display: "block",
-                                        width: "100%",
-                                    }}>
+                                    <Link
+                                        to={menu.href}
+                                        style={{
+                                            display: "block",
+                                            width: "100%",
+                                        }}
+                                    >
                                         <ListItemButton>
                                             <ListItemText primary={menu.text} />
                                         </ListItemButton>

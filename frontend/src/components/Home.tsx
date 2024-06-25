@@ -116,19 +116,19 @@ const Home = () => {
             name: "Rome",
             image: "/rome.jpg",
         },
-    ]
+    ];
     const guides = [
         {
             title: "Things To Do On Your Trip",
             image: "/canyon.jpg",
-            pretite: ""
+            pretite: "",
         },
         {
             title: "Up to 70% Discount",
             image: "/beach.jpg",
-            pretite: "Enjoy Summer Deals"
-        }
-    ]
+            pretite: "Enjoy Summer Deals",
+        },
+    ];
     const tours = [
         {
             id: 1,
@@ -137,7 +137,7 @@ const Home = () => {
             rating: 4.7,
             reviews: 3014,
             price: 72,
-            image: "/stonehenge.jpg"
+            image: "/stonehenge.jpg",
         },
         {
             id: 2,
@@ -146,7 +146,7 @@ const Home = () => {
             rating: 4.9,
             reviews: 214,
             price: 120,
-            image: "/rockies.jpg"
+            image: "/rockies.jpg",
         },
         {
             id: 3,
@@ -155,7 +155,7 @@ const Home = () => {
             rating: 4.5,
             reviews: 1587,
             price: 55,
-            image: "/venice.jpg"
+            image: "/venice.jpg",
         },
         {
             id: 4,
@@ -164,7 +164,7 @@ const Home = () => {
             rating: 4.8,
             reviews: 892,
             price: 230,
-            image: "/safari.jpg"
+            image: "/safari.jpg",
         },
         {
             id: 5,
@@ -173,7 +173,7 @@ const Home = () => {
             rating: 4.6,
             reviews: 3241,
             price: 65,
-            image: "/paris.jpg"
+            image: "/paris.jpg",
         },
         {
             id: 6,
@@ -182,7 +182,7 @@ const Home = () => {
             rating: 4.9,
             reviews: 1765,
             price: 110,
-            image: "/great_wall.jpg"
+            image: "/great_wall.jpg",
         },
         {
             id: 7,
@@ -191,7 +191,7 @@ const Home = () => {
             rating: 4.7,
             reviews: 940,
             price: 150,
-            image: "/northern_lights.jpg"
+            image: "/northern_lights.jpg",
         },
         {
             id: 8,
@@ -200,7 +200,7 @@ const Home = () => {
             rating: 4.8,
             reviews: 1305,
             price: 299,
-            image: "/canyon.jpg"
+            image: "/canyon.jpg",
         },
         {
             id: 9,
@@ -209,7 +209,7 @@ const Home = () => {
             rating: 4.7,
             reviews: 2210,
             price: 50,
-            image: "/pyramids.jpg"
+            image: "/pyramids.jpg",
         },
         {
             id: 10,
@@ -218,12 +218,12 @@ const Home = () => {
             rating: 4.6,
             reviews: 1834,
             price: 40,
-            image: "/sydney.jpg"
-        }
-    ]
+            image: "/sydney.jpg",
+        },
+    ];
     return (
         <div className="">
-            <Header showScrollAnimation={true}/>
+            <Header showScrollAnimation={true} />
             <div className="h-screen relative">
                 <div className="h-full w-full absolute -z-10">
                     <img
@@ -277,18 +277,32 @@ const Home = () => {
                         </p>
                         <div>
                             <Slider {...settings}>
-                                {popularDestinations.map((destination, index) => (
-                                    <ExploreCard key={index} title={destination.name} image={destination.image} />
-                                ))}
+                                {popularDestinations.map(
+                                    (destination, index) => (
+                                        <ExploreCard
+                                            key={index}
+                                            title={destination.name}
+                                            image={destination.image}
+                                        />
+                                    )
+                                )}
                             </Slider>
                         </div>
                     </div>
                     <div className="my-16 mt-28 h-full flex gap-8 flex-col md:flex-row">
                         <div className="md:basis-1/2 h-[300px] md:h-[550px]">
-                            <LearningCard image={guides[0].image} title={guides[0].title} pretitle={guides[0].pretite}/>
+                            <LearningCard
+                                image={guides[0].image}
+                                title={guides[0].title}
+                                pretitle={guides[0].pretite}
+                            />
                         </div>
                         <div className="md:basis-1/2 h-[300px] md:h-[550px]">
-                            <LearningCard image={guides[1].image} title={guides[1].title} pretitle={guides[1].pretite} />
+                            <LearningCard
+                                image={guides[1].image}
+                                title={guides[1].title}
+                                pretitle={guides[1].pretite}
+                            />
                         </div>
                     </div>
                     <div className="my-16 mt-28">
@@ -301,7 +315,15 @@ const Home = () => {
                         <div>
                             <Slider {...settings}>
                                 {tours.map((tour, index) => (
-                                    <TourCard key={tour.id} name={tour.name} location={tour.location} rating={tour.rating} reviews={tour.reviews} price={tour.price} image={tour.image} />
+                                    <TourCard
+                                        key={tour.id}
+                                        name={tour.name}
+                                        location={tour.location}
+                                        rating={tour.rating}
+                                        reviews={tour.reviews}
+                                        price={tour.price}
+                                        image={tour.image}
+                                    />
                                 ))}
                             </Slider>
                         </div>

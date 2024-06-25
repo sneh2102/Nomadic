@@ -16,15 +16,25 @@ const TourCard = (props: TourCardProps) => {
                     alt={props.name}
                 />
             </div>
-            <h4 className="text-xl font-medium tracking-tighter my-2">{props.name}
+            <h4 className="text-xl font-medium tracking-tighter my-2">
+                {props.name}
             </h4>
             <p className="text-grey text-sm mb-4">{props.location}</p>
             <div className="flex items-center">
-                <div className="w-8 h-8 bg-primary text-white font-bold flex items-center justify-center rounded-md">{props.rating}</div>
-                <div className="ml-2 font-medium tracking-tighter text-sm">Exceptional</div>
-                <div className="text-grey text-sm ml-4">{props.reviews} reviews</div>
+                <div className="w-8 h-8 bg-primary text-white font-bold flex items-center justify-center rounded-md">
+                    {props.rating}
+                </div>
+                <div className="ml-2 font-medium tracking-tighter text-sm">
+                    Exceptional
+                </div>
+                <div className="text-grey text-sm ml-4">
+                    {props.reviews} reviews
+                </div>
             </div>
-            <div className="my-2 font-medium tracking-tight">Starting from <span className="font-bold text-primary">CA${props.price}</span></div>
+            <div className="my-2 font-medium tracking-tight">
+                Starting from{" "}
+                <span className="font-bold text-primary">CA${props.price}</span>
+            </div>
         </div>
     );
 };

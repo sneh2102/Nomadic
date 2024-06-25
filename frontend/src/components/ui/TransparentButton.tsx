@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
-import { Button, ButtonProps } from '@mui/material'
-import React from 'react'
+import styled from "@emotion/styled";
+import { Button, ButtonProps } from "@mui/material";
+import React from "react";
 
 const StyledButton = styled(Button)`
     color: white;
@@ -10,10 +10,10 @@ const StyledButton = styled(Button)`
         color: black;
         background: white;
     }
-`
+`;
 
-const TransparentButton:React.FC<ButtonProps> = (props) => {
-  return <StyledButton size='large' disableElevation {...props} />
-}
+const TransparentButton: React.FC<ButtonProps> = (props) => {
+    return <StyledButton size="large" disableElevation {...props} />;
+};
 
-export default TransparentButton
+export default TransparentButton;
