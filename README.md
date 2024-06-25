@@ -1,93 +1,169 @@
-# CSCI 5709 Grp-10
+# Nomadic
+The primary goal of the Nomadic project is to create a comprehensive platform that facilitates the management and booking of tours and travel packages. The platform aims to provide an easy-to-use interface for travelers to discover, book, and manage tours, while also offering robust tools for travel agents and tour operators to organize and promote their travel offerings.
 
 
+* *Date Created*: 24 June 2024
+* *Last Modification Date*: 24 June 2024
+* *Git URL*: <https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/tree/main>
+* *Github URL*: <https://github.com/smit0086/csci-5709-grp-10>
+* *Deployed URL*: <https://csci-5709-g10.netlify.app/>
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Authors
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+* [Sneh Patel](mailto:sn372821@dal.ca) - *(Creator)*
+* [Meer Patel](mailto:mr418607@dal.ca) - *(Creator)*
+* [Smit Patel](mailto:Smit.patel@dal.ca) - *(Creator)*
+* [Heli Desai](mailto:Helidesai8@dal.ca) - *(Creator)*
+* [Vyansi Diyora](mailto:sn372821@dal.ca) - *(Creator)*
+* [Parth Patel](mailto:pr410642@dal.ca) - *(Creator)*
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Getting Started
+
+The initial structure of this project was established using [vite](https://vitejs.dev/guide/).
+
+### Prerequisites
+To get started with this project on your computer, you'll need to install the following software, libraries, or plugins.
+
+* To verify if Git is installed on your system, you can execute the following command in the terminal:
+    ```
+    git --version
+    ```
+* Node
+    To verify if Node is installed on your system, you can execute the following command in the terminal:
+    ```
+    node --version
+    ```
+* A web browser like Google Chrome or Firefox
+
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+1. Clone this repository to your local system
 
 ```
-cd existing_repo
-git remote add origin https://git.cs.dal.ca/snehp/csci-5709-grp-10.git
-git branch -M main
-git push -uf origin main
+git clone https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/tree/main
 ```
 
-## Integrate with your tools
+2. Change the current directory to cloned repository
 
-- [ ] [Set up project integrations](https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/settings/integrations)
+```
+cd csci-5709-grp-10/frontend
+```
 
-## Collaborate with your team
+3. Install required dependencies
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+```
+npm install
+```
 
-## Test and Deploy
+4. Run the project
 
-Use the built-in continuous integration in GitLab.
+```
+npm run dev
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+To run the app in development mode, follow these steps:
+1. Open your web browser and navigate to http://localhost:5173.
+2. The app will load in your browser, and any changes you make will automatically trigger a page reload.
 
-***
+## Available Scripts
 
-# Editing this README
+### `npm run dev`
+To run the app in development mode, you can execute the following command:
+```
+npm run dev
+```
+After running the command, open your web browser and navigate to http://localhost:5173 to view the app. Any changes you make will automatically trigger a page reload.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### `npm run build `
+```
+npm run build
+```
+Builds the app for production. The builded app is optimized for best performance and can found in `dist` folder.
 
-## Suggestions for a good README
+## Deployment
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+To publish your website after completing the setup and following all the steps mentioned above, you can follow these instructions:
 
-## Name
-Choose a self-explaining name for your project.
+1. Log in to Netlify using your GitHub account.
+2. Choose the repository you wish to deploy.
+3. Once you have selected the repository, Netlify will automatically deploy your website.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Built With
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+* [React](https://reactjs.org/) - Frontend Framework
+* [NPM](https://www.npmjs.com/) - The package manager for  [Node](https://nodejs.org/)
+* [Visual Studio Code](https://code.visualstudio.com/download) - The source code editor used
+* [Netlify](https://www.netlify.com/) - For application deployment
+* [GitHub](https://github.com/) - The version control tool
+* [Google Chrome](https://www.google.com/intl/en_in/chrome/) - Browser used to visualize the changes
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## External Dependencies Used
+[@mui/icons-material](https://mui.com/material-ui/material-icons/)- `^5.15.20`
+- Material-UI is a popular React UI framework. The `@mui/icons-material` package provides a collection of icons that can be used in Material-UI applications.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+[@mui/material](https://mui.com/components/)- `^5.15.20`
+- MUI Core components are a suite of high-quality, reusable UI components based on Material Design.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+[react-router-dom](https://reactrouter.com/) - `^6.23.1`
+- React Router DOM provides routing functionalities for React applications, allowing for declarative routing.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+[tailwind](https://tailwindcss.com/)- `^3.4.4`
+- Tailwind CSS is a highly customizable, low-level CSS framework that provides utility classes for building responsive and modern user interfaces.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+[react-hook-form](https://react-hook-form.com/)- `^7.52.0`
+ * React Hook Form is a library for managing form state in React using hooks.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+[Typescript](https://www.typescriptlang.org)- `^4.9.5`
+- Typescript is a typed superset of JavaScript that compiles to plain JavaScript. It adds static typing and other features to JavaScript, making it more robust and scalable for large-scale applications.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+[react-slick](https://www.npmjs.com/package/react-slick)- `^0.30.2`
+-   React Slick is a carousel component for React applications.
+ * It provides a simple and customizable way to create image sliders, carousels, and other similer UI Component 
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Sources Used
+### frontend/src/components/FAQ.tsx
+*Lines 113 -124
+```js
+<Accordion
+    key={index}
+    expanded={expanded === `panel${index}`}
+    onChange={handleChange(`panel${index}`)}
+>
+<AccordionSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
+    <Typography>{faq.question}</Typography>
+</AccordionSummary>
+<AccordionDetails>
+    <Typography>{faq.answer}</Typography>
+</AccordionDetails>
+</Accordion>
+```
+This code is adapted from [Material UI](https://mui.com/material-ui/react-accordion/) as shown below
+```js
+    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <Typography>Collapsible Group Item #1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Acknowledgments
+* The provided code was instrumental in getting started with the assignment. I would like to express my gratitude to all the authors for their hard work.
 
-## License
-For open source projects, say how it is licensed.
+## References
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- [1]“unDraw | Colorful illustrations,” Undraw.co, 2019. (Online) Available: https://undraw.co/illustrations (accessed Jun. 24, 2024).
+- [2]“React Accordion component - Material UI,” mui.com. (Online)  Available: https://mui.com/material-ui/react-accordion/ (accessed Jun. 24, 2024).
+- [3]“Travel World Tour Vector PNG Images, Tour And Travel Logo, Tour, Travel, Logo PNG Image For Free Download,” Pngtree. (Online) Available:https://pngtree.com/freepng/tour-and-travel-logo_5695483.html (accessed Jun. 25, 2024).
