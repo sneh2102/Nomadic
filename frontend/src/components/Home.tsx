@@ -242,14 +242,13 @@ const Home = () => {
             >
                 <div className="flex items-center">
                     <div className="flex items-center mr-8">
-                        <div className="bg-white rounded-xl w-12 mr-2">
+                        <div className="w-24 mr-2">
                             <img
                                 className="h-full w-full"
-                                src="/palm_logo.svg"
+                                src="/logo_white.png"
                                 alt="Palm Logo"
                             />
                         </div>
-                        <h1 className="text-xl hidden md:block">NoMadic</h1>
                     </div>
                     <ul className="gap-4 hidden md:flex">
                         <li>
