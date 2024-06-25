@@ -1,91 +1,59 @@
-# CSCI5709 Assignment 1
-
-## Nomadic
-The primary goal of the Nomadic project is to create a comprehensive platform that facilitates the management and booking of tours and travel packages. The platform aims to provide an easy-to-use interface for travelers to discover, book, and manage tours, while also offering robust tools for travel agents and tour operators to organize and promote their travel offerings.
+# CSCI 5709 Grp-10
 
 
-* *Date Created*: 24 June 2024
-* *Last Modification Date*: 24 June 2024
-* *Git URL*: <https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/tree/main>
-* *Github URL*: <https://github.com/smit0086/csci-5709-grp-10>
-* *Deployed URL*: <https://csci-5709-g10.netlify.app/>
 
+## Getting started
 
-## Authors
+To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-* [Sneh Patel](mailto:sn372821@dal.ca) - *(Creator)*
-* [Meer Patel](mailto:mr418607@dal.ca) - *(Creator)*
-* [Smit Patel](mailto:Smit.patel@dal.ca) - *(Creator)*
-* [Heli Desai](mailto:Helidesai8@dal.ca) - *(Creator)*
-* [Vyansi Diyora](mailto:sn372821@dal.ca) - *(Creator)*
-* [Parth Patel](mailto:pr410642@dal.ca) - *(Creator)*
+Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
+## Add your files
 
-## Getting Started
-
-The initial structure of this project was established using [vite](https://vitejs.dev/guide/).
-
-### Prerequisites
-To get started with this project on your computer, you'll need to install the following software, libraries, or plugins.
-
-* To verify if Git is installed on your system, you can execute the following command in the terminal:
-    ```
-    git --version
-    ```
-* Node
-    To verify if Node is installed on your system, you can execute the following command in the terminal:
-    ```
-    node --version
-    ```
-* A web browser like Google Chrome or Firefox
-
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-1. Clone this repository to your local system
+- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
+- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
 ```
-git clone https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/tree/main
+cd existing_repo
+git remote add origin https://git.cs.dal.ca/snehp/csci-5709-grp-10.git
+git branch -M main
+git push -uf origin main
 ```
 
-2. Change the current directory to cloned repository
+## Integrate with your tools
 
-```
-cd csci-5709-grp-10/frontend
-```
+- [ ] [Set up project integrations](https://git.cs.dal.ca/snehp/csci-5709-grp-10/-/settings/integrations)
 
-3. Install required dependencies
+## Collaborate with your team
 
-```
-npm install
-```
+- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
+- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
+- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
+- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
+- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-4. Run the project
+## Test and Deploy
 
-```
-npm run dev
-```
+Use the built-in continuous integration in GitLab.
 
-To run the app in development mode, follow these steps:
-1. Open your web browser and navigate to http://localhost:5173.
-2. The app will load in your browser, and any changes you make will automatically trigger a page reload.
+- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
+- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
+- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
+- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
+- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-## Available Scripts
+***
 
-### `npm run dev`
-To run the app in development mode, you can execute the following command:
-```
-npm run dev
-```
-After running the command, open your web browser and navigate to http://localhost:5173 to view the app. Any changes you make will automatically trigger a page reload.
+# Editing this README
 
-### `npm run build `
-```
-npm run build
-```
-Builds the app for production. The builded app is optimized for best performance and can found in `dist` folder.
+When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+
+## Suggestions for a good README
+
+Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+
+## Name
+Choose a self-explaining name for your project.
 
 ## Deployment
 
