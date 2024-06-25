@@ -290,14 +290,14 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="my-16 mt-28 h-full flex gap-8 flex-col md:flex-row">
-                        <div className="md:basis-1/2 h-[300px] md:h-[550px]">
+                        <div className="md:basis-1/2 h-[300px] mx-2 md:h-[550px]">
                             <LearningCard
                                 image={guides[0].image}
                                 title={guides[0].title}
                                 pretitle={guides[0].pretite}
                             />
                         </div>
-                        <div className="md:basis-1/2 h-[300px] md:h-[550px]">
+                        <div className="md:basis-1/2 h-[300px] mx-2 md:h-[550px]">
                             <LearningCard
                                 image={guides[1].image}
                                 title={guides[1].title}
