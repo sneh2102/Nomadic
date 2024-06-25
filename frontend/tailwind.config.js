@@ -6,7 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: "#051036"
+        purple: "#051036",
+        grey: '#697488',
+        'light-blue': '#e5f0fd',
+        primary: '#3554d1'
       }
     },
   },
