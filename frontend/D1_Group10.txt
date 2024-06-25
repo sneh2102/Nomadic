@@ -1,4 +1,4 @@
-# CSCI5709 Assignment 1
+# CSCI5709 Group Proposal 
 
 ## Nomadic
 The primary goal of the Nomadic project is to create a comprehensive platform that facilitates the management and booking of tours and travel packages. The platform aims to provide an easy-to-use interface for travelers to discover, book, and manage tours, while also offering robust tools for travel agents and tour operators to organize and promote their travel offerings.
