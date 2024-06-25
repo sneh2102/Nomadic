@@ -28,22 +28,9 @@ import TourCard from "./ui/TourCard";
 import TestimonialCard from "./ui/TestimonialCard";
 import BlogCard from "./ui/BlogCard";
 import Footer from "./ui/Footer";
+import Header from "./ui/Header";
 
 const Home = () => {
-    const navRef = useRef<HTMLElement>(null);
-    useEffect(() => {
-        const nav = navRef.current;
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 100) {
-                nav?.classList.remove("bg-transparent");
-                nav?.classList.add("bg-purple");
-            } else {
-                nav?.classList.add("bg-transparent");
-                nav?.classList.remove("bg-purple");
-            }
-        });
-    }, []);
-
     const settings: Settings = {
         dots: true,
         infinite: false,
@@ -236,47 +223,7 @@ const Home = () => {
     ]
     return (
         <div className="">
-            <nav
-                className="text-white p-4 flex justify-between fixed w-full z-50 transition-colors duration-300"
-                ref={navRef}
-            >
-                <div className="flex items-center">
-                    <div className="flex items-center mr-8">
-                        <div className="w-24 mr-2">
-                            <img
-                                className="h-full w-full"
-                                src="/logo_white.png"
-                                alt="Palm Logo"
-                            />
-                        </div>
-                    </div>
-                    <ul className="gap-4 hidden md:flex">
-                        <li>
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/faq">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="/contactus">Contact Us</a>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div className="md:hidden block">
-                        <IconButton>
-                            <Menu sx={{
-                                color:"white"
-                            }}/>
-                        </IconButton>
-                    </div>
-                    <div className="hidden md:block">
-                        <TransparentButton variant="contained">
-                            Sign In / Register
-                        </TransparentButton>
-                    </div>
-                </div>
-            </nav>
+            <Header showScrollAnimation={true}/>
             <div className="h-screen relative">
                 <div className="h-full w-full absolute -z-10">
                     <img

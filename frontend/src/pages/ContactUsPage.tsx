@@ -3,6 +3,8 @@ import { TextField, Button, Typography, Box, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import aboutUs from '../assets/AboutUs.png';
 import contactUs from '../assets/ContactUs.webp';
+import Footer from '../components/ui/Footer';
+import Header from '../components/ui/Header';
 
 const Section = styled('section')({
   padding: '2rem 0',
@@ -48,6 +50,10 @@ const AboutUsGrid = styled(Grid)({
 
 const ContactUsPage: React.FC = () => {
   return (
+    <>
+    <div className='h-[85px]'>
+      <Header />
+    </div>
     <Box>
       <AboutSection>
         <AboutUsGrid container spacing={4} className="px-20">
@@ -136,6 +142,11 @@ const ContactUsPage: React.FC = () => {
         </Box>
       </GeneralInfoSection>
     </Box>
+    <div className='mt-16'>
+    <Footer />
+    </div>
+    
+    </>
   );
 };
 

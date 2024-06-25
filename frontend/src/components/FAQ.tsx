@@ -9,6 +9,8 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import FaqImage from '../assets/faq.svg';
+import Footer from './ui/Footer';
+import Header from './ui/Header';
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -79,6 +81,10 @@ export default function FAQ() {
         };
 
     return (
+        <>
+        <div className='h-[85px]'>
+            <Header />
+        </div>
         <Box
             display="flex"
             flexDirection={isTabletOrSmaller ? 'column' : 'row'}
@@ -125,5 +131,7 @@ export default function FAQ() {
                 ))}
             </Box>
         </Box>
+        <Footer />
+        </>
     );
 }
