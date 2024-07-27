@@ -1,6 +1,7 @@
 interface TourCardProps {
     name: string;
     location: string;
+    city: string;
     rating: number;
     reviews: number;
     price: number;
@@ -19,7 +20,7 @@ const TourCard = (props: TourCardProps) => {
             <h4 className="text-xl font-medium tracking-tighter my-2">
                 {props.name}
             </h4>
-            <p className="text-grey text-sm mb-4">{props.location}</p>
+            <p className="text-grey text-sm mb-4">{props.location}, {props.city}</p>
             <div className="flex items-center">
                 <div className="w-8 h-8 bg-primary text-white font-bold flex items-center justify-center rounded-md">
                     {props.rating}

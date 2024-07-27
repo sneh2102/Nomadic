@@ -29,8 +29,69 @@ import TestimonialCard from "./ui/TestimonialCard";
 import BlogCard from "./ui/BlogCard";
 import Footer from "./ui/Footer";
 import Header from "./ui/Header";
+import { useTours } from "../hooks/useTours";
+import { ErrorBoundary } from "react-error-boundary";
+import { TourList } from "../interfaces/tour.interface";
+import ErrorComponent from "./ui/ErrorComponent";
+
+const RecommendedTourList = (props: { tours: TourList }) => {
+    const settings: Settings = {
+        dots: true,
+        infinite: false,
+        speed: 750,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1550,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 1050,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: false,
+                },
+            },
+        ],
+    };
+    return (
+        <ErrorBoundary fallback={<ErrorComponent />}>
+            <Slider {...settings}>
+                {props.tours.data.map((tour, index) => (
+                    <TourCard
+                        key={tour.id}
+                        name={tour.name}
+                        location={tour.location}
+                        city={tour.city}
+                        rating={1.2}
+                        reviews={1234}
+                        price={tour.price}
+                        image={tour.image}
+                    />
+                ))}
+            </Slider>
+        </ErrorBoundary>
+    );
+};
 
 const Home = () => {
+    const { tours, toursLoading, toursError } = useTours({
+        categories: null,
+    });
+    console.log({toursError});
     const settings: Settings = {
         dots: true,
         infinite: false,
@@ -129,98 +190,6 @@ const Home = () => {
             pretite: "Enjoy Summer Deals",
         },
     ];
-    const tours = [
-        {
-            id: 1,
-            name: "Stonehenge with Cathedral Tour",
-            location: "Westminster Borough, London",
-            rating: 4.7,
-            reviews: 3014,
-            price: 72,
-            image: "/stonehenge.jpg",
-        },
-        {
-            id: 2,
-            name: "Majestic Mountains Expedition",
-            location: "Rocky Mountains, Canada",
-            rating: 4.9,
-            reviews: 214,
-            price: 120,
-            image: "/rockies.jpg",
-        },
-        {
-            id: 3,
-            name: "Venice Gondola Experience",
-            location: "Venice, Italy",
-            rating: 4.5,
-            reviews: 1587,
-            price: 55,
-            image: "/venice.jpg",
-        },
-        {
-            id: 4,
-            name: "Safari Adventure in Serengeti",
-            location: "Serengeti National Park, Tanzania",
-            rating: 4.8,
-            reviews: 892,
-            price: 230,
-            image: "/safari.jpg",
-        },
-        {
-            id: 5,
-            name: "Eiffel Tower Summit Access",
-            location: "Paris, France",
-            rating: 4.6,
-            reviews: 3241,
-            price: 65,
-            image: "/paris.jpg",
-        },
-        {
-            id: 6,
-            name: "Great Wall of China Hiking Tour",
-            location: "Beijing, China",
-            rating: 4.9,
-            reviews: 1765,
-            price: 110,
-            image: "/great_wall.jpg",
-        },
-        {
-            id: 7,
-            name: "Northern Lights Viewing in Iceland",
-            location: "Reykjavik, Iceland",
-            rating: 4.7,
-            reviews: 940,
-            price: 150,
-            image: "/northern_lights.jpg",
-        },
-        {
-            id: 8,
-            name: "Grand Canyon Helicopter Tour",
-            location: "Arizona, USA",
-            rating: 4.8,
-            reviews: 1305,
-            price: 299,
-            image: "/canyon.jpg",
-        },
-        {
-            id: 9,
-            name: "Pyramids of Giza Tour",
-            location: "Cairo, Egypt",
-            rating: 4.7,
-            reviews: 2210,
-            price: 50,
-            image: "/pyramids.jpg",
-        },
-        {
-            id: 10,
-            name: "Sydney Opera House Guided Tour",
-            location: "Sydney, Australia",
-            rating: 4.6,
-            reviews: 1834,
-            price: 40,
-            image: "/sydney.jpg",
-        },
-    ];
     return (
         <div className="">
             <Header showScrollAnimation={true} />
@@ -313,19 +282,9 @@ const Home = () => {
                             Top picks curated for you
                         </p>
                         <div>
-                            <Slider {...settings}>
-                                {tours.map((tour, index) => (
-                                    <TourCard
-                                        key={tour.id}
-                                        name={tour.name}
-                                        location={tour.location}
-                                        rating={tour.rating}
-                                        reviews={tour.reviews}
-                                        price={tour.price}
-                                        image={tour.image}
-                                    />
-                                ))}
-                            </Slider>
+                            {toursLoading && <p>Loading...</p>}
+                            {tours && <RecommendedTourList tours={tours} />}
+                            {toursError && <ErrorComponent error={toursError} />}
                         </div>
                     </div>
                     <div className="my-16 mt-32">
