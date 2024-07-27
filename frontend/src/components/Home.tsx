@@ -88,7 +88,9 @@ const RecommendedTourList = (props: { tours: TourList }) => {
 };
 
 const Home = () => {
-    const { tours, toursLoading, toursError } = useTours();
+    const { tours, toursLoading, toursError } = useTours({
+        categories: null,
+    });
     console.log({toursError});
     const settings: Settings = {
         dots: true,

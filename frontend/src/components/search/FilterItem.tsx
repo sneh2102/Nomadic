@@ -19,11 +19,12 @@ const FilterItem: React.FC<any> = (props) => {
                             checked={props.checked}
                             value={props.filterId}
                             onChange={(e) => {
-                                if (props.parentName === "Category Types") {
-                                    categoryFilterChange(e.target.value);
-                                } else if (props.parentName === "Other") {
-                                    otherFilterChange();
-                                }
+                                props.onFilterChange(e.target.value);
+                                // if (props.parentName === "Category Types") {
+                                //     categoryFilterChange(e.target.value);
+                                // } else if (props.parentName === "Other") {
+                                //     otherFilterChange();
+                                // }
                             }}
                         />
                     }
