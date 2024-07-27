@@ -7,7 +7,7 @@ export const getTours = async ({
 }) => {
   try {
     const query = categories ? `?categories=${categories}` : '';
-    const response = await fetch(`http://localhost:8000/api/v1/tours${query}`);
+    const response = await fetch(`${import.meta.env.VITE_BASE_API_URL}/api/v1/tours${query}`);
     if (!response.ok) {
       throw new Error('Failed to fetch');
     }
