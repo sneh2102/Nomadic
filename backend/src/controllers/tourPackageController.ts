@@ -21,8 +21,8 @@ export const createTourPackage = async (req: Request, res: Response) => {
 // Get all tour packages with pagination, filtering, and sorting
 export const getAllTourPackages = async (req: Request, res: Response) => {
     try {
-        const { page = 1, pageSize = 10, name, minPrice, maxPrice, city, sortBy = 'name', sortOrder = 'asc' } = req.query;
-
+        const { page = 1, pageSize = 10, name, minPrice, maxPrice, city, sortBy = 'name', sortOrder = 'asc', freeCancelationAvailable, categories } = req.query;
+        const categoriesArray = categories ? String(categories).split(',') : [];
         const filters: any = {};
         if (name) {
             filters.name = { contains: String(name), mode: 'insensitive' }; // Case insensitive search
@@ -39,6 +39,12 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
         if (city) {
             filters.location = { contains: String(city), mode: 'insensitive' }; // Case insensitive search
         }
+        if (freeCancelationAvailable) {
+            filters.freeCancelationAvailable = freeCancelationAvailable === 'true';
+        }
+        if (categoriesArray.length > 0) {
+            filters.tourCategoryId = { in: categoriesArray.map((category) => Number(category)) };
+        }
 
         const skip = (Number(page) - 1) * Number(pageSize);
         const take = Number(pageSize);
@@ -49,6 +55,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
             skip: skip,
             take: take,
         });
+        const freeCancelationAvailableCount = await prisma.tourPackage.count({ where: { freeCancelationAvailable: true } });
 
         const total = await prisma.tourPackage.count({ where: filters });
 
@@ -59,6 +66,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
                 page: Number(page),
                 pageSize: Number(pageSize),
                 totalPages: Math.ceil(total / Number(pageSize)),
+                freeCancelationAvailableCount,
             },
         });
     } catch (error) {

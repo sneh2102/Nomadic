@@ -5,6 +5,10 @@ export interface Tour {
     city: string;
     price: number;
     image: string;
+    freeCancelationAvailable: boolean;
+    tourCategoryId: number;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface TourMetaData {
@@ -12,6 +16,7 @@ export interface TourMetaData {
     page: number;
     pageSize: number;
     totalPages: number;
+    freeCancelationAvailableCount: number;
 }
 
 export interface TourList {
