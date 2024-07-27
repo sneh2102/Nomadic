@@ -46,3 +46,13 @@ model TourPackage {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
+
+model Review {
+  id      Int     @id @default(autoincrement())
+  name    String
+  rating  String  // Store rating as a string if you're converting from a number
+  review  String
+  createdAt DateTime @default(now()) // Optional: Tracks when the review was created
+
+ 
+}
