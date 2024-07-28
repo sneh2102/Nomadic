@@ -14,35 +14,56 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  first_name String 
-  last_name String
-  email String @unique
-  password String 
-  resetToken String?
+  id               Int       @id @default(autoincrement())
+  first_name       String
+  last_name        String
+  email            String    @unique
+  password         String
+  resetToken       String?
   resetTokenExpiry DateTime?
-  createdAt DateTime @default(now())
+  createdAt        DateTime  @default(now())
+  reviews          Review[]
+
   @@map("user")
 }
 
 model TourCategory {
-  id        Int     @id @default(autoincrement())
-  name      String
-  tourPackages  TourPackage[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id           Int           @id @default(autoincrement())
+  name         String
+  tourPackages TourPackage[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model TourPackage {
-  id        Int     @id @default(autoincrement())
-  name      String
-  location  String
-  city      String
-  price     Float
-  image     String
-  freeCancelationAvailable  Boolean
-  tourCategory  TourCategory  @relation(fields: [tourCategoryId], references: [id])
-  tourCategoryId     Int
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id                       Int          @id @default(autoincrement())
+  name                     String
+  location                 String
+  city                     String
+  price                    Float
+  image                    String
+  freeCancelationAvailable Boolean
+  tourCategory             TourCategory @relation(fields: [tourCategoryId], references: [id])
+  tourCategoryId           Int
+  accommodationDetails     String
+  transportationDetails    String
+  activities               String
+  startDate                DateTime
+  endDate                  DateTime
+  duration                 Int
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
+  reviews                  Review[]
+}
+
+model Review {
+  id            Int         @id @default(autoincrement())
+  comment       String
+  rating        Int
+  tourPackage   TourPackage @relation(fields: [tourPackageId], references: [id])
+  tourPackageId Int
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
 }

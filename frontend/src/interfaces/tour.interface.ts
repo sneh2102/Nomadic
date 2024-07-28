@@ -9,6 +9,9 @@ export interface Tour {
     tourCategoryId: number;
     createdAt: string;
     updatedAt: string;
+    startDate: string;
+    endDate: string;
+    duration: number;
 }
 
 export interface TourMetaData {
@@ -17,6 +20,8 @@ export interface TourMetaData {
     pageSize: number;
     totalPages: number;
     freeCancelationAvailableCount: number;
+    minPrice: number;
+    maxPrice: number;
 }
 
 export interface TourList {
