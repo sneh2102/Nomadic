@@ -4,9 +4,9 @@ import FAQPage from "./pages/FAQPage";
 import HomePage from "./pages/HomePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import SearchPage from "./pages/SearchPage";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import ForgotPassword from "./pages/ForgotPassword";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 
 
@@ -19,9 +19,9 @@ function App() {
                     <Route path="/faq" element={<FAQPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="/contactus" element={<ContactUsPage />} />
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/forgotpassword" element={<ForgotPassword/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/signup" element={<SignUpPage/>}/>
+                    <Route path="/forgotpassword" element={<ForgotPasswordPage/>}/>
                 </Routes>
             </Router>
         </div>

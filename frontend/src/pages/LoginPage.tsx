@@ -21,7 +21,7 @@ type FormValues = {
     password: string
 }
 
-const Login = () => {
+const LoginPage = () => {
     const form = useForm<FormValues>()
     const [error,setError] = useState("");
     const {register,handleSubmit,formState} = form;
@@ -158,4 +158,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -26,7 +26,7 @@ import { useState } from "react";
 }
 
   
-  const SignUp = () => {
+  const SignUpPage = () => {
    
     // const [name, setName] = useState("");
     // const [email, setEmail] = useState("");
@@ -196,4 +196,4 @@ import { useState } from "react";
     );
   };
   
-  export default SignUp;
+  export default SignUpPage;

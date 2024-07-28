@@ -17,7 +17,7 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
     email: string;
   };
   
-  const ForgotPassword = () => {
+  const ForgotPasswordPage = () => {
     const form = useForm<FormValues>();
     const [error, setError] = useState("");
     const { register, handleSubmit, formState } = form;
@@ -109,5 +109,5 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
     );
   };
   
-  export default ForgotPassword;
+  export default ForgotPasswordPage;
   
