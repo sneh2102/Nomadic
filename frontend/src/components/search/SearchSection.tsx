@@ -6,17 +6,48 @@ import {
     Select,
 } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useLocations } from "../../hooks/useLocations";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { add, format } from "date-fns";
 
-const SearchSection = () => {
-    const selectedCityName = "London";
-    const selectedCity = 1;
-    const changeCity = (city: any) => {
+const SearchSection = ({
+    selectedCityName,
+    startDate,
+    endDate,
+}: {
+    selectedCityName: string | null;
+    startDate: string | null;
+    endDate: string | null;
+}) => {
+    const { locations } = useLocations();
+    const [selectedCity, setSelectedCity] = useState<string>(
+        selectedCityName || ""
+    );
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
+        startDate ? new Date(startDate) : null
+    );
+    const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(
+        endDate ? new Date(endDate) : null
+    );
+    const navigate = useNavigate();
+
+    const onSearch = () => {
+        let query = "";
+        if (selectedCity) {
+            query += `?location=${selectedCity}`;
+        }
+        if (selectedStartDate) {
+            query += `&startDate=${format(selectedStartDate!, "yyyy-MM-dd")}`;
+        }
+        if (selectedEndDate) {
+            query += `&endDate=${format(selectedEndDate!, "yyyy-MM-dd")}`;
+        }
+        navigate(`/search${query}`, {
+            replace: true,
+        });
     }
-    const citiesData = [
-        { id: 1, name: "London" },
-        { id: 2, name: "Paris" },
-        { id: 3, name: "New York" },
-    ];
 
     return (
         <div className="bg-light-gray py-4 pb-8 pt-32">
@@ -27,7 +58,7 @@ const SearchSection = () => {
                 <div className="my-2 p-4 bg-white flex flex-col lg:flex-row rounded-lg">
                     <div className="flex mt-4 lg:mt-0 lg:ml-4 basis-11/12">
                         <LocationOnOutlinedIcon className="text-gray" />
-                        <div className="ml-2 grow">
+                        <div className="ml-2 grow flex gap-x-2">
                             <FormControl fullWidth variant="standard">
                                 <InputLabel id="demo-simple-select-standard-label">
                                     Location
@@ -38,17 +69,34 @@ const SearchSection = () => {
                                     id="demo-simple-select-standard"
                                     value={selectedCity}
                                     onChange={(e) => {
-                                        changeCity(e.target.value);
+                                        setSelectedCity(
+                                            e.target.value as string
+                                        );
                                     }}
                                     label="Location"
                                 >
-                                    {citiesData.map((city: any) => (
-                                        <MenuItem key={city.id} value={city.id}>
-                                            {city.name}
+                                    {locations?.map((city) => (
+                                        <MenuItem
+                                            key={city.city}
+                                            value={city.city}
+                                        >
+                                            {city.city}
                                         </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
+                            <DatePicker
+                                label="Start Date"
+                                value={selectedStartDate}
+                                onChange={(value) =>
+                                    setSelectedStartDate(value)
+                                }
+                            />
+                            <DatePicker
+                                label="End Date"
+                                value={selectedEndDate}
+                                onChange={(value) => setSelectedEndDate(value)}
+                            />
                         </div>
                         <div className="ml-4 border-l border-gray-border"></div>
                     </div>
@@ -57,6 +105,7 @@ const SearchSection = () => {
                             variant="contained"
                             color="primary"
                             className="w-full h-full"
+                            onClick={onSearch}
                         >
                             Search
                         </Button>

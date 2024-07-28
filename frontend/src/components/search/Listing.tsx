@@ -1,4 +1,3 @@
-import { TourList } from '../../interfaces/tour.interface'
 import ListingItem, { IListingItem } from './ListingItem'
 
 interface ListingsProps {

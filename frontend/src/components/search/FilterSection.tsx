@@ -5,6 +5,7 @@ export interface FilterItemProps {
     filterName: string;
     filterId: number;
     count: number;
+    component: string;
 }
 
 interface FilterSectionProps {
@@ -15,6 +16,7 @@ interface FilterSectionProps {
 }
 
 const FilterSection : React.FC<FilterSectionProps> = (props) => {
+    console.log({props});
     return (
         <>
             <div className="font-medium mt-4">{props.filterName}</div>
