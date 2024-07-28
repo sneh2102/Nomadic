@@ -8,12 +8,32 @@ interface TourCategoryResponse extends TourCategory {
 
 export const getAllTourCategories = async (req: Request, res: Response) => {
     try {
-        const tourCategories = await prisma.tourCategory.findMany();
+        const {city, startDate, endDate} = req.query;
+        const filters: any = {};
+        if (city) {
+            filters.city = { contains: String(city), mode: 'insensitive' }; // Case insensitive search
+        }
+        if(startDate && endDate) {
+            filters.startDate = {
+                gte: new Date(String(startDate)),
+            };
+            filters.endDate = {
+                lte: new Date(String(endDate)),
+            };
+        }
+        const tourCategories = await prisma.tourCategory.findMany({
+            where: {
+                tourPackages: {
+                    some: filters
+                }
+            }
+        });
         const toursPackageCountByCategory = await prisma.tourPackage.groupBy({
             by: ['tourCategoryId'],
             _count: {
                 id: true,
             },
+            where: filters,
         });
         const tourCategoriesResponse: TourCategoryResponse[] = [];
         tourCategories.forEach((category) => {
@@ -28,7 +48,7 @@ export const getAllTourCategories = async (req: Request, res: Response) => {
             data: tourCategoriesResponse,
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch tour categories' });
+        res.status(500).json({ error: 'Failed to fetch tour categories: ' + JSON.stringify(error) });
     }
 }
 
@@ -60,6 +80,6 @@ export const updateTourCategory = async (req: Request, res: Response) => {
             data: updatedTourCategory
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update tour category' });
+        res.status(500).json({ error: 'Failed to update tour category: ' +JSON.stringify(error) });
     }
 }

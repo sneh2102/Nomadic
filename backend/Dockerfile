@@ -12,5 +12,5 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["npx", "prisma", "migrate", "dev"]
+CMD ["npx", "prisma", "migrate", "deploy"]
 CMD ["npm", "run", "start"]

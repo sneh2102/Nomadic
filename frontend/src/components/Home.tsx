@@ -4,12 +4,14 @@ import {
     IconButton,
     Input,
     InputBase,
+    MenuItem,
     Rating,
+    Select,
     TextField,
 } from "@mui/material";
 import Slider, { Settings } from "react-slick";
 import TransparentButton from "./ui/TransparentButton";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import RoundedButton from "./ui/RoundedButton";
 import ExploreCard from "./ui/ExploreCard";
 import {
@@ -33,6 +35,10 @@ import { useTours } from "../hooks/useTours";
 import { ErrorBoundary } from "react-error-boundary";
 import { TourList } from "../interfaces/tour.interface";
 import ErrorComponent from "./ui/ErrorComponent";
+import { useLocations } from "../hooks/useLocations";
+import { Link } from "react-router-dom";
+import { DatePicker } from "@mui/x-date-pickers";
+import { add, format } from "date-fns";
 
 const RecommendedTourList = (props: { tours: TourList }) => {
     const settings: Settings = {
@@ -90,8 +96,24 @@ const RecommendedTourList = (props: { tours: TourList }) => {
 const Home = () => {
     const { tours, toursLoading, toursError } = useTours({
         categories: null,
+        freeCancelationAvailable: null,
+        maxPrice: null,
+        minPrice: null,
+        city: null,
+        page: null,
+        sortBy: null,
+        sortOrder: null,
+        startDate: null,
+        endDate: null,
     });
-    console.log({toursError});
+    const { locations } = useLocations();
+    const [selectedLocation, setSelectedLocation] = useState<string>(
+        locations?.[0].city || ""
+    );
+    const [startDate, setStartDate] = useState<Date | null>(new Date());
+    const [endDate, setEndDate] = useState<Date | null>(
+        add(new Date(), { days: 15 })
+    );
     const settings: Settings = {
         dots: true,
         infinite: false,
@@ -203,7 +225,7 @@ const Home = () => {
                     <div className="bg-purple bg-opacity-75 h-full w-full absolute top-0"></div>
                 </div>
                 <div className="text-white h-screen flex justify-center">
-                    <div className="pt-48 md:pt-80 w-auto md:w-1/2">
+                    <div className="pt-48 md:pt-80 w-auto md:w-3/4">
                         <h1 className="text-3xl md:text-6xl font-semibold tracking-tight mb-6 text-center">
                             Find Next Place To Visit
                         </h1>
@@ -211,24 +233,79 @@ const Home = () => {
                             Discover amazing places at exclusive deals
                         </p>
                         <form>
-                            <div className="h-35 md:h-20 p-2 w-full bg-white rounded-md md:rounded-full text-black flex flex-col md:flex-row">
-                                <div className="basis-10/12 pl-8">
-                                    <div className="text-sm font-medium">
-                                        Location
+                            <div className="h-35 md:h-24 p-2 w-full bg-white rounded-md md:rounded-full text-black flex flex-col md:flex-row">
+                                <div className="basis-10/12 pl-8 mb-3 mr-4 flex items-end gap-1 ">
+                                    <div className="basis-6/12">
+                                        <div className="text-sm font-medium">
+                                            Location
+                                        </div>
+                                        <Select
+                                            label="Location"
+                                            value={selectedLocation}
+                                            onChange={(e) =>
+                                                setSelectedLocation(
+                                                    e.target.value
+                                                )
+                                            }
+                                            MenuProps={{
+                                                sx: {
+                                                    height: "300px",
+                                                },
+                                            }}
+                                            fullWidth
+                                            sx={{
+                                                outline: "none",
+                                                border: "none",
+                                            }}
+                                        >
+                                            {locations?.map((location) => (
+                                                <MenuItem value={location.city}>
+                                                    {location.city}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
                                     </div>
-                                    <InputBase
-                                        autoComplete="true"
-                                        placeholder="Where are you going?"
-                                        fullWidth
-                                    />
+                                    <div className="basis-3/12">
+                                        <DatePicker
+                                            label="Start Date"
+                                            value={startDate}
+                                            onChange={(value) =>
+                                                setStartDate(value)
+                                            }
+                                            disablePast
+                                        />
+                                    </div>
+                                    <div className="basis-3/12">
+                                        <DatePicker
+                                            label="End Date"
+                                            value={endDate}
+                                            onChange={(value) =>
+                                                setEndDate(value)
+                                            }
+                                            shouldDisableDate={(date) => {
+                                                if(startDate){
+                                                    return date < startDate;
+                                                }
+                                                return false;
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="basis-2/12">
-                                    <RoundedButton
-                                        type="submit"
-                                        variant="contained"
+                                    <Link
+                                        to={
+                                            selectedLocation && startDate && endDate
+                                                ? `/search?location=${selectedLocation}&startDate=${format(startDate, 'yyyy-MM-dd')}&endDate=${format(endDate, 'yyyy-MM-dd')}`
+                                                : "#"
+                                        }
                                     >
-                                        Search
-                                    </RoundedButton>
+                                        <RoundedButton
+                                            type="submit"
+                                            variant="contained"
+                                        >
+                                            Search
+                                        </RoundedButton>
+                                    </Link>
                                 </div>
                             </div>
                         </form>
@@ -284,7 +361,9 @@ const Home = () => {
                         <div>
                             {toursLoading && <p>Loading...</p>}
                             {tours && <RecommendedTourList tours={tours} />}
-                            {toursError && <ErrorComponent error={toursError} />}
+                            {toursError && (
+                                <ErrorComponent error={toursError} />
+                            )}
                         </div>
                     </div>
                     <div className="my-16 mt-32">
