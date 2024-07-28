@@ -4,6 +4,8 @@ import FAQPage from "./pages/FAQPage";
 import HomePage from "./pages/HomePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import SearchPage from "./pages/SearchPage";
+import HistoryPage from "./pages/HistoryPage";
+
 function App() {
     return (
         <div>
@@ -13,6 +15,8 @@ function App() {
                     <Route path="/faq" element={<FAQPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="/contactus" element={<ContactUsPage />} />
+                    <Route path="/history/:id" element={<HistoryPage />} />
+
                 </Routes>
             </Router>
         </div>

@@ -1,5 +1,5 @@
 import express from "express"
-import bookingRoutes from "./bookingRoute"
+import bookingRoutes from "../src/routes/bookingRoute"
 const router = express.Router()
 
 

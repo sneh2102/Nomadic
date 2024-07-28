@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+
 async function main() {
     const tour = await prisma.tourCategory.create({
         data: {
@@ -13,6 +14,12 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/stonehenge.jpg",
                         price: 72,
+                        accommodationDetails: "Accommodation included",
+                        transportationDetails: "Transportation included",
+                        activities: "Hiking, sightseeing",
+                        startDate: new Date("2024-01-01"),
+                        endDate: new Date("2024-01-05"),
+                        duration: 2,
                     },
                     {
                         name: "Majestic Mountains Expedition",
@@ -21,6 +28,12 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/rockies.jpg",
                         price: 120,
+                        accommodationDetails: "Tent camping",
+                        transportationDetails: "Bus transport",
+                        activities: "Mountain climbing, photography",
+                        startDate: new Date("2024-02-01"),
+                        endDate: new Date("2024-02-05"),
+                        duration: 5,
                     },
                     {
                         name: "Venice Gondola Experience",
@@ -29,6 +42,12 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/venice.jpg",
                         price: 55,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Boat transport",
+                        activities: "Sightseeing, cultural tours",
+                        startDate: new Date("2024-03-01"),
+                        endDate: new Date("2024-03-03"),
+                        duration: 3,
                     },
                     {
                         name: "Safari Adventure in Serengeti",
@@ -37,6 +56,12 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/safari.jpg",
                         price: 230,
+                        accommodationDetails: "Lodge stay",
+                        transportationDetails: "Jeep safari",
+                        activities: "Wildlife viewing, photography",
+                        startDate: new Date("2024-04-01"),
+                        endDate: new Date("2024-04-07"),
+                        duration: 7,
                     },
                     {
                         name: "Eiffel Tower Summit Access",
@@ -45,6 +70,12 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/paris.jpg",
                         price: 65,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Metro transport",
+                        activities: "Sightseeing, shopping",
+                        startDate: new Date("2024-05-01"),
+                        endDate: new Date("2024-05-03"),
+                        duration: 3,
                     },
                     {
                         name: "Great Wall of China Hiking Tour",
@@ -53,30 +84,54 @@ async function main() {
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/great_wall.jpg",
                         price: 110,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Bus transport",
+                        activities: "Hiking, sightseeing",
+                        startDate: new Date("2024-06-01"),
+                        endDate: new Date("2024-06-05"),
+                        duration: 5,
                     },
                     {
                         name: "Northern Lights Viewing in Iceland",
                         city: "Iceland",
                         location: "Reykjavik",
-                        price: 150,
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/northern_lights.jpg",
+                        price: 150,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Bus transport",
+                        activities: "Aurora viewing, photography",
+                        startDate: new Date("2024-07-01"),
+                        endDate: new Date("2024-07-05"),
+                        duration: 5,
                     },
                     {
                         name: "Grand Canyon Helicopter Tour",
                         location: "Arizona",
                         city: "USA",
-                        price: 299,
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/canyon.jpg",
+                        price: 299,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Helicopter ride",
+                        activities: "Sightseeing, photography",
+                        startDate: new Date("2024-08-01"),
+                        endDate: new Date("2024-08-03"),
+                        duration: 3,
                     },
                     {
                         name: "Pyramids of Giza Tour",
                         city: "Egypt",
                         location: "Cairo",
-                        price: 50,
                         freeCancelationAvailable: true,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/pyramids.jpg",
+                        price: 50,
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Bus transport",
+                        activities: "Sightseeing, history tour",
+                        startDate: new Date("2024-09-01"),
+                        endDate: new Date("2024-09-03"),
+                        duration: 3,
                     },
                     {
                         name: "Sydney Opera House Guided Tour",
@@ -85,17 +140,25 @@ async function main() {
                         freeCancelationAvailable: true,
                         price: 40,
                         image: "https://csci-5709-g10-tour-images.s3.amazonaws.com/sydney.jpg",
+                        accommodationDetails: "Hotel stay",
+                        transportationDetails: "Bus transport",
+                        activities: "Sightseeing, cultural tours",
+                        startDate: new Date("2024-10-01"),
+                        endDate: new Date("2024-10-03"),
+                        duration: 3,
                     },
                 ],
             },
         },
     });
 }
+
 main()
     .then(async () => {
-        await prisma.$disconnect()
+        await prisma.$disconnect();
     })
     .catch(async (e) => {
-        console.error(e)
-        await prisma.$disconnect()
-    })
+        console.error(e);
+        await prisma.$disconnect();
+        process.exit(1);
+    });
