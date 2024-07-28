@@ -7,6 +7,8 @@ import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -14,6 +16,7 @@ function App() {
     return (
         <div>
             <Router>
+            <ToastContainer></ToastContainer>
                 <Routes>
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/faq" element={<FAQPage />} />

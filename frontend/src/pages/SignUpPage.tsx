@@ -13,8 +13,7 @@ import {Form, useForm} from "react-hook-form";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import { useState } from "react";
-// import {toast } from "react-toastify";
-
+import {toast } from "react-toastify";
 
 
   type FormValues = {
@@ -38,7 +37,6 @@ import { useState } from "react";
     const navigate = useNavigate();
     const onSubmit = async (data: FormValues) => {
       setError("")
-      console.log("Data:",data)
       const response = await fetch('http://localhost:8000/api/v1/signUp', {
         method: 'POST',
         headers: {
@@ -47,17 +45,18 @@ import { useState } from "react";
         body: JSON.stringify(data)
     });
         const result = await response.json();
-        console.log("Result:",result);
-        console.log("On Submit called")
+        console.log("Result:::",result);
         if (!response.ok) {
           setError(result.error);
+          return;
       }
-        console.log(data)
-        // toast.success("SignUp Successful!", {
-        //   position: "top-center",
-        // });
-        
-        navigate('/login')
+        toast.success("SignUp Successful!", {
+          position: "top-center",
+          autoClose: 2000
+        });
+        setTimeout(() => {
+          navigate('/login');
+      }, 2000);
     }  
     return (
       <>
@@ -124,7 +123,7 @@ import { useState } from "react";
                         value: true,
                         message: "Email is required"
                     },pattern: {
-                        value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
+                        value: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
                         message:"Invalid email format"
     
                     }})}
