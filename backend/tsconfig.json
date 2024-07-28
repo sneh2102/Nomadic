@@ -1,37 +1,14 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "lib": [
-      "dom",
-      "es6",
-      "es2017",
-      "es2021",
-      "esnext.asynciterable",
-      "esnext.array"
-    ],
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "outDir": "./build",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": false,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    //  "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "allowUnusedLabels": true,
-    "baseUrl": "."
-  },
-  "exclude": ["node_modules"],
-  "include": ["./**/*.ts"]
-}
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs", // or "ESNext"
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "dist"
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+  }
+  

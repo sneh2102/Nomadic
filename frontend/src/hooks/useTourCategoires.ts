@@ -2,17 +2,27 @@ import { useQuery } from "@tanstack/react-query"
 import { TourCategoryList } from "../interfaces/tourCategory.interface";
 import { getAllTourCategories } from "../services/tourCategoryService";
 
-export const useTourCategories = () => {
+interface useTourCategories {
+    city: string | null;
+    startDate: string | null;
+    endDate: string | null;
+}
+
+export const useTourCategories = (props: useTourCategories) => {
     const tourCategoryQuery = useQuery<TourCategoryList>({
-        queryKey: ["tourCategories"],
+        queryKey: ["tourCategories", props.city, props.startDate, props.endDate],
         queryFn: async () => {
             try {
-                const response = await getAllTourCategories();
-                if(response instanceof Error) {
+                const response = await getAllTourCategories({
+                    city: props.city,
+                    startDate: props.startDate,
+                    endDate: props.endDate
+                });
+                if (response instanceof Error) {
                     throw new Error(response.message);
                 }
                 return response;
-            }catch (error: any) {
+            } catch (error: any) {
                 throw new Error(error);
             };
         }

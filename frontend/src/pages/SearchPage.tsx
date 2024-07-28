@@ -11,7 +11,7 @@ import Listings from "../components/search/Listing";
 const SearchPage = () => {
     const { tourCategoriesLoading, tourCategories, toursCategoryDict } = useTourCategories();
     const navigate = useNavigate();
-    
+
     const tourCategoryItems = tourCategories?.data.map((category) => {
         return {
             filterId: category.id,
@@ -50,7 +50,7 @@ const SearchPage = () => {
 
     const toursData = tours?.data.map((tour) => {
         return {
-            id:tour.id,
+            id: tour.id,
             title: tour.name,
             cityName: `${tour.location}, ${tour.city}`,
             categoryName: toursCategoryDict[tour.tourCategoryId],
@@ -71,7 +71,7 @@ const SearchPage = () => {
         <div>
             <Header showScrollAnimation={false} />
             <SearchSection />
-            <div className="container mx-auto flex my-12">
+            <div className="container flex mx-auto my-12">
                 <div className="hidden xl:block xl:basis-2/12">
                     <FilterSection
                         filterName="Category Types"
@@ -90,7 +90,7 @@ const SearchPage = () => {
                         filterItems={durationData}
                     /> */}
                 </div>
-                <div className="xl:basis-10/12 px-10">
+                <div className="px-10 xl:basis-10/12">
                     {tours && <Listings listings={toursData} />}
                     {/* <ListingHeader toggleDrawer={toggleDrawer} />
                     <Listings /> */}

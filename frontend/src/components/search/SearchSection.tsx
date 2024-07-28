@@ -19,12 +19,12 @@ const SearchSection = () => {
     ];
 
     return (
-        <div className="bg-light-gray py-4 pb-8 pt-32">
+        <div className="py-4 pt-32 pb-8 bg-light-gray">
             <div className="container mx-auto">
-                <h1 className="text-3xl font-medium text-center pt-8 mb-8">
+                <h1 className="pt-8 mb-8 text-3xl font-medium text-center">
                     Tours in {" " + selectedCityName}
                 </h1>
-                <div className="my-2 p-4 bg-white flex flex-col lg:flex-row rounded-lg">
+                <div className="flex flex-col p-4 my-2 bg-white rounded-lg lg:flex-row">
                     <div className="flex mt-4 lg:mt-0 lg:ml-4 basis-11/12">
                         <LocationOnOutlinedIcon className="text-gray" />
                         <div className="ml-2 grow">
@@ -52,7 +52,7 @@ const SearchSection = () => {
                         </div>
                         <div className="ml-4 border-l border-gray-border"></div>
                     </div>
-                    <div className="basis-1/12 mt-4 lg:mt-0">
+                    <div className="mt-4 basis-1/12 lg:mt-0">
                         <Button
                             variant="contained"
                             color="primary"
