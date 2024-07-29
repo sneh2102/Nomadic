@@ -20,7 +20,7 @@ const UserHistoryDetailsModal = ({ data, totalCost, noOfPeople, bookingDate }: a
     }
     return (
         <div>
-            <Button color="white" backgroundColor="rgba(0,0,0,0.8)" onClick={onOpen} _hover={{ backgroundColor: "gray", color: "white" }} >Show Details</Button>
+            <Button color="white" backgroundColor="#10346e" onClick={onOpen} _hover={{ backgroundColor: "gray", color: "white" }} >Show Details</Button>
 
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />

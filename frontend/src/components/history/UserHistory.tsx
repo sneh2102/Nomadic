@@ -43,7 +43,7 @@ const UserHistory: React.FC = () => {
         <Box p={4}>
             <Heading ml={["2", "5", "7", "10"]}>History</Heading>
             <Flex overflowX="auto" whiteSpace="nowrap">
-                {cards?.length === 0 ? <Box>No history found</Box> : <>
+                {cards?.length === 0 ? <Text textAlign="center" w="100%" my="5" fontSize="xl">No history found.</Text> : <>
                     {cards?.map((card: any) => (
                         <Flex
                             flexDir="column-reverse"

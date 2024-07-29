@@ -16,9 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <ChakraProvider>
-                    <App />
-                </ChakraProvider>
+                <App />
             </LocalizationProvider>
         </QueryClientProvider>
     </React.StrictMode>
