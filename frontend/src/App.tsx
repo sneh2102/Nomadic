@@ -4,6 +4,11 @@ import FAQPage from "./pages/FAQPage";
 import HomePage from "./pages/HomePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import SearchPage from "./pages/SearchPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ContextProvider } from "./Context/Context";
 import { Toaster } from "react-hot-toast";
 import { Box } from "@mui/material";
@@ -17,7 +22,6 @@ function App() {
         <div>
         <ContextProvider>
             <Router>
-            {/* <Box sx={{display: "flex" }}> */}
                 <Routes>
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/faq" element={<FAQPage />} />
@@ -26,7 +30,6 @@ function App() {
                     <Route path="/manage/add-tour" element={<AddTourPage/>} />
                     <Route path="/manage/plan-details/:id" element={<PlanDetails/>}/>
                     <Route path="/contactus" element={<ContactUsPage />} />
-                    <Route path="/manage/create-package" element={<CreateTourPackage/>} />
                 </Routes>
             {/* </Box> */}
             </Router>

@@ -83,7 +83,7 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                    <TransparentButton variant="contained">
+                    <TransparentButton to="/signup" variant="contained">
                         Sign In / Register
                     </TransparentButton>
                 </div>
