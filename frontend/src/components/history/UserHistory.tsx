@@ -12,7 +12,7 @@ import {
 import { MdOutlineLocationOn } from "react-icons/md";
 import UserHistoryDetailsModal from "./UserHistoryDetailsModal";
 import AddHistoryNotesModal from "./AddHistoryNotesModal";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { MdOutlineReviews } from "react-icons/md";
 const UserHistory: React.FC = () => {
@@ -36,6 +36,8 @@ const UserHistory: React.FC = () => {
             setLoading(false)
         })
     }, [])
+
+    const navigate = useNavigate()
 
     if (loading) return <Center my="5">Loading...</Center>
 
@@ -62,7 +64,7 @@ const UserHistory: React.FC = () => {
                                 {/* {card.content} */}
                                 <AddHistoryNotesModal location={`${card.tourPackage.city}, ${card.tourPackage.location}`} note={card.note} id={id} />
                                 <UserHistoryDetailsModal data={card.tourPackage} totalCost={card.totalCost} noOfPeople={card.noOfPeople} bookingDate={card.createdAt} />
-                                <Button colorScheme="green">
+                                <Button colorScheme="green" onClick={() => navigate("/reviews", { state: { tourPackageId: card.tourPackageId, userId: card.userId } })}>
                                     <MdOutlineReviews />
                                 </Button>
                                 {/* </Flex> */}
