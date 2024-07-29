@@ -9,6 +9,7 @@ import {
   import { useState } from "react";
   import { Link, useNavigate } from "react-router-dom";
   import { useForm } from "react-hook-form";
+  import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
@@ -64,6 +65,12 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
             }}
           >
             <Typography variant="h5">Forgot Password</Typography>
+            <Box sx={{ mt: 2, width: "100%" }}>
+              <Link to="/login" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+                <ArrowBackIcon />
+                <Typography variant="body1" sx={{ ml: 1 }}>Back</Typography>
+              </Link>
+            </Box>
             <Box sx={{ mt: 1 }}>
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 {error && (
