@@ -58,6 +58,7 @@ export const createTourCategory = async (req: Request, res: Response) => {
         const newTourCategory = await prisma.tourCategory.create({
             data: { name },
         });
+        console.log('New tour category:', newTourCategory);
         res.status(201).json({
             message: "Tour category created successfully",
             data: newTourCategory
@@ -83,3 +84,59 @@ export const updateTourCategory = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to update tour category: ' +JSON.stringify(error) });
     }
 }
+
+export const getEveryTourCategory = async (req: Request, res: Response) => {
+    try {
+        const tourCategories = await prisma.tourCategory.findMany();
+        res.status(200).json({
+            data: tourCategories
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch tour categories: ' + JSON.stringify(error) });
+    }
+}
+
+export const deleteTourCategory = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        await prisma.tourCategory.delete({
+            where: { id: Number(id) },
+        });
+        res.status(200).json({
+            message: "Tour category deleted successfully",
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete tour category: ' + JSON.stringify(error) });
+    }
+}
+
+export const getTourCategoryById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const tourCategory = await prisma.tourCategory.findUnique({
+            where: { id: Number(id) },
+        });
+        res.status(200).json({
+            data: tourCategory
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch tour category: ' + JSON.stringify(error) });
+    }
+}
+
+export const getTourCategoryTours = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const tours = await prisma.tourPackage.findMany({
+            where: {
+                tourCategoryId: Number(id),
+            },
+        });
+        res.status(200).json({
+            data: tours
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch tours for tour category: ' + JSON.stringify(error) });
+    }
+}
+
