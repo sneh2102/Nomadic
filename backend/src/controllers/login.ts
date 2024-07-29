@@ -12,6 +12,7 @@ export const login = async(req:Request, res:Response) => {
         const {email,password} = req.body;
         console.log(email,password)
         let user = await prismaClient.user.findFirst({where: { email }})
+        console.log("User details fetched from database")
         if(!user){
              throw Error('User does not exist! Please register your account')
         }
@@ -19,10 +20,12 @@ export const login = async(req:Request, res:Response) => {
         if(!compareSync(password,user.password)){
             throw Error('Incorrect Password.')
         }
+        console.log("Generating token....",`${process.env.JWT_SECRET_KEY}`)
         const token = jwt.sign({
             userId: user.id
-        },JWT_SECRET)
+        },JWT_SECRET, {expiresIn: '1h'})
         const { password: _, ...userDetails } = user;
+        console.log("Token:",token)
         res.json({userDetails,token});
         
     } catch (error: unknown) {
