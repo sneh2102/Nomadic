@@ -71,7 +71,6 @@ model Review {
   updatedAt                DateTime     @updatedAt
 }
 
-
 model Bookings {
   id                    Int     @id @default(autoincrement())
   noOfPeople            String?

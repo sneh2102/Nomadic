@@ -19,15 +19,15 @@ class BookingController {
                     note,
                     noOfPeople: noOfPeople.toString(),
                     tourPackage: {
-                        connect: { id: Number(tourPackageId) }, // Ensure tourPackageId is connected correctly
+                        connect: { id: Number(tourPackageId) }, 
                     }
                     ,
                     user: {
-                        connect: { id: Number(id) }, // Ensure userId is connected correctly
+                        connect: { id: Number(id) }, 
                     },
                 },
             });
-            res.status(201).json({ success: true, data: newBooking });
+            res.status(201).json({ success: true, data: newBooking });  
         } catch (error: unknown) {
             if (error instanceof Error) {
                 res.status(500).json({ error: error.message });
