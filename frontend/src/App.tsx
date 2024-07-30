@@ -29,6 +29,7 @@ function App() {
                     <Route path="/manage" element={<Manage_Listing/>}/>
                     <Route path="/manage/add-tour" element={<AddTourPage/>} />
                     <Route path="/manage/plan-details/:id" element={<PlanDetails/>}/>
+                    <Route path="/manage/create-package" element={<CreateTourPackage/>}/>
                     <Route path="/contactus" element={<ContactUsPage />} />
                 </Routes>
             {/* </Box> */}

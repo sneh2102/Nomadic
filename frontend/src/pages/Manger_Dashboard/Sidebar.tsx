@@ -9,15 +9,15 @@ import { useFilter } from '../../Context/Context';
 
 const ManagerDashboardsidebar: React.FC = () => {
   const navigate = useNavigate();
-  const { setFilter } = useFilter();
+  const { setFreeCancelationAvailable } = useFilter();
 
   const handleNavigation = (filter: string, path: string) => {
-    setFilter(filter);
+    setFreeCancelationAvailable(filter);
     navigate(path);
   };
 
   return (
-    <Box sx={{ display: { xs: 'none', md: 'block' }, width: 250, background: grey[900], color: 'white', p: 2, boxShadow: '0px 0px 5px rgba(0, 0, 0, 1)'}} style={{background: "rgb(5 16 54)"}}>
+    <Box sx={{ display: { xs: 'none', md: 'block' }, width: 250, background: grey[900], color: 'white', p: 2, boxShadow: '0px 0px 5px rgba(0, 0, 0, 1)'}} style={{background: "#2F365F"}}>
       <List sx={{position: 'sticky', top: 80}}>
         <ListItem button onClick={() => handleNavigation('all', '/manage')}>
           <ListItemIcon sx={{ color: 'white' }}>
@@ -37,17 +37,17 @@ const ManagerDashboardsidebar: React.FC = () => {
           </ListItemIcon>
           <ListItemText primary="Add Tour" />
         </ListItem>
-        <ListItem button onClick={() => handleNavigation('', '/manage')}>
+        <ListItem button onClick={() => handleNavigation('active', '/manage')}>
           <ListItemIcon sx={{ color: 'white' }}>
             <AnalyticsIcon />
           </ListItemIcon>
-          <ListItemText primary="Active Tours" />
+          <ListItemText primary="Cancleable" />
         </ListItem>
         <ListItem button onClick={() => handleNavigation('inactive', '/manage')}>
           <ListItemIcon sx={{ color: 'white' }}>
             <AnalyticsIcon />
           </ListItemIcon>
-          <ListItemText primary="Inactive Tours" />
+          <ListItemText primary="None Cancleable" />
         </ListItem>
       </List>
     </Box>

@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-hot-toast';
 import Header from '../../components/ui/Header';
-import Footer from '../../components/ui/Footer';
+import Footer from './Footer';
 import ManagerDashboardsidebar from './Sidebar';
 
 interface TourCategory {

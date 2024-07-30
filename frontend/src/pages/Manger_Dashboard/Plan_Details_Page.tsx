@@ -2,11 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container, Box, Typography, TextField, Button, Paper, Grid, ToggleButtonGroup, ToggleButton,
-  SelectChangeEvent,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  FormControl, InputLabel, Select, MenuItem, SelectChangeEvent
 } from '@mui/material';
 import ManagerDashboardsidebar from './Sidebar';
 import { Edit, PhotoCamera, Save } from '@mui/icons-material';
@@ -14,6 +10,7 @@ import toast from 'react-hot-toast';
 import { Tour } from './Add_Tours';
 import axios from 'axios';
 import Header from '../../components/ui/Header';
+import Footer from './Footer';
 
 interface TourCategory {
   id: number;
@@ -25,13 +22,26 @@ const PlanDetails: React.FC = () => {
   const [tour, setTour] = useState<Tour | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTour, setEditedTour] = useState<Tour | undefined>(undefined);
+  const [editedTour, setEditedTour] = useState<Tour | undefined>({
+    name: '',
+    location: '',
+    city: '',
+    startDate: '',
+    endDate: '',
+    transportationDetails: '',
+    accommodationDetails: '',
+    activities: '',
+    price: '',
+    image: '',
+    tourCategoryId: '',
+    freeCancelationAvailable: false,
+  });
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [tourCategories, setTourCategories] = useState<TourCategory[]>([]);
+  const [imageChange, setImageChange] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const fetchTourCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/v1/tour-categories/all');
@@ -41,11 +51,11 @@ const PlanDetails: React.FC = () => {
         console.error('Error fetching tour categories:', error);
       }
     };
-   
-    const fetchTour = async () => { 
+    
+    const fetchTour = async () => {
       const response = await axios.get(`http://localhost:8000/api/v1/tours/${id}`);
       const tourData = response.data;
-
+      
       // Format the date fields to YYYY-MM-DD
       if (tourData.startDate) {
         tourData.startDate = tourData.startDate.split('T')[0];
@@ -53,12 +63,14 @@ const PlanDetails: React.FC = () => {
       if (tourData.endDate) {
         tourData.endDate = tourData.endDate.split('T')[0];
       }
-
-      setTour(tourData);
+      
+      await setTour(tourData);
+      await console.log(tour);
       setIsLoading(false);
-    }
+    };
     fetchTour();
     fetchTourCategories();
+    console.log(tour?.freeCancelationAvailable ? 'active' : 'inactive')
   }, [id]);
 
   useEffect(() => {
@@ -67,14 +79,12 @@ const PlanDetails: React.FC = () => {
     }
   }, [isEditing, tour]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (isEditing && editedTour) {
       setEditedTour({ ...editedTour, [name]: value });
     }
   };
-
-  
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -95,13 +105,13 @@ const PlanDetails: React.FC = () => {
       toast.error("Start date cannot be later than end date.");
       return false;
     }
-    
+
     if (!editedTour?.location) {
       toast.error("Please fill out location field.");
       return false;
     }
 
-    if (!editedTour?.accomadationDetails) { // Corrected here
+    if (!editedTour?.accommodationDetails) {
       toast.error("Please fill out accommodation description field.");
       return false;
     }
@@ -124,16 +134,43 @@ const PlanDetails: React.FC = () => {
     return true;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    let imageUrl =''
+    if (imageChange) {
+      const imageUrlResponse = await axios.post('https://pbj75c8y09.execute-api.us-east-1.amazonaws.com/dev/get-url', { image: editedTour?.image });
+      console.log(imageUrlResponse);
+      imageUrl = imageUrlResponse.data.url;
+      console.log(imageChange ? imageUrl : editedTour?.image);
+    }
     if (validateFields()) {
-        console.log(editedTour);
-        toast.success("Tour details saved successfully!");
-        navigate('/manage');
-      
+      const payload = {
+        name: editedTour?.name || '',
+        location: editedTour?.location || '',
+        city: editedTour?.city || '',
+        price: parseFloat(editedTour?.price || '0'),
+        image: imageChange ? imageUrl : editedTour?.image,
+        freeCancelationAvailable: editedTour?.freeCancelationAvailable || false,
+        tourCategoryId: parseInt(editedTour?.tourCategoryId || '0'),
+        accommodationDetails: editedTour?.accommodationDetails || '',
+        transportationDetails: editedTour?.transportationDetails || '',
+        activities: editedTour?.activities || '',
+        startDate: new Date(editedTour?.startDate || '').toISOString(),
+        endDate: new Date(editedTour?.endDate || '').toISOString()
+      };
+      console.log(payload);
+      try{
+      const data = await axios.put(`http://localhost:8000/api/v1/tours/${id}`, payload);
+      toast.success("Tour details saved successfully!");
+      console.log(data);
+      navigate('/manage');
+      }catch(error){
+        toast.success("Failed to save tour details!");
+      }
     }
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setImageChange(true);
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setImageFile(file);
@@ -151,7 +188,7 @@ const PlanDetails: React.FC = () => {
     const { name, value } = e.target;
     setEditedTour({ ...editedTour, [name]: value } as Tour);
   };
-  
+
   if (isLoading) return <div>Loading...</div>;
 
   return (
@@ -211,6 +248,7 @@ const PlanDetails: React.FC = () => {
                   <TextField
                     margin="dense"
                     label="Start Date"
+                    name="startDate"
                     type="date"
                     fullWidth
                     variant="outlined"
@@ -219,9 +257,10 @@ const PlanDetails: React.FC = () => {
                     onChange={handleChange}
                     InputLabelProps={{
                       shrink: true,
+                      style: { color: "black" }
                     }}
                     InputProps={{
-                      style: { color: 'black' }
+                      style: { color: "black" }
                     }}
                   />
                 </Grid>
@@ -229,6 +268,7 @@ const PlanDetails: React.FC = () => {
                   <TextField
                     margin="dense"
                     label="End Date"
+                    name="endDate"
                     type="date"
                     fullWidth
                     variant="outlined"
@@ -237,9 +277,10 @@ const PlanDetails: React.FC = () => {
                     onChange={handleChange}
                     InputLabelProps={{
                       shrink: true,
+                      style: { color: "black" }
                     }}
                     InputProps={{
-                      style: { color: 'black' }
+                      style: { color: "black" }
                     }}
                   />
                 </Grid>
@@ -250,12 +291,12 @@ const PlanDetails: React.FC = () => {
                     label="Location"
                     type="text"
                     fullWidth
-                    disabled={!isEditing}
                     variant="outlined"
+                    disabled={!isEditing}
                     value={isEditing ? (editedTour?.location || '') : (tour?.location || '')}
                     onChange={handleChange}
                     InputProps={{
-                      style: { color: 'black' }
+                      style: { color: "black" }
                     }}
                   />
                 </Grid>
@@ -271,47 +312,63 @@ const PlanDetails: React.FC = () => {
                     value={isEditing ? (editedTour?.city || '') : (tour?.city || '')}
                     onChange={handleChange}
                     InputProps={{
-                      style: { color: 'black' }
+                      style: { color: "black" }
                     }}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    margin="dense"
-                    name="accomadationDetails" // Corrected here
-                    label="Accommodation Details"
-                    type="text"
-                    fullWidth
-                    variant="outlined"
-                    disabled={!isEditing}
-                    value={isEditing ? (editedTour?.accomadationDetails || '') : (tour?.accomadationDetails || '')} // Corrected here
-                    onChange={handleChange}
-                    multiline
-                    rows={4}
-                    InputProps={{
-                      style: { color: 'black' }
-                    }}
-                  />
+                <Grid item xs={12} md={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label" style={{ color: 'black' }}>Tour Category</InputLabel>
+                    <Select
+                      name="tourCategoryId"
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={isEditing ? (editedTour?.tourCategoryId || '') : (tour?.tourCategoryId || '')}
+                      disabled={!isEditing}
+                      onChange={handleSelectChange}
+                      inputProps={{
+                        style: { color: 'black' }
+                      }}
+                    >
+                      {tourCategories.map((category) => (
+                        <MenuItem key={category.id} value={category.id.toString()}>{category.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     margin="dense"
                     name="transportationDetails"
-                    label="Transportation Details"
+                    label="Transportation"
                     type="text"
                     fullWidth
                     variant="outlined"
                     disabled={!isEditing}
                     value={isEditing ? (editedTour?.transportationDetails || '') : (tour?.transportationDetails || '')}
                     onChange={handleChange}
-                    multiline
-                    rows={4}
                     InputProps={{
                       style: { color: 'black' }
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
+                  <TextField
+                    margin="dense"
+                    name="accommodationDetails"
+                    label="Accommodation"
+                    type="text"
+                    fullWidth
+                    variant="outlined"
+                    disabled={!isEditing}
+                    value={isEditing ? (editedTour?.accommodationDetails || '') : (tour?.accommodationDetails || '')}
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { color: 'black' }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
                   <TextField
                     margin="dense"
                     name="activities"
@@ -319,6 +376,7 @@ const PlanDetails: React.FC = () => {
                     type="text"
                     fullWidth
                     variant="outlined"
+                    disabled={!isEditing}
                     value={isEditing ? (editedTour?.activities || '') : (tour?.activities || '')}
                     onChange={handleChange}
                     InputProps={{
@@ -326,56 +384,38 @@ const PlanDetails: React.FC = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="tourCategoryId-label">Tour Category</InputLabel>
-                    <Select
-                      labelId="tourCategoryId-label"
-                      id="tourCategoryId"
-                      name="tourCategoryId"
-                      value={isEditing ? editedTour?.tourCategoryId || '' : tour?.tourCategoryId || ''}
-                      onChange={handleSelectChange}
-                      disabled={!isEditing}
-                    >
-                      <MenuItem value="">
-                        <em>Select Tour Category</em>
-                      </MenuItem>
-                      {tourCategories.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>
-                          {category.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={12}>
+                  <Box mt={2} display="flex">
                   <ToggleButtonGroup
-                    value={editedTour?.freeCancelationAvailable ? 'Available' : 'Not Available'}
-                    exclusive
-                    onChange={(event, newValue) => {
-                      if (newValue !== null && isEditing && editedTour) {
-                        setEditedTour({ ...editedTour, freeCancelationAvailable: newValue === 'Available' });
-                      }
-                    }}
-                  >
-                    <ToggleButton value="active" style={{ backgroundColor: editedTour?.freeCancelationAvailable ? 'rgb(91, 219, 101)' : 'grey', color: editedTour?.freeCancelationAvailable ? 'white' : 'black', transition: '0.3s ease-out' }} sx={{ width: { xs: 65, md: 80 } }}>Active</ToggleButton>
-                    <ToggleButton value="inactive" style={{ backgroundColor: editedTour?.freeCancelationAvailable ? 'grey' : 'red', color: editedTour?.freeCancelationAvailable ? 'black' : 'white', transition: '0.3s ease-out' }} sx={{ width: { xs: 65, md: 80 } }}>Inactive</ToggleButton>
-                  </ToggleButtonGroup>
+                  value={isEditing ? editedTour?.freeCancelationAvailable ? 'active' : 'inactive' : tour?.freeCancelationAvailable ? 'active' : 'inactive'}
+                  exclusive
+                  onChange={(event, newValue) => {
+                    if (newValue !== null && isEditing && editedTour) {
+                      setEditedTour({ ...editedTour, freeCancelationAvailable: newValue === 'active' });
+                    }
+                  }}
+                >
+                  <ToggleButton value="active" style={{ backgroundColor: editedTour?.freeCancelationAvailable ? 'rgb(91, 219, 101)' : 'grey', color: editedTour?.freeCancelationAvailable ? 'white' : 'black', transition: '0.3s ease-out'}} sx={{ width: {xs: 65, md: 80} }}>Active</ToggleButton>
+                  <ToggleButton value="inactive" style={{ backgroundColor: editedTour?.freeCancelationAvailable ? 'grey' : 'red', color: editedTour?.freeCancelationAvailable ? 'black' : 'white', transition: '0.3s ease-out'}} sx={{ width: {xs: 65, md: 80} }}>Inactive</ToggleButton>
+                </ToggleButtonGroup>
+                    
+                  </Box>
+                {isEditing ? (
+            <Button variant="contained" color="primary" onClick={handleSave} sx={{ mt: 2 } }>
+              Save
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" onClick={handleEdit} sx={{ mt: 2 }}>
+              Edit
+            </Button>
+          )}
                 </Grid>
               </Grid>
             </Box>
-            {isEditing ? (
-              <Button variant="contained" color="primary" onClick={handleSave} sx={{ mt: 2 }}>
-                Save
-              </Button>
-            ) : (
-              <Button variant="contained" color="primary" onClick={handleEdit} sx={{ mt: 2 }}>
-                Edit
-              </Button>
-            )}
           </Paper>
         </Container>
       </Box>
+        <Footer/>
     </>
   );
 };

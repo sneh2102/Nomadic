@@ -1,17 +1,17 @@
 import React, { createContext, useState, ReactNode } from 'react';
 
 interface FilterContextType {
-  filter: string;
-  setFilter: (filter: string) => void;
+  freeCancelationAvailable: string;
+  setFreeCancelationAvailable: (filter: string) => void;
 }
 
 const Context = createContext<FilterContextType | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [filter, setFilter] = useState<string>('all');
+  const [freeCancelationAvailable, setFreeCancelationAvailable] = useState<string>("");
 
   return (
-    <Context.Provider value={{ filter, setFilter }}>
+    <Context.Provider value={{ freeCancelationAvailable, setFreeCancelationAvailable }}>
       {children}
     </Context.Provider>
   );

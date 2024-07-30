@@ -16,8 +16,9 @@ import Header from '../../components/ui/Header';
 import Footer from '../../components/ui/Footer';
 import { SelectChangeEvent } from '@mui/material';
 
+
 export interface Tour {
-  id: number;
+  id?: number
   name: string;
   location: string;
   city: string;
@@ -26,7 +27,7 @@ export interface Tour {
   freeCancelationAvailable: boolean;
   tourCategoryId: string;
   transportationDetails: string;
-  accomadationDetails: string;
+  accommodationDetails: string;
   activities: string;
   startDate: string;
   endDate: string;
@@ -34,14 +35,13 @@ export interface Tour {
 
 const AddTourPage: React.FC = () => {
   const [newTour, setNewTour] = useState<Tour>({
-    id: 0,
     name: '',
     location: '',
     city: '',
     startDate: '',
     endDate: '',
     transportationDetails: '',
-    accomadationDetails: '',
+    accommodationDetails: '',
     activities: '',
     price: '',
     image: '',
@@ -84,7 +84,7 @@ const AddTourPage: React.FC = () => {
       return false;
     }
 
-    if (!newTour?.accomadationDetails) {
+    if (!newTour?.accommodationDetails) {
       toast.error("Please fill out accommodation description field.");
       return false;
     }
@@ -131,11 +131,42 @@ const AddTourPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+
+  
+  const handleSubmit = async () => {
     if (validateFields()) {
-      console.log(newTour);
-      toast.success('Tour added successfully!');
-      navigate('/manage');
+      try {
+        // Get the URL for the image
+        const imageUrlResponse = await axios.post('https://pbj75c8y09.execute-api.us-east-1.amazonaws.com/dev/get-url', {image: newTour.image});
+        const imageUrl = imageUrlResponse.data.url;
+  
+        // Create the payload with proper types
+        const payload = {
+          name: newTour.name,
+          location: newTour.location,
+          city: newTour.city,
+          price: parseFloat(newTour.price),
+          image: imageUrl,
+          freeCancelationAvailable: newTour.freeCancelationAvailable,
+          tourCategoryId: parseInt(newTour.tourCategoryId),
+          accommodationDetails: newTour.accommodationDetails,
+          transportationDetails: newTour.transportationDetails,
+          activities: newTour.activities,
+          startDate: new Date(newTour.startDate).toISOString(),
+          endDate: new Date(newTour.endDate).toISOString()
+        };
+  
+        console.log("Payload being sent to backend:", payload);
+  
+        const response = await axios.post('http://localhost:8000/api/v1/tours', payload);
+        console.log("Response from backend:", response.data);
+  
+        toast.success('Tour added successfully!');
+        navigate('/manage');
+      } catch (error) {
+        console.error("Error creating tour:", error);
+        toast.error('Failed to create tour. Please try again.');
+      }
     }
   };
 
@@ -246,6 +277,7 @@ const AddTourPage: React.FC = () => {
                       id="city"
                       label="City"
                       name="city"
+                      onChange={handleChange}
                     />
                   )}
                 />
@@ -299,12 +331,12 @@ const AddTourPage: React.FC = () => {
                 <TextField
                   required
                   fullWidth
-                  id="accomadationDetails"
+                  id="accommodationDetails"
                   label="Accommodation Details"
-                  name="accomadationDetails"
+                  name="accommodationDetails"
                   multiline
                   rows={4}
-                  value={newTour.accomadationDetails}
+                  value={newTour.accommodationDetails}
                   onChange={handleChange}
                 />
               </Grid>
