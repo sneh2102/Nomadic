@@ -1,3 +1,4 @@
+// author: Smit Patel
 import express from 'express';
 import { createTourCategory, getAllTourCategories, updateTourCategory } from '../controllers/tourCategoryController';
 const router = express.Router();

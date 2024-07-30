@@ -1,3 +1,4 @@
+// author: Smit Patel
 // src/controllers/tourPackageController.ts
 import { Request, Response } from "express";
 import { prismaClient as prisma } from "../server";

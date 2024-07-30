@@ -1,3 +1,4 @@
+// author: Smit Patel
 import express from 'express';
 import { getAllLocations } from '../controllers/tourLocationController';
 

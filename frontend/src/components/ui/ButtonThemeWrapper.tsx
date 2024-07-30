@@ -1,3 +1,4 @@
+// author: Smit Patel
 //Button theme wrapper for login and signup button.
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
