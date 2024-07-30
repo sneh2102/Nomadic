@@ -6,7 +6,7 @@ import ResetPasswordRouter from './resetpassword';
 import TourPackageRouter from './tourPackageRouter';
 import TourCategoryRouter from './tourCategoryRouter';
 import TourLocationRouter from './tourLocationRouter';
-
+import meRouter from './me';
 
 const rootRouter: Router = Router();
 
@@ -17,6 +17,8 @@ rootRouter.use('/v1',ResetPasswordRouter)
 rootRouter.use('/v1', TourPackageRouter)
 rootRouter.use('/v1', TourCategoryRouter)
 rootRouter.use('/v1', TourLocationRouter)
+rootRouter.use('/v1', meRouter)
+rootRouter.use('/v1',)
 
 
 
