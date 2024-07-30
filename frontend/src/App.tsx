@@ -4,7 +4,7 @@ import FAQPage from "./pages/FAQPage";
 import HomePage from "./pages/HomePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import SearchPage from "./pages/SearchPage";
-import {ReviewForm} from "./pages/ReviewForm";
+import ReviewForm from "./pages/ReviewForm";
 import TourDetail from "./pages/TourDetail";
 import HistoryPage from "./pages/HistoryPage";
 import LoginPage from "./pages/LoginPage";
