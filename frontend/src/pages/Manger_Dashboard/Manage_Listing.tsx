@@ -31,11 +31,13 @@ const Manage_Listing: React.FC = () => {
   const [price, setPrice] = useState('');
   const [startDate, setStartDate] = useState('');
   const [enddate, setEndDate] = useState('');
-
+  
+  
+  const URL = import.meta.env.VITE_BASE_API_URL;
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/tours`, {
+        const response = await axios.get(URL+`/api/v1/tours`, {
           params: {
             page,
             pageSize,
@@ -62,7 +64,7 @@ const Manage_Listing: React.FC = () => {
 
   const handleDeleteTour = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8000/api/v1/tours/${id}`);
+      await axios.delete(URL + `/api/v1/tours/${id}`);
       toast.success('Tour deleted successfully');
       setOpenDialog(false);
       setTourToDelete(null);
@@ -189,8 +191,8 @@ const Manage_Listing: React.FC = () => {
                       {listings.map((listing, index) => (
                         <TableRow key={listing.id ?? 0} hover onClick={() => handleRowClick(listing.id ?? 0)} sx={{ backgroundColor: index % 2 === 0 ? '#f5f5f5' : 'inherit' }}>
                           <TableCell>{listing.name}</TableCell>
-                          <TableCell>{listing.startDate}</TableCell>
-                          <TableCell>{listing.endDate}</TableCell>
+                          <TableCell>{listing.startDate.substring(0,10)}</TableCell>
+                          <TableCell>{listing.endDate.substring(0,10)}</TableCell>
                           <TableCell>{listing.price}</TableCell>
                           <TableCell>{listing.city}</TableCell>
                           <TableCell>{listing.freeCancelationAvailable ? 'Yes' : 'No'}</TableCell>

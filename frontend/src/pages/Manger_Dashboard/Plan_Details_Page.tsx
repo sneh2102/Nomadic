@@ -18,6 +18,8 @@ interface TourCategory {
 }
 
 const PlanDetails: React.FC = () => {
+
+  const URL = import.meta.env.VITE_BASE_API_URL;
   const { id } = useParams<{ id: string }>();
   const [tour, setTour] = useState<Tour | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +36,7 @@ const PlanDetails: React.FC = () => {
     price: '',
     image: '',
     tourCategoryId: '',
-    freeCancelationAvailable: false,
+    freeCancelationAvailable: true,
   });
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [tourCategories, setTourCategories] = useState<TourCategory[]>([]);
@@ -44,8 +46,7 @@ const PlanDetails: React.FC = () => {
   useEffect(() => {
     const fetchTourCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/tour-categories/all');
-        console.log(response.data.data);
+        const response = await axios.get(URL + '/api/v1/tour-categories/all');
         setTourCategories(response.data.data);
       } catch (error) {
         console.error('Error fetching tour categories:', error);
@@ -53,7 +54,7 @@ const PlanDetails: React.FC = () => {
     };
     
     const fetchTour = async () => {
-      const response = await axios.get(`http://localhost:8000/api/v1/tours/${id}`);
+      const response = await axios.get(URL + `/api/v1/tours/${id}`);
       const tourData = response.data;
       
       // Format the date fields to YYYY-MM-DD
@@ -65,12 +66,10 @@ const PlanDetails: React.FC = () => {
       }
       
       await setTour(tourData);
-      await console.log(tour);
       setIsLoading(false);
     };
     fetchTour();
     fetchTourCategories();
-    console.log(tour?.freeCancelationAvailable ? 'active' : 'inactive')
   }, [id]);
 
   useEffect(() => {
@@ -138,9 +137,9 @@ const PlanDetails: React.FC = () => {
     let imageUrl =''
     if (imageChange) {
       const imageUrlResponse = await axios.post('https://pbj75c8y09.execute-api.us-east-1.amazonaws.com/dev/get-url', { image: editedTour?.image });
-      console.log(imageUrlResponse);
+
       imageUrl = imageUrlResponse.data.url;
-      console.log(imageChange ? imageUrl : editedTour?.image);
+
     }
     if (validateFields()) {
       const payload = {
@@ -157,11 +156,10 @@ const PlanDetails: React.FC = () => {
         startDate: new Date(editedTour?.startDate || '').toISOString(),
         endDate: new Date(editedTour?.endDate || '').toISOString()
       };
-      console.log(payload);
       try{
       const data = await axios.put(`http://localhost:8000/api/v1/tours/${id}`, payload);
       toast.success("Tour details saved successfully!");
-      console.log(data);
+
       navigate('/manage');
       }catch(error){
         toast.success("Failed to save tour details!");

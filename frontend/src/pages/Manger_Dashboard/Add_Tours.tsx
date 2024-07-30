@@ -13,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ManagerDashboardsidebar from './Sidebar';
 import { toast } from 'react-hot-toast';
 import Header from '../../components/ui/Header';
-import Footer from '../../components/ui/Footer';
+import Footer from './Footer';
 import { SelectChangeEvent } from '@mui/material';
 
 
@@ -34,6 +34,8 @@ export interface Tour {
 }
 
 const AddTourPage: React.FC = () => {
+
+  const URL = import.meta.env.VITE_BASE_API_URL;
   const [newTour, setNewTour] = useState<Tour>({
     name: '',
     location: '',
@@ -156,10 +158,7 @@ const AddTourPage: React.FC = () => {
           endDate: new Date(newTour.endDate).toISOString()
         };
   
-        console.log("Payload being sent to backend:", payload);
-  
-        const response = await axios.post('http://localhost:8000/api/v1/tours', payload);
-        console.log("Response from backend:", response.data);
+        const response = await axios.post(URL+'/api/v1/tours', payload);
   
         toast.success('Tour added successfully!');
         navigate('/manage');
@@ -240,7 +239,7 @@ const AddTourPage: React.FC = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" component="label">
+                <Button variant="contained" component="label" style={{ background: "#2F365F", color: 'white' }}>
                   Upload Photo
                   <input type="file" hidden onChange={handleFileChange} />
                   <PhotoCamera style={{ marginLeft: '10px' }} />
@@ -393,6 +392,7 @@ const AddTourPage: React.FC = () => {
                   startIcon={<SaveIcon />}
                   onClick={handleSubmit}
                   fullWidth
+                  style={{ background: "#2F365F", color: 'white' }}
                 >
                   Save Tour
                 </Button>

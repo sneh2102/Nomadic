@@ -3,7 +3,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { Link } from "react-router-dom";
 const Footer = () => {
     return (
-        <div className="" style={{background: "rgb(5 16 54)", color: 'white'}}>
+        <div className="" style={{background: "rgb(5 16 54)", color: 'white', paddingTop: "45px"}}>
         <div className="w-10/12 mx-auto" >
             <div className="flex flex-col md:flex-row mx-8 md:mx-0">
                 <div className="md:basis-4/12">

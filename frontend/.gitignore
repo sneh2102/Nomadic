@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.vite
+.yarn-lock
 
 # testing
 /coverage
