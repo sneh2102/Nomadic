@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { TourList } from "../interfaces/tour.interface";
 
 export const getTours = async ({

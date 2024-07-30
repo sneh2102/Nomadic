@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Button, Divider, Rating, Skeleton } from "@mui/material";
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined';
 

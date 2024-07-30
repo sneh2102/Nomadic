@@ -1,3 +1,4 @@
+// author: Smit Patel
 export interface TourCategory {
     id: number;
     name: string;

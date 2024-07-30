@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Divider } from "@mui/material";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { Link } from "react-router-dom";

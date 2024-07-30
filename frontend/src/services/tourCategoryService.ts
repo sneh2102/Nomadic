@@ -1,3 +1,4 @@
+// author: Smit Patel
 export const getAllTourCategories = async ({
     city,
     startDate,

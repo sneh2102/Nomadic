@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Skeleton } from "@mui/material";
 
 export interface FilterItemProps {

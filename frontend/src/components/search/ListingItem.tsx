@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Button, Divider, Rating } from "@mui/material";
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined';
 import { format } from "date-fns";

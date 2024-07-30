@@ -1,3 +1,4 @@
+// author: Smit Patel
 import ListingItem, { IListingItem } from './ListingItem'
 
 interface ListingsProps {
