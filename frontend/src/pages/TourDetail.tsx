@@ -14,8 +14,11 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import HikingIcon from '@mui/icons-material/Hiking';
 import AddIcon from '@mui/icons-material/Add';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
 import axios from 'axios';
 import BookingForm from '../components/history/BookingForm';
+import Header from '../components/ui/Header';
+import Footer from '../components/ui/Footer';
 
 const theme = createTheme({
   palette: {
@@ -51,6 +54,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
   borderRadius: '16px',
   overflow: 'hidden',
+  marginTop:'0px',
+ 
 }));
 
 const StyledCardMedia = styled(CardMedia)({
@@ -187,7 +192,8 @@ export function TourDetail() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="lg">
+      <Header/>
+      <Container maxWidth="lg" style={{paddingTop: "120px" ,paddingBottom:"120px"}}>
         <StyledCard>
           <Box position="relative">
             <StyledCardMedia
@@ -324,19 +330,7 @@ export function TourDetail() {
                 <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary', fontWeight: 700 }}>
                   Customer Reviews
                 </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h6" sx={{ mr: 2, color: 'text.primary' }}>
-                    Add Review
-                  </Typography>
-                  <Tooltip title="Add Review" arrow>
-                    <IconButton
-                      onClick={() => {/* Navigate to add review page */ }}
-                      color="primary"
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
+              
               </Box>
             </Box>
             <List>
@@ -375,6 +369,7 @@ export function TourDetail() {
           </ReviewPaper>
         </Fade>
       </Container>
+      <Footer/>
     </ThemeProvider>
   );
 }
