@@ -113,7 +113,7 @@ const AddTourPage: React.FC = () => {
     // Fetch tour categories from the API
     const fetchTourCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/tour-categories');
+        const response = await axios.get(URL + '/api/v1/tour-categories');
         setTourCategories(response.data.data);
       } catch (error) {
         console.error('Error fetching tour categories:', error);
