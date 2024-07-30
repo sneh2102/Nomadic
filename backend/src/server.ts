@@ -1,13 +1,15 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, {Express,Request,Response} from "express";
 import {PrismaClient} from "@prisma/client";
 import cors from "cors";
-import dotenv from "dotenv";
 import rootRouter from "./routes";
 
 
 export const prismaClient = new PrismaClient();
 
-dotenv.config();
+// dotenv.config();
 const app:Express = express();
 const port = process.env.PORT || 8000;
 
