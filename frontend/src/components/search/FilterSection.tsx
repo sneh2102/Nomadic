@@ -5,7 +5,6 @@ export interface FilterItemProps {
     filterName: string;
     filterId: number;
     count: number;
-    component: string;
 }
 
 interface FilterSectionProps {
