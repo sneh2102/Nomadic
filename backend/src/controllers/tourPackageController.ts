@@ -176,8 +176,11 @@ export const getTourPackageById = async (req: Request, res: Response) => {
                 tourCategory: true,
                 reviews: {
                     orderBy: { createdAt: "desc" },
+                    include: {
+                        user: true, 
+                    },
                 },
-            }
+            },
         });
         if (tourPackage) {
             res.status(200).json(tourPackage);
