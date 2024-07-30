@@ -13,13 +13,13 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResetPassword from "./pages/ResetPassword";
-
-
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
     return (
         <div>
             <Router>
+                <ScrollToTop />
                 <Routes>
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/faq" element={<FAQPage />} />

@@ -13,6 +13,9 @@ interface UseTours {
     page: string | null;
     startDate: string | null;
     endDate: string | null;
+    minDuration: string | null;
+    maxDuration: string | null;
+    pageSize: string | null;
 }
 
 export const useTours = (props: UseTours) => {
@@ -29,6 +32,9 @@ export const useTours = (props: UseTours) => {
             props.page,
             props.startDate,
             props.endDate,
+            props.minDuration,
+            props.maxDuration,
+            props.pageSize,
         ],
         queryFn: async () => {
             try {
@@ -43,6 +49,9 @@ export const useTours = (props: UseTours) => {
                     page: props.page,
                     startDate: props.startDate,
                     endDate: props.endDate,
+                    minDuration: props.minDuration,
+                    maxDuration: props.maxDuration,
+                    pageSize: props.pageSize,
                 });
                 if (response instanceof Error) {
                     throw new Error(response.message);

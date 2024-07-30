@@ -1,6 +1,7 @@
 import { Button, Divider, Rating } from "@mui/material";
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined';
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 export interface IListingItem {
     id: number;
@@ -29,9 +30,11 @@ const ListingItem = (props: ListingProps) => {
         <div className="flex my-8 flex-col md:flex-row">
             <div className="md:basis-4/12 md:max-w-[250px] md:max-h-[250px]">
                 <img
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg bg-gray-border"
+                    width={250}
+                    height={250}
                     src={listing.image}
-                    alt="placeholder"
+                    alt="thumbnail"
                 />
             </div>
             <div className="basis-6/12 grow md:px-4 md:pl-8">
@@ -65,7 +68,7 @@ const ListingItem = (props: ListingProps) => {
                         <div className="text-sm text-gray">per adult</div>
                     </div>
                     <div>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" component={Link} to={`/tour/${listing.id}`}>
                             {" "}
                             View Detail
                             <span className="ml-2"><NorthEastOutlinedIcon /></span>

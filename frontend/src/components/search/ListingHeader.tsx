@@ -1,4 +1,4 @@
-import { Button, Divider, Menu, MenuItem } from "@mui/material";
+import { Button, Divider, Menu, MenuItem, Skeleton } from "@mui/material";
 import SwapVertOutlinedIcon from "@mui/icons-material/SwapVertOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { useContext, useState } from "react";
@@ -10,6 +10,7 @@ interface ListingHeaderProps {
     selectedCityTourCount: number;
     selectedSortBy: string | null;
     selectedSortOrder: string | null;
+    isLoading: boolean;
 }
 
 const ListingHeader: React.FC<ListingHeaderProps> = (props) => {
@@ -33,14 +34,21 @@ const ListingHeader: React.FC<ListingHeaderProps> = (props) => {
     return (
         <>
             <div className="mt-2 flex flex-wrap justify-between items-center mb-8">
-                <div className="text-lg">
-                    <span className="font-medium">
-                        {props.selectedCityTourCount + " "} tours
-                    </span>{" "}
-                    in
-                    {" " + props.selectedCityName}
-                </div>
-                <div className="flex gap-1">
+                {props.isLoading && (
+                        <Skeleton variant="text" sx={{
+                            width: 150
+                        }}/>
+                )}
+                {!props.isLoading && (
+                    <div className="text-lg mr-4">
+                        <span className="font-medium">
+                            {props.selectedCityTourCount + " "} tours
+                        </span>{" "}
+                        in
+                        {" " + props.selectedCityName}
+                    </div>
+                )}
+                <div className="flex gap-1 flex-wrap">
                     <div className="xl:hidden">
                         <Button
                             variant="outlined"
