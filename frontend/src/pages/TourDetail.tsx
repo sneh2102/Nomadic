@@ -330,14 +330,7 @@ export function TourDetail() {
                 <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary', fontWeight: 700 }}>
                   Customer Reviews
                 </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h6" sx={{ mr: 2, color: 'text.primary' }}>
-                 
-                  </Typography>
-                  <Tooltip title="Add Review" arrow>
-                   
-                  </Tooltip>
-                </Box>
+              
               </Box>
             </Box>
             <List>
