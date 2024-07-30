@@ -5,21 +5,20 @@ export interface FilterItemProps {
     filterName: string;
     filterId: number;
     count: number;
-    component: string;
 }
 
 interface FilterSectionProps {
     filterName: string;
     filterItems: FilterItemProps[];
-    selectedItems: {[key: string]:boolean};
+    selectedItems: { [key: string]: boolean };
     onFilterChange: (filterId: number) => void;
 }
 
-const FilterSection : React.FC<FilterSectionProps> = (props) => {
-    console.log({props});
+const FilterSection: React.FC<FilterSectionProps> = (props) => {
+    console.log({ props });
     return (
         <>
-            <div className="font-medium mt-4">{props.filterName}</div>
+            <div className="mt-4 font-medium">{props.filterName}</div>
             <ul className="pt-2">
                 {props?.filterItems.map((filterItem, index) => {
                     const checked = Object.keys(props.selectedItems).includes(filterItem.filterId?.toString());

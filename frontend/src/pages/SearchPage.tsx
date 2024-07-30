@@ -249,7 +249,6 @@ const SearchPage = () => {
                         filterItems={durationData}
                         onFilterChange={onDurationFilterChange}
                         selectedItems={selectedDurationFilter}
-                        component="radio"
                     />
                 </div>
                 <div className="xl:basis-10/12 px-10">

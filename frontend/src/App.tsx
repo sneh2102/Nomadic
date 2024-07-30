@@ -4,6 +4,7 @@ import FAQPage from "./pages/FAQPage";
 import HomePage from "./pages/HomePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import SearchPage from "./pages/SearchPage";
+import HistoryPage from "./pages/HistoryPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -17,17 +18,19 @@ function App() {
     return (
         <div>
             <Router>
-            <ToastContainer></ToastContainer>
                 <Routes>
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/faq" element={<FAQPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="/contactus" element={<ContactUsPage />} />
+                    <Route path="/history/:id" element={<HistoryPage />} />
+                    <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/signup" element={<SignUpPage/>}/>
                     <Route path='/reset-password/:token' element={<ResetPassword/>}></Route>
                     <Route path="/forgotpassword" element={<ForgotPasswordPage/>}/>
                 </Routes>
+                <ToastContainer />
             </Router>
         </div>
     );
