@@ -123,7 +123,7 @@ import {toast } from "react-toastify";
                         value: true,
                         message: "Email is required"
                     },pattern: {
-                        value: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
+                        value: /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
                         message:"Invalid email format"
     
                     }})}
