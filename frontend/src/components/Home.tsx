@@ -39,6 +39,7 @@ import { useLocations } from "../hooks/useLocations";
 import { Link } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import { add, format } from "date-fns";
+import { l } from "vite/dist/node/types.d-aGj9QkWt";
 
 const RecommendedTourList = (props: { tours: TourList }) => {
     const settings: Settings = {
@@ -86,6 +87,7 @@ const RecommendedTourList = (props: { tours: TourList }) => {
                         reviews={1234}
                         price={tour.price}
                         image={tour.image}
+                        tourId={tour.id}
                     />
                 ))}
             </Slider>
@@ -105,6 +107,9 @@ const Home = () => {
         sortOrder: null,
         startDate: null,
         endDate: null,
+        maxDuration: null,
+        minDuration: null,
+        pageSize: "10",
     });
     const { locations } = useLocations();
     const [selectedLocation, setSelectedLocation] = useState<string>(
@@ -168,36 +173,44 @@ const Home = () => {
     };
     const popularDestinations = [
         {
-            name: "Halifax",
+            name: "Nova Scotia",
             image: "/halifax.jpg",
+            link: `/search?location=Nova%20Scotia&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
             name: "New York",
             image: "/new_york.jpg",
+            link: `/search?location=New%20York&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
-            name: "Paris",
+            name: "France",
             image: "/paris.jpg",
+            link: `/search?location=France&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
             name: "London",
             image: "/london.jpg",
+            link: `/search?location=London&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
-            name: "Tokyo",
+            name: "Japan",
             image: "/tokyo.jpg",
+            link: `/search?location=Japan&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
-            name: "Dubai",
+            name: "UAE",
             image: "/dubai.jpg",
+            link: `/search?location=UAE&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
-            name: "Sydney",
+            name: "Australia",
             image: "/sydney.jpg",
+            link: `/search?location=Australia&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
         {
-            name: "Rome",
+            name: "Italy",
             image: "/rome.jpg",
+            link: `/search?location=Italy&startDate=${format(startDate || new Date(), 'yyyy-MM-dd')}&endDate=${format(endDate || new Date(), 'yyyy-MM-dd')}`,
         },
     ];
     const guides = [
@@ -234,8 +247,8 @@ const Home = () => {
                         </p>
                         <form>
                             <div className="flex flex-col w-full p-2 text-black bg-white rounded-md h-35 md:h-24 md:rounded-full md:flex-row">
-                                <div className="flex items-end gap-1 pl-8 mb-3 mr-4 basis-10/12 ">
-                                    <div className="basis-6/12">
+                                <div className="flex items-end gap-1 pl-8 mb-3 mr-4 basis-10/12 flex-col md:flex-row">
+                                    <div className="md:basis-6/12 w-full">
                                         <div className="text-sm font-medium">
                                             Location
                                         </div>
@@ -265,7 +278,7 @@ const Home = () => {
                                             ))}
                                         </Select>
                                     </div>
-                                    <div className="basis-3/12">
+                                    <div className="md:basis-3/12">
                                         <DatePicker
                                             label="Start Date"
                                             value={startDate}
@@ -275,7 +288,7 @@ const Home = () => {
                                             disablePast
                                         />
                                     </div>
-                                    <div className="basis-3/12">
+                                    <div className="md:basis-3/12">
                                         <DatePicker
                                             label="End Date"
                                             value={endDate}
@@ -329,6 +342,7 @@ const Home = () => {
                                             key={index}
                                             title={destination.name}
                                             image={destination.image}
+                                            link={destination.link || ""}
                                         />
                                     )
                                 )}
@@ -379,8 +393,7 @@ const Home = () => {
                                     Best Price Guarantee
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.
+                                We ensure the lowest prices for your dream vacations, or we'll match the difference!
                                 </p>
                             </div>
                             <div className="flex flex-col items-center w-full max-w-80">
@@ -394,8 +407,7 @@ const Home = () => {
                                     Easy & Quick Booking
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.
+                                Effortless and fast booking process to get you on your way without any hassle.
                                 </p>
                             </div>
                             <div className="flex flex-col items-center w-full max-w-80">
@@ -409,8 +421,7 @@ const Home = () => {
                                     Customer Care 24/7
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.
+                                Round-the-clock support to assist you anytime, anywhere.
                                 </p>
                             </div>
                         </div>
@@ -424,10 +435,7 @@ const Home = () => {
                                     What our customers are saying us?
                                 </h3>
                                 <p className="mt-8 mb-6 text-grey xl:mb-20">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Maecenas varius tortor
-                                    nibh, sit amet tempor nibh finibus et.
-                                    Aenean eu enim justo.
+                                Our customers rave about their seamless booking experiences and unforgettable trips. They appreciate our commitment to offering the best prices and our 24/7 customer support, making their travel planning stress-free and enjoyable. Hear directly from our satisfied travelers and see why they keep coming back!
                                 </p>
                                 <div className="flex flex-col items-center gap-8 xl:gap-32 xl:flex-row">
                                     <div>
@@ -455,10 +463,10 @@ const Home = () => {
                             </div>
                             <div className="xl:basis-8/12 max-w-[900px]">
                                 <Slider {...testimonialSliderSettings}>
-                                    <TestimonialCard />
-                                    <TestimonialCard />
-                                    <TestimonialCard />
-                                    <TestimonialCard />
+                                    <TestimonialCard name="John Doe" designation="Software Engineer" review="I had an amazing experience booking my vacation through this website. The process was quick and easy, and the customer support team was incredibly helpful. Highly recommend!"/>
+                                    <TestimonialCard name="Jane Smith" designation="Marketing Manager" review="This is my go-to site for all my travel needs. They offer the best prices, and their 24/7 customer care ensures I'm always taken care of. Five stars!"/>
+                                    <TestimonialCard name="Emily Johnson" designation="Teacher" review="Planning a trip has never been this hassle-free! The booking was straightforward, and I felt supported throughout my entire journey. A wonderful service!"/>
+                                    <TestimonialCard name="Michael Brown" designation="Sales Executive" review="I was impressed with the level of service and the ease of booking my holiday. The customer care team was always available to answer my questions, making the entire experience smooth and enjoyable."/>
                                 </Slider>
                             </div>
                         </div>
@@ -470,7 +478,7 @@ const Home = () => {
                             Get inspiration for your next trip
                         </h3>
                         <p className="my-2 text-center text-grey">
-                            Interdum et malesuada fames
+                            Here's our latest blogs
                         </p>
                         <div className="flex flex-col gap-12 mx-4 my-12 md:flex-row md:mx-0">
                             <BlogCard />

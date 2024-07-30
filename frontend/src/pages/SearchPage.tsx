@@ -9,8 +9,9 @@ import { useTours } from "../hooks/useTours";
 import Listings from "../components/search/Listing";
 import FilterSliderSection from "../components/search/FilterSliderSection";
 import ListingHeader from "../components/search/ListingHeader";
-import { Pagination } from "@mui/material";
-import { max, min } from "date-fns";
+import { Box, Drawer, Pagination } from "@mui/material";
+import FitlerLoading from "../components/search/FilterLoading";
+import ListingLoading from "../components/search/ListingLoading";
 
 const SearchPage = () => {
     const searchparams = new URLSearchParams(useLocation().search);
@@ -56,7 +57,7 @@ const SearchPage = () => {
         initialCategoryFilter
     );
 
-    const onCategoryFilterChange = (filterId: number) => {
+    const onCategoryFilterChange = (filterId: string) => {
         selectedCategoryFilter[filterId] = !selectedCategoryFilter[filterId];
         const selectedCategoryString = Object.keys(selectedCategoryFilter)
             .filter((key) => selectedCategoryFilter[key])
@@ -77,7 +78,16 @@ const SearchPage = () => {
         page: pageQuery,
         startDate: startDateQuery,
         endDate: endDateQuery,
+        minDuration: minDurationQuery,
+        maxDuration: maxDurationQuery,
+        pageSize: "5",
     });
+
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDrawer = (newOpen: boolean) => {
+        setOpen(newOpen);
+    };
 
     const toursData =
         tours?.data.map((tour) => {
@@ -109,7 +119,7 @@ const SearchPage = () => {
         ...(freeCancelationAvailableQuery === "true" ? { 1: true } : {}),
     };
 
-    const onOtherFilterChange = (filterId: number) => {
+    const onOtherFilterChange = (filterId: string) => {
         if (selectedOtherFilter[filterId]) {
             delete selectedOtherFilter[filterId];
         } else {
@@ -148,66 +158,58 @@ const SearchPage = () => {
 
     const selectedDurationFilter: { [key: string]: boolean } = {};
 
-    if(minDurationQuery){
+    if (minDurationQuery) {
         const minDuration = parseInt(minDurationQuery, 10);
-        const maxDuration = maxDurationQuery ? parseInt(maxDurationQuery, 10) : null;
-        if(minDuration <= 1 ){
-            selectedDurationFilter[1] = true;
-        }else if(minDuration <= 2){
-            selectedDurationFilter[2] = true;
+        const maxDuration = maxDurationQuery
+            ? parseInt(maxDurationQuery, 10)
+            : null;
+        if (maxDuration) {
+            if (minDuration >= 1 && maxDuration <= 1) {
+                selectedDurationFilter[1] = true;
+            } else if (minDuration <= 2 && maxDuration <= 2) {
+                selectedDurationFilter[2] = true;
+            } else if (minDuration >= 3 && maxDuration <= 7) {
+                selectedDurationFilter[3] = true;
+            }
         }
-        if(minDuration >= 3 && (maxDuration && maxDuration <= 7)){
-            selectedDurationFilter[3] = true;
-        }else if(maxDuration && maxDuration <= 7){
-            selectedDurationFilter[2] = true;
-            selectedDurationFilter[3] = true;
-        }
-        if(minDuration >= 8){
+        if (minDuration >= 8) {
             selectedDurationFilter[4] = true;
         }
-        
-        // const maxDuration = maxDurationQuery ? parseInt(maxDurationQuery, 10) : null;
-        // if(minDuration <= 1 ){
-        //     selectedDurationFilter[1] = true;
-        // } else if(minDuration <= 2){
-        //     selectedDurationFilter[2] = true;
-        // }else if(minDuration <= 3 && (maxDuration && maxDuration <= 7)){
-        //     selectedDurationFilter[3] = true;
-        // }else if(minDuration >= 8){
-        //     selectedDurationFilter[4] = true;
-        // }
-        // if(maxDuration){
-        //     if(maxDuration <= 2 ){
-        //         selectedDurationFilter[2] = true;
-        //     }else if(maxDuration <= 7){
-        //         selectedDurationFilter[2] = true;
-        //         selectedDurationFilter[3] = true;
-        //     }
-        // }
-    }
-    // console.log(maxDurationQuery);
-    // if(maxDurationQuery){
-    //     const maxDuration = parseInt(maxDurationQuery, 10);
-    //     console.log({maxDuration});
-    //     if(maxDuration <= 2 ){
-    //         selectedDurationFilter[2] = true;
-    //     }else if(maxDuration <= 7){
-    //         selectedCategoryFilter[2] = true;
-    //         selectedDurationFilter[3] = true;
-    //     }
-    // }
-
-    console.log(selectedDurationFilter);
-    const onDurationFilterChange = (filterId: number) => {
-        // if(filterId === 1){
-        //     searchparams.set("minDuration", "1");
-        // }else if(filterId === 2){
-        // navigate({ search: searchparams.toString() }, { replace: true });
     }
 
-    if (tourCategoriesLoading) {
-        return <div>Loading...</div>;
-    }
+    const onDurationFilterChange = (filterIdStr: string) => {
+        const filterId = parseInt(filterIdStr, 10);
+        if (filterId === 1) {
+            searchparams.set("minDuration", "1");
+            searchparams.set("maxDuration", "1");
+            if (minDurationQuery === "1" && maxDurationQuery === "1") {
+                searchparams.delete("minDuration");
+                searchparams.delete("maxDuration");
+            }
+        } else if (filterId === 2) {
+            searchparams.set("minDuration", "2");
+            searchparams.set("maxDuration", "2");
+            if (minDurationQuery === "2" && maxDurationQuery === "2") {
+                searchparams.delete("minDuration");
+                searchparams.delete("maxDuration");
+            }
+        } else if (filterId === 3) {
+            searchparams.set("minDuration", "3");
+            searchparams.set("maxDuration", "7");
+            if (minDurationQuery === "3" && maxDurationQuery === "7") {
+                searchparams.delete("minDuration");
+                searchparams.delete("maxDuration");
+            }
+        } else if (filterId === 4) {
+            searchparams.set("minDuration", "8");
+            searchparams.delete("maxDuration");
+            if (minDurationQuery === "8") {
+                searchparams.delete("minDuration");
+            }
+        }
+        searchparams.delete("page");
+        navigate({ search: searchparams.toString() }, { replace: true });
+    };
 
     return (
         <div>
@@ -217,47 +219,64 @@ const SearchPage = () => {
                 startDate={startDateQuery}
                 endDate={endDateQuery}
             />
-            <div className="container mx-auto flex my-12">
-                <div className="hidden xl:block xl:basis-2/12">
-                    <FilterSection
-                        filterName="Category Types"
-                        filterItems={tourCategoryItems!}
-                        selectedItems={selectedCategoryFilter}
-                        onFilterChange={onCategoryFilterChange}
-                    />
-                    <FilterSection
-                        filterName="Other"
-                        filterItems={otherData}
-                        selectedItems={selectedOtherFilter}
-                        onFilterChange={onOtherFilterChange}
-                    />
-                    {tours?.meta.minPrice && tours?.meta.maxPrice && (
-                        <FilterSliderSection
-                            min={tours.meta.minPrice}
-                            max={tours.meta.maxPrice}
-                            selectedMin={
-                                minPriceQuery ? parseInt(minPriceQuery) : null
-                            }
-                            selectedMax={
-                                maxPriceQuery ? parseInt(maxPriceQuery) : null
-                            }
-                            filterName="Price"
+            <div className="container mx-auto flex my-12 justify-center">
+                {tourCategoriesLoading && (
+                    <div className="hidden xl:block xl:basis-2/12">
+                        <FitlerLoading filterName="Category Types" count={5} />
+                        <FitlerLoading filterName="Other" count={1} />
+                        <FitlerLoading filterName="Price" count={1} />
+                        <FitlerLoading filterName="Duration" count={4} />
+                    </div>
+                )}
+                {!tourCategoriesLoading && (
+                    <div className="hidden xl:block xl:basis-2/12">
+                        <FilterSection
+                            filterName="Category Types"
+                            filterItems={tourCategoryItems!}
+                            selectedItems={selectedCategoryFilter}
+                            onFilterChange={onCategoryFilterChange}
                         />
-                    )}
-                    <FilterSection
-                        filterName="Duration"
-                        filterItems={durationData}
-                        onFilterChange={onDurationFilterChange}
-                        selectedItems={selectedDurationFilter}
-                    />
-                </div>
-                <div className="xl:basis-10/12 px-10">
+                        <FilterSection
+                            filterName="Other"
+                            filterItems={otherData}
+                            selectedItems={selectedOtherFilter}
+                            onFilterChange={onOtherFilterChange}
+                        />
+                        {tours?.meta.minPrice && tours?.meta.maxPrice ? (
+                            <FilterSliderSection
+                                min={tours.meta.minPrice}
+                                max={tours.meta.maxPrice}
+                                selectedMin={
+                                    minPriceQuery
+                                        ? parseInt(minPriceQuery)
+                                        : null
+                                }
+                                selectedMax={
+                                    maxPriceQuery
+                                        ? parseInt(maxPriceQuery)
+                                        : null
+                                }
+                                filterName="Price"
+                            />
+                        ) : (
+                            <FitlerLoading filterName="Price" count={1} />
+                        )}
+                        <FilterSection
+                            filterName="Duration"
+                            filterItems={durationData}
+                            onFilterChange={onDurationFilterChange}
+                            selectedItems={selectedDurationFilter}
+                        />
+                    </div>
+                )}
+                <div className="xl:basis-10/12 mx-10">
                     <ListingHeader
                         selectedCityName={locationQuery || ""}
                         selectedCityTourCount={tours?.meta.total || 0}
-                        toggleDrawer={() => {}}
+                        toggleDrawer={toggleDrawer}
                         selectedSortOrder={sortOrderQuery}
                         selectedSortBy={sortByQuery}
+                        isLoading={toursLoading}
                     />
                     <Pagination
                         sx={{
@@ -277,6 +296,7 @@ const SearchPage = () => {
                         size="large"
                         shape="rounded"
                     />
+                    {toursLoading && <ListingLoading />}
                     {tours && <Listings listings={toursData} />}
                     <Pagination
                         sx={{
@@ -300,29 +320,62 @@ const SearchPage = () => {
                     />
                 </div>
             </div>
-            {/* <Drawer open={open} onClose={toggleDrawer(false)}>
+            <Drawer open={open} onClose={() => toggleDrawer(false)}>
                 <Box sx={{ width: 250 }} role="presentation">
-                    <div className="p-8">
-                        <FilterSection
-                            filterName="Category Types"
-                            filterItems={categoryData}
-                        />
-                        <FilterSection
-                            filterName="Other"
-                            filterItems={otherData}
-                        />
-                        <FilterSliderSection
-                            min={minPrice}
-                            max={maxPrice}
-                            filterName="Price"
-                        />
-                        <FilterSection
-                            filterName="Duration"
-                            filterItems={durationData}
-                        />
-                    </div>
+                    {tourCategoriesLoading && (
+                        <div className="p-8">
+                            <FitlerLoading
+                                filterName="Category Types"
+                                count={5}
+                            />
+                            <FitlerLoading filterName="Other" count={1} />
+                            <FitlerLoading filterName="Price" count={1} />
+                            <FitlerLoading filterName="Duration" count={4} />
+                        </div>
+                    )}
+                    {!tourCategoriesLoading && (
+                        <div className="p-8">
+                            <FilterSection
+                                filterName="Category Types"
+                                filterItems={tourCategoryItems!}
+                                selectedItems={selectedCategoryFilter}
+                                onFilterChange={onCategoryFilterChange}
+                            />
+                            <FilterSection
+                                filterName="Other"
+                                filterItems={otherData}
+                                selectedItems={selectedOtherFilter}
+                                onFilterChange={onOtherFilterChange}
+                            />
+                            {tours?.meta.minPrice && tours?.meta.maxPrice ? (
+                                <FilterSliderSection
+                                    min={tours.meta.minPrice}
+                                    max={tours.meta.maxPrice}
+                                    selectedMin={
+                                        minPriceQuery
+                                            ? parseInt(minPriceQuery)
+                                            : null
+                                    }
+                                    selectedMax={
+                                        maxPriceQuery
+                                            ? parseInt(maxPriceQuery)
+                                            : null
+                                    }
+                                    filterName="Price"
+                                />
+                            ) : (
+                                <FitlerLoading filterName="Price" count={1} />
+                            )}
+                            <FilterSection
+                                filterName="Duration"
+                                filterItems={durationData}
+                                onFilterChange={onDurationFilterChange}
+                                selectedItems={selectedDurationFilter}
+                            />
+                        </div>
+                    )}
                 </Box>
-            </Drawer> */}
+            </Drawer>
             <Footer />
         </div>
     );
