@@ -9,6 +9,7 @@ import {
 import { styled } from '@mui/material/styles';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import { useLocation } from 'react-router-dom';
 import UserHistory from '../components/history/UserHistory';
 
 // Create a theme that matches the home page
@@ -63,13 +64,7 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[300]}`,
 }));
 
-const ReviewForm: React.FC = () => {
-  const location = useLocation();
-  const tourPackageId = location.state.tourPackageId
-  const userId = location.state.userId
-  
-
-
+const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPackageId ,userId }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,14 +74,21 @@ const ReviewForm: React.FC = () => {
     severity: 'success' as 'success' | 'error',
   });
 
+  interface CustomLocation {
+    tourPackageId: number;
+    userId: number;
+  }
+
+  const { tourPackageId, userId } = useLocation() as unknown as CustomLocation;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(`http://localhost:8000/api/v1/reviews`, {
-        tourPackageId,
-        userId,
+      const response = await axios.post('http://localhost:8000/api/v1/reviews', {
+        tourPackageId :1,
+        userId:1, // You might want to get this from user authentication
         rating,
         comment
       });
@@ -163,17 +165,23 @@ const ReviewForm: React.FC = () => {
                 {isSubmitting ? <CircularProgress size={24} /> : 'Submit Review'}
               </Button>
             </StyledForm>
-            <Snackbar
-              open={snackbar.open}
-              autoHideDuration={6000}
-             
-            >
-              <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
-                {snackbar.message}
-              </Alert>
-            </Snackbar>
           </StyledPaper>
         </Fade>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+        
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Container>
     </ThemeProvider>
   );

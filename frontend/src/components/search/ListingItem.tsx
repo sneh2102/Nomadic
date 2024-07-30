@@ -1,6 +1,8 @@
+// author: Smit Patel
 import { Button, Divider, Rating } from "@mui/material";
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined';
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 export interface IListingItem {
     id: number;
@@ -26,12 +28,14 @@ const ListingItem = (props: ListingProps) => {
     const {listing} = props;
     return (
         <>
-        <div className="flex my-8 flex-col md:flex-row">
+        <div className="flex flex-col my-8 md:flex-row">
             <div className="md:basis-4/12 md:max-w-[250px] md:max-h-[250px]">
                 <img
-                    className="w-full h-full object-cover rounded-lg"
+                    className="object-cover w-full h-full rounded-lg bg-gray-border"
+                    width={250}
+                    height={250}
                     src={listing.image}
-                    alt="placeholder"
+                    alt="thumbnail"
                 />
             </div>
             <div className="basis-6/12 grow md:px-4 md:pl-8">
@@ -42,7 +46,7 @@ const ListingItem = (props: ListingProps) => {
                         <span>{listing.categoryName}</span>
                     </div>
                 </div>
-                <div className="font-medium text-lg">{listing.title}</div>
+                <div className="text-lg font-medium">{listing.title}</div>
                 <div className="text-sm text-gray">
                     {listing.cityName}
                 </div>
@@ -53,7 +57,7 @@ const ListingItem = (props: ListingProps) => {
                     Free cancellation
                 </div>}
             </div>
-            <div className="basis-2/12 md:text-end flex flex-col justify-between">
+            <div className="flex flex-col justify-between basis-2/12 md:text-end">
                 <div>
                     <Rating size="small" name="read-only" value={listing.rating} readOnly />
                     <div className="text-sm text-gray">{listing.reviews} reviews</div>
@@ -65,7 +69,7 @@ const ListingItem = (props: ListingProps) => {
                         <div className="text-sm text-gray">per adult</div>
                     </div>
                     <div>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" component={Link} to={`/tours/${listing.id}`}>
                             {" "}
                             View Detail
                             <span className="ml-2"><NorthEastOutlinedIcon /></span>

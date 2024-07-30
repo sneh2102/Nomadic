@@ -1,3 +1,4 @@
+// author: Smit Patel
 import FilterSlider from "./Filterslider";
 
 interface FilterSliderSectionProps {

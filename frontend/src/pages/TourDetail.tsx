@@ -6,7 +6,6 @@ import {
   styled, Avatar, Rating, ThemeProvider, createTheme,
   List, ListItem, Divider, Fade, IconButton, Tooltip
 } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import EventIcon from '@mui/icons-material/Event';
@@ -16,8 +15,8 @@ import HikingIcon from '@mui/icons-material/Hiking';
 import AddIcon from '@mui/icons-material/Add';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-
 import axios from 'axios';
+import BookingForm from '../components/history/BookingForm';
 
 const theme = createTheme({
   palette: {
@@ -113,7 +112,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.secondary.contrastText,
 }));
 
-interface TourPackage {
+export interface TourPackage {
   id: number;
   name: string;
   location: string;
@@ -154,7 +153,7 @@ export function TourDetail() {
     const fetchTourPackage = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/api/v1/tours/${id}`);
+        const response = await axios.get(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/tours/${id}`);
         setTourPackage(response.data);
         setLoading(false);
       } catch (error) {
@@ -307,15 +306,16 @@ export function TourDetail() {
               </FeatureBox>
             </Grid>
           </Grid>
-          <Button 
-            variant="contained" 
-            color="primary" 
-            size="large" 
-            startIcon={<SendIcon />} 
+          <BookingForm tourPackage={tourPackage} />
+          {/* <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<SendIcon />}
             sx={{ mt: 3 }}
           >
             Book Your Adventure Now
-          </Button>
+          </Button> */}
         </StyledPaper>
 
         <Fade in={true} timeout={1000}>
@@ -330,8 +330,8 @@ export function TourDetail() {
                     Add Review
                   </Typography>
                   <Tooltip title="Add Review" arrow>
-                    <IconButton 
-                      onClick={() => {/* Navigate to add review page */}} 
+                    <IconButton
+                      onClick={() => {/* Navigate to add review page */ }}
                       color="primary"
                     >
                       <AddIcon />

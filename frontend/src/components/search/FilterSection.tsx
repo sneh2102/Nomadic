@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useContext } from "react";
 import FilterItem from "./FilterItem";
 
@@ -11,7 +12,7 @@ interface FilterSectionProps {
     filterName: string;
     filterItems: FilterItemProps[];
     selectedItems: { [key: string]: boolean };
-    onFilterChange: (filterId: number) => void;
+    onFilterChange: (filterId: string) => void;
 }
 
 const FilterSection: React.FC<FilterSectionProps> = (props) => {

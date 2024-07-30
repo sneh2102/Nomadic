@@ -1,3 +1,4 @@
+// author: Smit Patel
 import {
     Button,
     FormControl,
@@ -58,7 +59,7 @@ const SearchSection = ({
                 <div className="my-2 p-4 bg-white flex flex-col lg:flex-row rounded-lg">
                     <div className="flex mt-4 lg:mt-0 lg:ml-4 basis-11/12">
                         <LocationOnOutlinedIcon className="text-gray" />
-                        <div className="ml-2 grow flex gap-x-2">
+                        <div className="ml-2 grow flex gap-x-2 flex-col md:flex-row gap-4">
                             <FormControl fullWidth variant="standard">
                                 <InputLabel id="demo-simple-select-standard-label">
                                     Location
@@ -98,9 +99,8 @@ const SearchSection = ({
                                 onChange={(value) => setSelectedEndDate(value)}
                             />
                         </div>
-                        <div className="ml-4 border-l border-gray-border"></div>
                     </div>
-                    <div className="basis-1/12 mt-4 lg:mt-0">
+                    <div className="ml-4 basis-1/12 mt-4 lg:mt-0">
                         <Button
                             variant="contained"
                             color="primary"

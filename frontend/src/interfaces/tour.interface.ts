@@ -1,3 +1,4 @@
+// author: Smit Patel
 export interface Tour {
     id: number;
     name: string;
