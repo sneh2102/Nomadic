@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 
 // Create a new tour package
 export const createTourPackage = async (req: Request, res: Response) => {
-    console.log(req.body);
+   
     try {
         const {
             name,
@@ -43,7 +43,7 @@ export const createTourPackage = async (req: Request, res: Response) => {
                 transportationDetails,
             },
         });
-        console.log(newTourPackage);
+       
         res.status(201).json({
             message: "Tour package created successfully",
             data: newTourPackage,
@@ -72,7 +72,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
             minDuration,
             maxDuration,
         } = req.query;
-        console.log(req.query);
+        
         const categoriesArray = categories ? String(categories).split(",") : [];
         // const filters: Prisma.TourPackageWhereInput = {};
         const filters: any = {};

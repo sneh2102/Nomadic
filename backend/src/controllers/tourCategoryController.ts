@@ -58,7 +58,7 @@ export const createTourCategory = async (req: Request, res: Response) => {
         const newTourCategory = await prisma.tourCategory.create({
             data: { name },
         });
-        console.log('New tour category:', newTourCategory);
+       
         res.status(201).json({
             message: "Tour category created successfully",
             data: newTourCategory
@@ -72,10 +72,12 @@ export const updateTourCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
+       
         const updatedTourCategory = await prisma.tourCategory.update({
             where: { id: Number(id) },
             data: { name },
         });
+        
         res.status(200).json({
             message: "Tour category updated successfully",
             data: updatedTourCategory
@@ -99,9 +101,11 @@ export const getEveryTourCategory = async (req: Request, res: Response) => {
 export const deleteTourCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        await prisma.tourCategory.delete({
+       
+        const response =await prisma.tourCategory.delete({
             where: { id: Number(id) },
         });
+       
         res.status(200).json({
             message: "Tour category deleted successfully",
         });
