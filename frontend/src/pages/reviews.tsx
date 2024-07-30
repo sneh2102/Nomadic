@@ -77,8 +77,8 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPa
 
     try {
       const response = await axios.post('http://localhost:8000/api/v1/reviews', {
-        tourPackageId ,
-        userId, // You might want to get this from user authentication
+        tourPackageId :1,
+        userId:1, // You might want to get this from user authentication
         rating,
         comment
       });
