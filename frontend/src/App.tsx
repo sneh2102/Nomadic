@@ -42,12 +42,12 @@ function App() {
                     <Route path="/signup" element={<SignUpPage/>}/>
                     <Route path="/forgotpassword" element={<ForgotPasswordPage/>}/>
                     <Route path="/history/:id" element={<HistoryPage />} />
-                    <Route path="/reviews" element={<ReviewForm/>} />
+                    <Route path="/reviews" element={<ReviewForm />} />
                     <Route path="/tours/:id" element={<TourDetail />} />
-                    <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/signup" element={<SignUpPage/>}/>
-                    <Route path='/reset-password/:token' element={<ResetPassword/>}></Route>
-                    <Route path="/forgotpassword" element={<ForgotPasswordPage/>}/>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path='/reset-password/:token' element={<ResetPassword />}></Route>
+                    <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
                 </Routes>
             </Router>
             <Toaster />

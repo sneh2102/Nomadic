@@ -8,6 +8,7 @@ import {
 import { styled } from '@mui/material/styles';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import { useLocation } from 'react-router-dom';
 
 // Create a theme that matches the home page
 const theme = createTheme({
@@ -61,7 +62,7 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[300]}`,
 }));
 
-const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = () => {
+const ReviewForm: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,14 +72,21 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = () => {
     severity: 'success' as 'success' | 'error',
   });
 
+  interface CustomLocation {
+    tourPackageId: number;
+    userId: number;
+  }
+
+  const { tourPackageId, userId } = useLocation() as unknown as CustomLocation;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/reviews', {
-        tourPackageId :1,
-        userId:1, // You might want to get this from user authentication
+      const response = await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/reviews`, {
+        tourPackageId: tourPackageId,
+        userId: userId, // You might want to get this from user authentication
         rating,
         comment
       });
@@ -174,7 +182,7 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = () => {
         <Snackbar
           open={snackbar.open}
           autoHideDuration={6000}
-        
+
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
           <Alert
