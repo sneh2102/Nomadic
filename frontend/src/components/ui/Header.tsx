@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Menu } from "@mui/icons-material";
 import {
     Box,
@@ -83,7 +84,7 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                    <TransparentButton variant="contained">
+                    <TransparentButton to="/signup" variant="contained">
                         Sign In / Register
                     </TransparentButton>
                 </div>
@@ -103,6 +104,10 @@ const Header = (props: HeaderProps) => {
                                     text: "Contact Us",
                                     href: "/contactus",
                                 },
+                                {
+                                    text: "Manage Listings",
+                                    href: "/manage",
+                                }
                             ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
                                     <Link

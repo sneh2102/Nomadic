@@ -1,11 +1,8 @@
+// author: Smit Patel
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useContext } from "react";
 
 const FilterItem: React.FC<any> = (props) => {
-    const categoryFilterChange = (e: any) => {};
-
-    const otherFilterChange = () => {};
-
     return (
         <li className="flex items-center justify-between -mt-2">
             <div className="flex items-center ">
@@ -20,18 +17,13 @@ const FilterItem: React.FC<any> = (props) => {
                             value={props.filterId}
                             onChange={(e) => {
                                 props.onFilterChange(e.target.value);
-                                // if (props.parentName === "Category Types") {
-                                //     categoryFilterChange(e.target.value);
-                                // } else if (props.parentName === "Other") {
-                                //     otherFilterChange();
-                                // }
                             }}
                         />
                     }
                     label={props.filterName}
                 />
             </div>
-            <div className="text-gray text-sm">{props.count}</div>
+            {props.count !== 0 && <div className="text-sm text-gray">{props.count}</div>}
         </li>
     );
 };

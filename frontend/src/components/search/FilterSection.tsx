@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useContext } from "react";
 import FilterItem from "./FilterItem";
 
@@ -10,14 +11,15 @@ export interface FilterItemProps {
 interface FilterSectionProps {
     filterName: string;
     filterItems: FilterItemProps[];
-    selectedItems: {[key: string]:boolean};
-    onFilterChange: (filterId: number) => void;
+    selectedItems: { [key: string]: boolean };
+    onFilterChange: (filterId: string) => void;
 }
 
-const FilterSection : React.FC<FilterSectionProps> = (props) => {
+const FilterSection: React.FC<FilterSectionProps> = (props) => {
+    console.log({ props });
     return (
         <>
-            <div className="font-medium mt-4">{props.filterName}</div>
+            <div className="mt-4 font-medium">{props.filterName}</div>
             <ul className="pt-2">
                 {props?.filterItems.map((filterItem, index) => {
                     const checked = Object.keys(props.selectedItems).includes(filterItem.filterId?.toString());
