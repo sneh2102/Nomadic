@@ -342,13 +342,21 @@ Randomly generates 1000 tour packages in various categories and cities.
 
 ## References
 [1] “React,” React Blog RSS.  [Online]. Available: https://react.dev/. [Accessed: 30-Jul-2024]
+
 [2] “Node.js web application framework,” Express.  [Online]. Available: https://expressjs.com/. [Accessed: 30-Jul-2024]
+
 [3] P. G. D. Group, PostgreSQL, 28-Jul-2024.  [Online]. Available: https://www.postgresql.org/. [Accessed: 30-Jul-2024]
+
 [4] Managed SQL database - amazon relational database service (RDS) - AWS.  [Online]. Available: https://aws.amazon.com/rds/. [Accessed: 30-Jul-2024] 
+
 [5] “Cloud run,” Google.  [Online]. Available: https://cloud.google.com/run. [Accessed: 30-Jul-2024] 
+
 [6] “Accelerated Container Application Development,” Docker, 08-Jul-2024.  [Online]. Available: https://www.docker.com/. [Accessed: 30-Jul-2024]
+
 [7] “Scale & Ship Faster with a composable web architecture,” Netlify.  [Online]. Available: https://www.netlify.com/. [Accessed: 30-Jul-2024] 
+
 [8] “Vite,” vitejs.  [Online]. Available: https://vitejs.dev/. [Accessed: 30-Jul-2024]
+
 [9]    “JavaScript with syntax for types.,” TypeScript.  [Online]. Available: https://www.typescriptlang.org/. [Accessed: 30-Jul-2024] 
 
 ## Authors
