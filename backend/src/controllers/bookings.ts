@@ -84,15 +84,24 @@ class BookingController {
 
             // Ensure `id` is a number
             const bookingId = Number(id);
+            if (isNaN(bookingId)) {
+                return res.status(400).json({ success: false, message: 'Invalid booking ID' });
+            }
+
+            const existingBooking = await prisma.bookings.findUnique({
+                where: { id: bookingId },
+            });
+
+            if (!existingBooking) {
+                return res.status(404).json({ success: false, message: 'Booking not found' });
+            }
 
             const updateObj = req.body;
             const booking = await prisma.bookings.update({
                 where: { id: bookingId },
                 data: updateObj
             });
-            if (!booking) {
-                return res.status(404).json({ success: false, message: 'Booking not found' });
-            }
+
             res.status(200).json({ success: true, data: booking });
         } catch (error: unknown) {
             if (error instanceof Error) {

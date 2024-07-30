@@ -1,3 +1,4 @@
+// author: Smit Patel
 import React from "react";
 import SearchSection from "../components/search/SearchSection";
 import Header from "../components/ui/Header";

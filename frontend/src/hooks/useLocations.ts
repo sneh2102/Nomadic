@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useQuery } from "@tanstack/react-query"
 import { getAllLocations } from "../services/locationService";
 import { ILocation } from "../interfaces/location.interface";

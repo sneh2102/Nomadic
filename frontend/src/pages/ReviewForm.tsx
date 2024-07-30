@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import {
   Box, Button, Container, Rating, TextField, Typography,
   Paper, Snackbar, Alert, CircularProgress, Fade,
@@ -8,13 +9,14 @@ import {
 import { styled } from '@mui/material/styles';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import { useLocation } from 'react-router-dom';
+import Header from '../components/ui/Header';
+import Footer from '../components/ui/Footer';
 
 // Create a theme that matches the home page
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#051036', // Purple color from the home page
+      main: '#051036',
     },
     secondary: {
       main: '#FFFFFF',
@@ -25,7 +27,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#000000',
-      secondary: '#6B7280', // Grey color for secondary text
+      secondary: '#6B7280',
     },
   },
   shape: {
@@ -41,7 +43,8 @@ const theme = createTheme({
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
-  marginTop: theme.spacing(4),
+  marginTop: theme.spacing(0),
+  marginBottom: theme.spacing(14),
   borderRadius: theme.shape.borderRadius,
   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 }));
@@ -63,6 +66,9 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
 }));
 
 const ReviewForm: React.FC = () => {
+  const location = useLocation();
+  const { tourPackageId, userId } = location.state || { tourPackageId: null, userId: null };
+
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,24 +78,18 @@ const ReviewForm: React.FC = () => {
     severity: 'success' as 'success' | 'error',
   });
 
-  interface CustomLocation {
-    tourPackageId: number;
-    userId: number;
-  }
-
-  const { tourPackageId, userId } = useLocation() as unknown as CustomLocation;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
       const response = await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/reviews`, {
-        tourPackageId: tourPackageId,
-        userId: userId, // You might want to get this from user authentication
+        tourPackageId,
+        userId,
         rating,
         comment
       });
+
       console.log('Review submitted:', response.data);
 
       setSnackbar({
@@ -117,85 +117,66 @@ const ReviewForm: React.FC = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="sm">
-        <Fade in={true} timeout={1000}>
-          <StyledPaper elevation={3}>
-            <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-              <RateReviewIcon sx={{ fontSize: 48, color: 'primary.main' }} />
-              <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary' }}>
-                Share Your Thoughts
-              </Typography>
-            </Box>
-            <StyledForm onSubmit={handleSubmit}>
-              <StyledRatingBox>
-                <Typography component="legend" variant="h6" color="text.secondary">
-                  How was your experience?
+    <>
+      <ThemeProvider theme={theme}>
+        <Header /> {/* Add the Header component here */}
+        <Container maxWidth="sm">
+          <Fade in={true} timeout={1000}>
+            <StyledPaper elevation={3}>
+              <Box display="flex" flexDirection="column" alignItems="center" mb={4} mt={14}>
+                <RateReviewIcon sx={{ fontSize: 48, color: 'primary.main' }} />
+                <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary' }}>
+                  Share Your Experience
                 </Typography>
-                <Rating
-                  name="rating"
-                  value={rating}
-                  onChange={(_, newValue) => setRating(newValue)}
-                  precision={1}
-                  size="large"
-                />
-                <SentimentSatisfiedAltIcon sx={{ fontSize: 48, color: 'primary.main' }} />
-                {rating !== null && (
-                  <Typography variant="body1" color="text.primary" fontWeight="bold">
-                    {rating.toFixed(1)} / 5
+              </Box>
+              <StyledForm onSubmit={handleSubmit}>
+                <StyledRatingBox>
+                  <Typography component="legend" variant="h6" color="text.secondary">
+                    How was your experience?
                   </Typography>
-                )}
-              </StyledRatingBox>
-              <TextField
-                label="Your Review"
-                variant="outlined"
-                multiline
-                rows={4}
-                fullWidth
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                required
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                disabled={isSubmitting}
-                sx={{
-                  py: 1.5,
-                  color: 'common.white',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                }}
+                  <Rating
+                    name="rating"
+                    value={rating}
+                    onChange={(_, newValue) => setRating(newValue)}
+                    precision={1}
+                    size="large"
+                  />
+                  <SentimentSatisfiedAltIcon sx={{ fontSize: 48, color: 'primary.main' }} />
+                </StyledRatingBox>
+                <TextField
+                  label="Leave a comment"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  fullWidth
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  disabled={isSubmitting || rating === null}
+                  fullWidth
+                >
+                  {isSubmitting ? <CircularProgress size={24} /> : 'Submit Review'}
+                </Button>
+              </StyledForm>
+              <Snackbar
+                open={snackbar.open}
+                autoHideDuration={6000}
               >
-                {isSubmitting ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  'Submit Your Review'
-                )}
-              </Button>
-            </StyledForm>
-          </StyledPaper>
-        </Fade>
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={6000}
-
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity={snackbar.severity}
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
-      </Container>
-    </ThemeProvider>
+                <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+                  {snackbar.message}
+                </Alert>
+              </Snackbar>
+            </StyledPaper>
+          </Fade>
+        </Container>
+        <Footer/>
+      </ThemeProvider>
+    </>
   );
 };
 

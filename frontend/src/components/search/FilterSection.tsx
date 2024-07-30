@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useContext } from "react";
 import FilterItem from "./FilterItem";
 

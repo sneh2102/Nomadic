@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useQuery } from "@tanstack/react-query"
 import { TourCategoryList } from "../interfaces/tourCategory.interface";
 import { getAllTourCategories } from "../services/tourCategoryService";

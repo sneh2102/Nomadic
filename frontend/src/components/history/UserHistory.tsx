@@ -24,9 +24,7 @@ const UserHistory: React.FC = () => {
 
     const { id } = useParams()
     useEffect(() => {
-        console.log("history", `${(import.meta as any).env.VITE_BASE_API_URL}`)
         setLoading(true)
-        console.log(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/booking/${id}`)
         axios.get(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/booking/${id}`).then((response: any) => {
             console.log("res", response.data)
             setCards(response.data.data)
@@ -62,7 +60,7 @@ const UserHistory: React.FC = () => {
                             {/* <Flex p="4" justifyContent="space-between" fontSize="large"> */}
                             <Flex alignItems="center" justifyContent="space-between" p="5">
                                 {/* {card.content} */}
-                                <AddHistoryNotesModal location={`${card.tourPackage.city}, ${card.tourPackage.location}`} note={card.note} id={id} />
+                                <AddHistoryNotesModal location={`${card.tourPackage.city}, ${card.tourPackage.location}`} note={card.note} id={card.id} />
                                 <UserHistoryDetailsModal data={card.tourPackage} totalCost={card.totalCost} noOfPeople={card.noOfPeople} bookingDate={card.createdAt} />
                                 <Button colorScheme="green" onClick={() => navigate("/reviews", { state: { tourPackageId: card.tourPackageId, userId: card.userId } })}>
                                     <MdOutlineReviews />

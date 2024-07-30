@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { debounce, Slider } from "@mui/material";
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
