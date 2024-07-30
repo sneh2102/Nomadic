@@ -10,6 +10,7 @@ import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
 import { TourPackage } from '../../pages/TourDetail';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -51,6 +52,10 @@ const BookingForm = ({ tourPackage }: { tourPackage: TourPackage }) => {
         try {
             await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/booking`, payload).then((response) => {
                 if (response.data.success) {
+                    toast.success("SignUp Successful!", {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                     navigate(`/history/${userId}`)
                 };
             })

@@ -41,13 +41,13 @@ const UserHistoryDetailsModal = ({ data, totalCost, noOfPeople, bookingDate }: a
                             <span className='boldfont'>Number of individuals: </span><span>{noOfPeople}</span>
                         </Box>
                         <Box>
-                            <span className='boldfont'>Duration: </span><span>{data.duration}</span>
+                            <span className='boldfont'>Duration: </span><span>{data.duration} Days</span>
                         </Box>
                         <Box>
                             <span className='boldfont'>Total Cost: </span><span>{totalCost}</span>
                         </Box>
                         <Box>
-                            <span className='boldfont'>Booking Date: </span><span>{bookingDate}</span>
+                            <span className='boldfont'>Booking Date: </span><span>{dateConverter(bookingDate)}</span>
                         </Box>
                         <Box>
                             <span className='boldfont'>Accommodation Details: </span><span>{data.accommodationDetails}</span>

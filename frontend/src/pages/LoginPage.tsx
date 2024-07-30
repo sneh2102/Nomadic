@@ -45,7 +45,7 @@ const LoginPage = () => {
       if (response.ok) {
         localStorage.setItem('token', result.token);
         console.log("Login successful.")
-        //navigate('/home')
+        navigate('/')
       }
       else {
         setError(result.error)
