@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { Menu } from "@mui/icons-material";
 import {
     Box,
@@ -103,6 +104,10 @@ const Header = (props: HeaderProps) => {
                                     text: "Contact Us",
                                     href: "/contactus",
                                 },
+                                {
+                                    text: "Manage Listings",
+                                    href: "/manage",
+                                }
                             ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
                                     <Link

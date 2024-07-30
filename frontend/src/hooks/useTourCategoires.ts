@@ -1,3 +1,4 @@
+// author: Smit Patel
 import { useQuery } from "@tanstack/react-query"
 import { TourCategoryList } from "../interfaces/tourCategory.interface";
 import { getAllTourCategories } from "../services/tourCategoryService";
@@ -18,11 +19,11 @@ export const useTourCategories = (props: useTourCategories) => {
                     startDate: props.startDate,
                     endDate: props.endDate
                 });
-                if(response instanceof Error) {
+                if (response instanceof Error) {
                     throw new Error(response.message);
                 }
                 return response;
-            }catch (error: any) {
+            } catch (error: any) {
                 throw new Error(error);
             };
         }

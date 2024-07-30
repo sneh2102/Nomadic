@@ -25,6 +25,7 @@ model User {
   reviews          Review[]
 
   @@map("user")
+  Bookings Bookings[]
 }
 
 model TourCategory {
@@ -54,6 +55,8 @@ model TourPackage {
   createdAt                DateTime     @default(now())
   updatedAt                DateTime     @updatedAt
   reviews                  Review[]
+
+  Bookings Bookings[]
 }
 
 model Review {
@@ -63,7 +66,19 @@ model Review {
   tourPackage   TourPackage @relation(fields: [tourPackageId], references: [id])
   tourPackageId Int
   user          User        @relation(fields: [userId], references: [id])
-  userId        Int
+  userId        Int         
   createdAt                DateTime     @default(now())
   updatedAt                DateTime     @updatedAt
+}
+
+model Bookings {
+  id                    Int     @id @default(autoincrement())
+  noOfPeople            String?
+  totalCost             String?
+  note                  String? @default("")
+  tourPackage   TourPackage @relation(fields: [tourPackageId], references: [id])
+  tourPackageId         Int
+  createdAt        DateTime  @default(now())
+  userId                Int
+  user                  User    @relation(fields: [userId], references: [id])
 }

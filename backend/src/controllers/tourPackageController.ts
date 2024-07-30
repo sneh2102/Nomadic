@@ -1,3 +1,4 @@
+// author: Smit Patel
 // src/controllers/tourPackageController.ts
 import { Request, Response } from "express";
 import { prismaClient as prisma } from "../server";
@@ -5,6 +6,7 @@ import { Prisma } from "@prisma/client";
 
 // Create a new tour package
 export const createTourPackage = async (req: Request, res: Response) => {
+   
     try {
         const {
             name,
@@ -23,7 +25,7 @@ export const createTourPackage = async (req: Request, res: Response) => {
         const duration = Math.ceil(
             (new Date(String(endDate)).getTime() -
                 new Date(String(startDate)).getTime()) /
-                (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24)
         );
         const newTourPackage = await prisma.tourPackage.create({
             data: {
@@ -42,6 +44,7 @@ export const createTourPackage = async (req: Request, res: Response) => {
                 transportationDetails,
             },
         });
+       
         res.status(201).json({
             message: "Tour package created successfully",
             data: newTourPackage,
@@ -70,11 +73,12 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
             minDuration,
             maxDuration,
         } = req.query;
+        
         const categoriesArray = categories ? String(categories).split(",") : [];
         // const filters: Prisma.TourPackageWhereInput = {};
         const filters: any = {};
         if (name) {
-            filters.name = { contains: String(name), mode: "insensitive" }; // Case insensitive search
+            filters.name = { contains: String(name), mode: "insensitive" }; 
         }
         if (minPrice) {
             filters.price = { gte: Number(minPrice) };
@@ -86,7 +90,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
             filters.price.lte = Number(maxPrice);
         }
         if (city) {
-            filters.city = { contains: String(city), mode: "insensitive" }; // Case insensitive search
+            filters.city = { contains: String(city), mode: "insensitive" }; 
         }
         if (freeCancelationAvailable) {
             filters.freeCancelationAvailable =
@@ -175,9 +179,12 @@ export const getTourPackageById = async (req: Request, res: Response) => {
             include: {
                 tourCategory: true,
                 reviews: {
-                    orderBy: { createdAt : "desc" },
+                    orderBy: { createdAt: "desc" },
+                    include: {
+                        user: true, 
+                    },
                 },
-            }
+            },
         });
         if (tourPackage) {
             res.status(200).json(tourPackage);
@@ -237,13 +244,41 @@ export const updateTourPackageById = async (req: Request, res: Response) => {
 export const deleteTourPackageById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        await prisma.tourPackage.delete({
+        const response=await prisma.tourPackage.delete({
             where: { id: Number(id) },
         });
         res.status(200).json({
             message: "Tour package deleted successfully",
+            resposne: response,
         });
     } catch (error) {
-        res.status(500).json({ error: "Failed to delete tour package" });
+        res.status(500).json({ error: error });
     }
 };
+
+export const getAllFreeCancelationAvailableTourPackages = async (req: Request, res: Response) => {
+    try {
+        const tourPackages = await prisma.tourPackage.findMany({
+            where: {
+                freeCancelationAvailable: true,
+            },
+        });
+        res.status(200).json(tourPackages);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to retrieve tour packages" });
+    }
+}
+
+export const getAllNonFreeCancelationAvailableTourPackages = async (req: Request, res: Response) => {
+    try {
+        const tourPackages = await prisma.tourPackage.findMany({
+            where: {
+                freeCancelationAvailable: false,
+            },
+        });
+        res.status(200).json(tourPackages);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to retrieve tour packages" });
+    }
+}
+

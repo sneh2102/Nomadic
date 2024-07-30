@@ -1,4 +1,6 @@
+// author: Smit Patel
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface LearningCardProps {
     title: string;
@@ -22,7 +24,7 @@ const LearningCard = (props: LearningCardProps) => {
                 <div className="text-4xl font-bold my-4 mb-10">
                     {props.title}
                 </div>
-                <Button variant="contained" size="large">
+                <Button variant="contained" size="large" component={Link} to="/blog">
                     <span className="py-1 px-2">Learn More</span>
                 </Button>
             </div>

@@ -1,59 +1,59 @@
 import {
-    Container,
-    CssBaseline,
-    Box,
-    Typography,
-    TextField,
-    Button,
-  } from "@mui/material";
-  import { useState } from "react";
-  import { Link, useNavigate } from "react-router-dom";
-  import { useForm } from "react-hook-form";
-  import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+  Container,
+  CssBaseline,
+  Box,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
-  
-  type FormValues = {
-    email: string;
-  };
-  
-  const ForgotPasswordPage = () => {
-    const form = useForm<FormValues>();
-    const [error, setError] = useState("");
-    const { register, handleSubmit, formState } = form;
-    const { errors } = formState;
-    const [success, setSuccess] = useState("");
 
-    const navigate = useNavigate();
-  
-    const onSubmit = async (data: FormValues) => {
-      const response = await fetch('http://localhost:8000/api/v1/forgotPassword', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+type FormValues = {
+  email: string;
+};
+
+const ForgotPasswordPage = () => {
+  const form = useForm<FormValues>();
+  const [error, setError] = useState("");
+  const { register, handleSubmit, formState } = form;
+  const { errors } = formState;
+  const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: FormValues) => {
+    const response = await fetch(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/forgotPassword`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
     const result = await response.json();
 
-      if(!response.ok){
-        setError(result.error)
+    if (!response.ok) {
+      setError(result.error)
 
-      } else{
-        setError("")
-        localStorage.setItem('token',result.token);
-        setSuccess(result.message)
-      }
-      console.log(data);
-    };
-  
-    return (
-      <>
-        <div className="h-[10px]">
-        <Header/>
-        </div>
-        <ButtonThemeWrapper>
+    } else {
+      setError("")
+      localStorage.setItem('token', result.token);
+      setSuccess(result.message)
+    }
+    console.log(data);
+  };
+
+  return (
+    <>
+      <div className="h-[10px]">
+        <Header />
+      </div>
+      <ButtonThemeWrapper>
         <Container maxWidth="xs">
           <CssBaseline />
           <Box
@@ -75,7 +75,7 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 {error && (
                   <Typography variant="body2" color={"red"}>{error}</Typography>)}
-                  {success && (
+                {success && (
                   <Typography variant="body2" color={"green"}>{success}</Typography>)}
                 <TextField
                   margin="normal"
@@ -108,13 +108,12 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
             </Box>
           </Box>
         </Container>
-        </ButtonThemeWrapper>
+      </ButtonThemeWrapper>
       <div className="mt-16">
-                <Footer />
+        <Footer />
       </div>
-      </>
-    );
-  };
-  
-  export default ForgotPasswordPage;
-  
+    </>
+  );
+};
+
+export default ForgotPasswordPage;
