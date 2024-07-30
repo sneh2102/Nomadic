@@ -9,14 +9,18 @@ interface City {
 const cities: City[] = [
   { city: "London", location: "Westminster Borough" },
   { city: "Canada", location: "Rocky Mountains" },
-  { city: "Italy", location: "Venice" },
+  { city: "Italy", location: "Rome" },
   { city: "Tanzania", location: "Serengeti National Park" },
   { city: "France", location: "Paris" },
   { city: "China", location: "Beijing" },
   { city: "Iceland", location: "Reykjavik" },
   { city: "USA", location: "Arizona" },
+  { city: "New York", location: "New york" },
   { city: "Egypt", location: "Cairo" },
   { city: "Australia", location: "Sydney" },
+  { city: "Nova Scotia", location: "Halifax" },
+  { city: "Japan", location: "Tokyo" },
+  {city: "UAE", location: "Dubai"},
 ];
 
 const getRandomImage = (id: number): string => `https://picsum.photos/250?random=${id}`;

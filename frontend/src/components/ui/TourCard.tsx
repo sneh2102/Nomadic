@@ -1,3 +1,6 @@
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+
 interface TourCardProps {
     name: string;
     location: string;
@@ -6,6 +9,7 @@ interface TourCardProps {
     reviews: number;
     price: number;
     image: string;
+    tourId: number;
 }
 const TourCard = (props: TourCardProps) => {
     return (
@@ -36,6 +40,12 @@ const TourCard = (props: TourCardProps) => {
                 Starting from{" "}
                 <span className="font-bold text-primary">CA${props.price}</span>
             </div>
+            <Button
+                component={Link}
+                to={`/tour/${props.tourId}`}
+                variant="contained"
+                className="w-full"
+            >Explore</Button>
         </div>
     );
 };
