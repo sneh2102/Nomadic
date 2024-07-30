@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import {
   Box, Button, Container, Rating, TextField, Typography,
   Paper, Snackbar, Alert, CircularProgress, Fade,
@@ -8,12 +9,13 @@ import {
 import { styled } from '@mui/material/styles';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import UserHistory from '../components/history/UserHistory';
 
 // Create a theme that matches the home page
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#051036', // Purple color from the home page
+      main: '#051036',
     },
     secondary: {
       main: '#FFFFFF',
@@ -24,7 +26,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#000000',
-      secondary: '#6B7280', // Grey color for secondary text
+      secondary: '#6B7280',
     },
   },
   shape: {
@@ -61,7 +63,13 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[300]}`,
 }));
 
-const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPackageId ,userId }) => {
+const ReviewForm: React.FC = () => {
+  const location = useLocation();
+  const tourPackageId = location.state.tourPackageId
+  const userId = location.state.userId
+  
+
+
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,12 +84,14 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPa
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/reviews', {
-        tourPackageId :1,
-        userId:1, // You might want to get this from user authentication
+      const response = await axios.post(`http://localhost:8000/api/v1/reviews`, {
+        tourPackageId,
+        userId,
         rating,
         comment
       });
+      console.log(tourPackageId)
+
       console.log('Review submitted:', response.data);
 
       setSnackbar({
@@ -116,7 +126,7 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPa
             <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
               <RateReviewIcon sx={{ fontSize: 48, color: 'primary.main' }} />
               <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary' }}>
-                Share Your Thoughts
+                Share Your Experience
               </Typography>
             </Box>
             <StyledForm onSubmit={handleSubmit}>
@@ -132,60 +142,38 @@ const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPa
                   size="large"
                 />
                 <SentimentSatisfiedAltIcon sx={{ fontSize: 48, color: 'primary.main' }} />
-                {rating !== null && (
-                  <Typography variant="body1" color="text.primary" fontWeight="bold">
-                    {rating.toFixed(1)} / 5
-                  </Typography>
-                )}
               </StyledRatingBox>
               <TextField
-                label="Your Review"
-                variant="outlined"
+                label="Leave a comment"
                 multiline
                 rows={4}
-                fullWidth
+                variant="outlined"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                required
+                fullWidth
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 size="large"
-                disabled={isSubmitting}
-                sx={{
-                  py: 1.5,
-                  color: 'common.white',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                }}
+                disabled={isSubmitting || rating === null}
+                fullWidth
               >
-                {isSubmitting ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  'Submit Your Review'
-                )}
+                {isSubmitting ? <CircularProgress size={24} /> : 'Submit Review'}
               </Button>
             </StyledForm>
+            <Snackbar
+              open={snackbar.open}
+              autoHideDuration={6000}
+             
+            >
+              <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+                {snackbar.message}
+              </Alert>
+            </Snackbar>
           </StyledPaper>
         </Fade>
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={6000}
-        
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity={snackbar.severity}
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
       </Container>
     </ThemeProvider>
   );
