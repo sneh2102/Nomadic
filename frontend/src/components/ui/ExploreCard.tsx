@@ -1,8 +1,10 @@
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface ExploreCardProps {
     title: string;
     image: string;
+    link: string;
 }
 
 const ExploreCard = (props: ExploreCardProps) => {
@@ -24,6 +26,8 @@ const ExploreCard = (props: ExploreCardProps) => {
                                 fullWidth
                                 variant="contained"
                                 disableElevation
+                                component={Link}
+                                to={props.link}
                             >
                                 Discover
                             </Button>

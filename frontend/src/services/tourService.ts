@@ -11,6 +11,9 @@ export const getTours = async ({
   page,
   startDate,
   endDate,
+  minDuration,
+  maxDuration,
+  pageSize,
 }: {
   categories: string | null;
   city: string | null;
@@ -22,6 +25,9 @@ export const getTours = async ({
   page: string | null;
   startDate: string | null;
   endDate: string | null;
+  minDuration: string | null;
+  maxDuration: string | null;
+  pageSize: string | null;
 }) => {
   try {
     let query = categories ? `?categories=${categories}` : '';
@@ -34,13 +40,16 @@ export const getTours = async ({
     query += page ? `${query ? '&' : '?'}page=${page}` : '';
     query += startDate ? `${query ? '&' : '?'}startDate=${startDate}` : '';
     query += endDate ? `${query ? '&' : '?'}endDate=${endDate}` : '';
+    query += minDuration ? `${query ? '&' : '?'}minDuration=${minDuration}` : '';
+    query += maxDuration ? `${query ? '&' : '?'}maxDuration=${maxDuration}` : '';
+    query += pageSize ? `${query ? '&' : '?'}pageSize=${pageSize}` : '';
     const response = await fetch(`${import.meta.env.VITE_BASE_API_URL}/api/v1/tours${query}`);
     if (!response.ok) {
       throw new Error('Failed to fetch');
     }
     const data: TourList = await response.json();
     return data;
-  }catch (error: any) {
+  } catch (error: any) {
     return new Error(error.error);
   }
 }

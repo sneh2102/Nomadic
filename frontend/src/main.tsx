@@ -7,7 +7,6 @@ import "./index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const queryClient = new QueryClient();
 

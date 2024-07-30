@@ -24,7 +24,7 @@ export const createTourPackage = async (req: Request, res: Response) => {
         const duration = Math.ceil(
             (new Date(String(endDate)).getTime() -
                 new Date(String(startDate)).getTime()) /
-                (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24)
         );
         const newTourPackage = await prisma.tourPackage.create({
             data: {
@@ -178,9 +178,12 @@ export const getTourPackageById = async (req: Request, res: Response) => {
             include: {
                 tourCategory: true,
                 reviews: {
-                    orderBy: { createdAt : "desc" },
+                    orderBy: { createdAt: "desc" },
+                    include: {
+                        user: true, 
+                    },
                 },
-            }
+            },
         });
         if (tourPackage) {
             res.status(200).json(tourPackage);

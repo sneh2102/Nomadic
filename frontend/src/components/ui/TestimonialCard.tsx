@@ -1,6 +1,14 @@
 import React from "react";
 
-const TestimonialCard = () => {
+const TestimonialCard = ({
+    name,
+    designation,
+    review,
+}: {
+    name: string;
+    designation: string;
+    review: string;
+}) => {
     return (
         <div className="mx-8 md:mx-32 my-8">
             <div className="flex items-center ">
@@ -8,21 +16,17 @@ const TestimonialCard = () => {
                     {" "}
                     <img
                         className="w-100 h-100 object-cover"
-                        src="/profile1.jpg"
+                        src={`https://picsum.photos/200?id=${name}`}
                         alt="profile"
                     />
                 </div>
                 <div className="pl-4">
-                    <h4 className="font-medium">Annette Black</h4>
-                    <p className="text-grey">UX / UI Designer</p>
+                    <h4 className="font-medium">{name}</h4>
+                    <p className="text-grey">{designation}</p>
                 </div>
             </div>
             <p className="font-medium my-8 tracking-wide">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga
-                cumque quas adipisci a. Similique inventore suscipit quidem
-                debitis, accusamus! Lorem ipsum dolor sit, amet consectetur
-                adipisicing elit. Fuga cumque quas adipisci a. Similique
-                inventore suscipit quidem debitis, accusamus!
+                {review}
             </p>
         </div>
     );
