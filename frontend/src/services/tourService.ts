@@ -40,7 +40,7 @@ export const getTours = async ({
     }
     const data: TourList = await response.json();
     return data;
-  }catch (error: any) {
+  } catch (error: any) {
     return new Error(error.error);
   }
 }

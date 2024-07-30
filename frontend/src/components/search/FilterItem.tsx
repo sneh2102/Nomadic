@@ -22,7 +22,7 @@ const FilterItem: React.FC<any> = (props) => {
                     label={props.filterName}
                 />
             </div>
-            {props.count !== 0 && <div className="text-gray text-sm">{props.count}</div>}
+            {props.count !== 0 && <div className="text-sm text-gray">{props.count}</div>}
         </li>
     );
 };

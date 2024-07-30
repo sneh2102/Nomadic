@@ -18,11 +18,11 @@ export const useTourCategories = (props: useTourCategories) => {
                     startDate: props.startDate,
                     endDate: props.endDate
                 });
-                if(response instanceof Error) {
+                if (response instanceof Error) {
                     throw new Error(response.message);
                 }
                 return response;
-            }catch (error: any) {
+            } catch (error: any) {
                 throw new Error(error);
             };
         }

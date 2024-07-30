@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {prismaClient as prisma} from '../server';
+import { prismaClient as prisma } from '../server';
 import { TourCategory } from '@prisma/client';
 
 interface TourCategoryResponse extends TourCategory {
@@ -8,12 +8,12 @@ interface TourCategoryResponse extends TourCategory {
 
 export const getAllTourCategories = async (req: Request, res: Response) => {
     try {
-        const {city, startDate, endDate} = req.query;
+        const { city, startDate, endDate } = req.query;
         const filters: any = {};
         if (city) {
             filters.city = { contains: String(city), mode: 'insensitive' }; // Case insensitive search
         }
-        if(startDate && endDate) {
+        if (startDate && endDate) {
             filters.startDate = {
                 gte: new Date(String(startDate)),
             };
@@ -80,6 +80,6 @@ export const updateTourCategory = async (req: Request, res: Response) => {
             data: updatedTourCategory
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update tour category: ' +JSON.stringify(error) });
+        res.status(500).json({ error: 'Failed to update tour category: ' + JSON.stringify(error) });
     }
 }
