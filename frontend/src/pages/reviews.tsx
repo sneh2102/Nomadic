@@ -61,10 +61,9 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[300]}`,
 }));
 
-const ReviewForm: React.FC = () => {
-  const [name, setName] = useState('');
+const ReviewForm: React.FC<{ tourPackageId: number ,userId:number }> = ({ tourPackageId ,userId }) => {
   const [rating, setRating] = useState<number | null>(null);
-  const [review, setReview] = useState('');
+  const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -77,7 +76,12 @@ const ReviewForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/reviews', { name, rating, review });
+      const response = await axios.post('http://localhost:8000/api/v1/reviews', {
+        tourPackageId ,
+        userId, // You might want to get this from user authentication
+        rating,
+        comment
+      });
       console.log('Review submitted:', response.data);
 
       setSnackbar({
@@ -85,9 +89,8 @@ const ReviewForm: React.FC = () => {
         message: 'Review submitted successfully!',
         severity: 'success',
       });
-      setName('');
       setRating(null);
-      setReview('');
+      setComment('');
     } catch (error) {
       console.error('Error submitting review:', error);
       setSnackbar({
@@ -117,14 +120,6 @@ const ReviewForm: React.FC = () => {
               </Typography>
             </Box>
             <StyledForm onSubmit={handleSubmit}>
-              <TextField
-                label="Your Name"
-                variant="outlined"
-                fullWidth
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
               <StyledRatingBox>
                 <Typography component="legend" variant="h6" color="text.secondary">
                   How was your experience?
@@ -133,7 +128,7 @@ const ReviewForm: React.FC = () => {
                   name="rating"
                   value={rating}
                   onChange={(_, newValue) => setRating(newValue)}
-                  precision={0.5}
+                  precision={1}
                   size="large"
                 />
                 <SentimentSatisfiedAltIcon sx={{ fontSize: 48, color: 'primary.main' }} />
@@ -149,8 +144,8 @@ const ReviewForm: React.FC = () => {
                 multiline
                 rows={4}
                 fullWidth
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 required
               />
               <Button
@@ -179,7 +174,7 @@ const ReviewForm: React.FC = () => {
         <Snackbar
           open={snackbar.open}
           autoHideDuration={6000}
-         
+        
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
           <Alert

@@ -5,15 +5,16 @@ const prisma = new PrismaClient();
 
 export class ReviewController {
   static async createReview(req: Request, res: Response) {
-    const { name, rating, review } = req.body;
+    const { tourPackageId, userId, rating, comment } = req.body;
 
-    console.log('Received data:', { name, rating, review });
+    console.log('Received data:', { tourPackageId, userId, rating, comment });
     try {
       const newReview = await prisma.review.create({
         data: {
-          name,
-          rating: rating.toString(), // Convert rating to string if it's a number
-          review,
+          tourPackageId,
+          userId,
+          rating, // Convert rating to string if it's a number
+          comment
         },
       });
       res.status(201).json(newReview);
@@ -32,6 +33,24 @@ export class ReviewController {
       console.error('Error fetching reviews:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       res.status(500).json({ error: 'Failed to fetch reviews', details: errorMessage });
+    }
+  }
+
+  static async getReviewsByTourPackageId(req: Request, res: Response) {
+    const { id } = req.params;
+    const tourPackageId =id
+
+    try {
+      const reviews = await prisma.review.findMany({
+        where: {
+          tourPackageId: parseInt(tourPackageId, 10), // Ensure tourPackageId is an integer
+        },
+      });
+      res.json(reviews);
+    } catch (error) {
+      console.error('Error fetching reviews by tourPackageId:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      res.status(500).json({ error: 'Failed to fetch reviews by tourPackageId', details: errorMessage });
     }
   }
 }

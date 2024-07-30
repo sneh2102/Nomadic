@@ -6,9 +6,11 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm install
+RUN npm i -g prisma
 
 COPY . .
 
 EXPOSE 8000
 
-CMD ["./startup.sh"]
+CMD ["npx", "prisma", "migrate", "deploy"]
+CMD ["npm", "run", "start"]
