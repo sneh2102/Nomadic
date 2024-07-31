@@ -91,6 +91,7 @@ CREATE TABLE "Comment" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "blogPostId" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
+    "ratings" INTEGER NOT NULL,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
