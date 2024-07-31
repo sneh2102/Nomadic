@@ -1,3 +1,4 @@
+// Author: Heli Desai
 import axios from 'axios';
 
 export const fetchComments = async (blogPostId: string) => {

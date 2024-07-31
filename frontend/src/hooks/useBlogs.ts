@@ -1,4 +1,4 @@
-// useBlogs.ts
+// Author: Heli Desai
 import { getBlogs } from "../services/blogServie";
 import { useQuery } from "@tanstack/react-query";
 

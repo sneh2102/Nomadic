@@ -1,4 +1,4 @@
-// blogServie.ts
+// Author: Heli Desai
 export const getBlogs = async ({
     page,
     category,

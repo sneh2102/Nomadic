@@ -1,3 +1,5 @@
+// author: Heli Desai
+
 import React from 'react';
 
 const HeroSection: React.FC = () => {

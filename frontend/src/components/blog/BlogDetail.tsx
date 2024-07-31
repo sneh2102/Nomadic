@@ -1,3 +1,5 @@
+// author: Heli Desai
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import useBlogDetail from '../../hooks/useBlogDetail';
