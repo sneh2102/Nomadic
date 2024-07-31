@@ -1,3 +1,4 @@
+// author: Parth Patel
 import { Request,Response } from "express";
 import { prismaClient } from "../server";
 import {compareSync, hashSync} from 'bcrypt';

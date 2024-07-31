@@ -1,3 +1,4 @@
+// author: Parth Patel
 import {Router} from "express";
 import { signUp } from "../controllers/signup";
 

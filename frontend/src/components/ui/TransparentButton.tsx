@@ -16,10 +16,11 @@ const StyledButton = styled(Button)`
 
 interface TransparentButtonProps extends ButtonProps {
     to: string;
+    onClick?: () => void;
 }
 const TransparentButton: React.FC<TransparentButtonProps> = (props) => {
-    const { to, ...buttonProps } = props;
-    return <StyledButton component={Link} size="large" disableElevation {...props} />;
+    const { to, onClick,  ...buttonProps } = props;
+    return <StyledButton component={Link} size="large" disableElevation {...props} onClick={onClick} />;
 };
 
 export default TransparentButton;

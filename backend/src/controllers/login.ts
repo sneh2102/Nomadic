@@ -1,3 +1,4 @@
+// author: Parth Patel
 import { Request,Response } from "express";
 import { prismaClient } from "../server";
 import {compareSync, hashSync} from 'bcrypt';
@@ -14,7 +15,8 @@ export const login = async(req:Request, res:Response) => {
         let user = await prismaClient.user.findFirst({where: { email }})
         console.log("User details fetched from database")
         if(!user){
-             throw Error('User does not exist! Please register your account')
+            //  throw Error('User does not exist! Please register your account')
+            return res.status(500).json({"error":'User does not exist! Please register your account'})
         }
         
         if(!compareSync(password,user.password)){

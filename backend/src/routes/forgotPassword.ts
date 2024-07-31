@@ -1,3 +1,4 @@
+// author: Parth Patel
 import {Router} from "express";
 import { forgotpassword } from "../controllers/forgotpassword";
 
