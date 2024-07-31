@@ -20,9 +20,9 @@ const HistoryPage = () => {
                 <br />
                 <UserHistory />
                 <Recommendations />
-                <br />
-                <Footer />
+                {/* <br /> */}
             </ChakraProvider>
+            <Footer />
         </div>
     )
 }
