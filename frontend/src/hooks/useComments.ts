@@ -7,6 +7,7 @@ interface Comment {
     name: string;
     comment: string;
     createdAt: string;
+    ratings: number;
 }
 
 export const useComments = (blogPostId: string) => {

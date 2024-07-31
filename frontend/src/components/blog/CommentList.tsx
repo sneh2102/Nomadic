@@ -1,15 +1,10 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { useComments } from '../../hooks/useComments';
+import Rating from '@mui/material/Rating';
 
-const CommentList: React.FC<{ blogPostId: string }> = ({ blogPostId }) => {
-    const { data: comments = [], isLoading, error } = useComments(blogPostId);
-
-    if (isLoading) return <p>Loading comments...</p>;
-    if (error) return <p>Error loading comments: {error.message}</p>;
-
+const CommentList: React.FC<{ comments: any }> = ({ comments }) => {
     return (
-        <div className="mt-8 mx-20 mx-auto">
+        <div className="mt-8 mx-20">
             <h2 className="text-2xl font-bold mb-6">Reviews and Comments</h2>
             {comments.length === 0 ? (
                 <p className="text-gray-500">No comments yet. Be the first to comment!</p>
@@ -26,6 +21,7 @@ const CommentList: React.FC<{ blogPostId: string }> = ({ blogPostId }) => {
                                 </p>
                             </div>
                         </div>
+                        <Rating value={comment.ratings} readOnly />
                         <p className="text-gray-800">{comment.comment}</p>
                     </div>
                 ))

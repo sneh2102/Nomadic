@@ -7,13 +7,14 @@ const app = express();
 app.use(express.json());
 
 export async function addComment(req: express.Request, res: express.Response) {
-    const { blogPostId, comment, name } = req.body;
+    const { blogPostId, comment, name, ratings} = req.body;
     try {
         const newComment = await prisma.comment.create({
-            data: { blogPostId, comment, name },
+            data: { blogPostId: parseInt(blogPostId), comment, name, ratings },
         });
         res.status(201).json(newComment);
     } catch (error) {
+        console.error("Failed to add comment:", error);
         res.status(500).json({ error: 'Failed to add comment' });
     }
 }

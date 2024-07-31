@@ -129,6 +129,7 @@ export const seedBlogs = async (): Promise<void> => {
           name: faker.person.fullName(), // Use faker to generate a random name for the commenter
           comment: faker.lorem.sentence(),
           blogPostId: blogPostId,
+          ratings: Math.floor(Math.random() * 5) + 1,
         },
       });
     }
