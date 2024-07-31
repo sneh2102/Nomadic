@@ -126,10 +126,14 @@ export async function getBlogPostById(req: Request, res: Response) {
       include: {
         comments: {
           select: {
+            ratings: true,
             comment: true,
             createdAt: true,
             name: true, // Assuming you have a 'name' field in comments
           },
+          orderBy: {
+            createdAt: "desc",
+          }
         },
       },
     });

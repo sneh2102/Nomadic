@@ -2,11 +2,14 @@
 export const getBlogs = async ({
     page,
     category,
+    pageSize
 }: {
     page: string | null;
     category: string | null;
+    pageSize: number;
 }) => {
     let q = page ? `?page=${page}` : "";
+    q += pageSize ? `${q ? "&" : "?"}limit=${pageSize}` : "";
     q += category ? `${q ? "&" : "?"}category=${category}` : "";
     const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog${q}`;
     console.log("Fetching from URL:", url);

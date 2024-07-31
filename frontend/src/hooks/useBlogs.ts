@@ -5,9 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 const useBlog = ({
     page,
     category,
+    pageSize = 6,
 }: {
     page: string | null;
     category: string | null;
+    pageSize?: number;
 }) => {
     const blogQuery = useQuery({
         queryKey: ["blogs", page, category],
@@ -15,6 +17,7 @@ const useBlog = ({
             return await getBlogs({
                 page,
                 category,
+                pageSize,
             });
         },
     });

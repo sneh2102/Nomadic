@@ -10,6 +10,7 @@ import reviewRoutes from "./reviewroutes"
 import TourLocationRouter from './tourLocationRouter';
 import bookingRouter from './bookingRoute';
 import BlogRouter from "./blogRouter";
+import commentRouter from "./commentRouter";
 
 
 const rootRouter: Router = Router();
@@ -23,6 +24,7 @@ rootRouter.use('/v1', TourPackageRouter)
 rootRouter.use('/v1', TourCategoryRouter)
 rootRouter.use('/v1', reviewRoutes);
 rootRouter.use('/v1',BlogRouter)
+rootRouter.use('/v1', commentRouter)
 
 
 rootRouter.use('/v1', TourLocationRouter)
