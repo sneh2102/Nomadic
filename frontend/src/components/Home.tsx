@@ -25,6 +25,7 @@ import {
     ShieldOutlined,
     ShoppingCartOutlined,
 } from "@mui/icons-material";
+import useBlogs from "../hooks/useBlogs";
 import LearningCard from "./ui/LearningCard";
 import TourCard from "./ui/TourCard";
 import TestimonialCard from "./ui/TestimonialCard";
@@ -39,7 +40,6 @@ import { useLocations } from "../hooks/useLocations";
 import { Link } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import { add, format } from "date-fns";
-import { l } from "vite/dist/node/types.d-aGj9QkWt";
 
 const RecommendedTourList = (props: { tours: TourList }) => {
     const settings: Settings = {
@@ -111,6 +111,11 @@ const Home = () => {
         minDuration: null,
         pageSize: "10",
     });
+    const { blogs } = useBlogs({
+        page: null,
+        category: null,
+        pageSize: 3
+      });
     const { locations } = useLocations();
     const [selectedLocation, setSelectedLocation] = useState<string>(
         locations?.[0].city || ""
@@ -481,9 +486,15 @@ const Home = () => {
                             Here's our latest blogs
                         </p>
                         <div className="flex flex-col gap-12 mx-4 my-12 md:flex-row md:mx-0">
-                            <BlogCard />
-                            <BlogCard />
-                            <BlogCard />
+                            {blogs?.data.map((blog) => (
+                                <BlogCard
+                                    key={blog.id}
+                                    id={blog.id}
+                                    title={blog.title}
+                                    date={blog.createdAt}
+                                    image={blog.thumbnail}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>

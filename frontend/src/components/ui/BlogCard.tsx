@@ -1,21 +1,35 @@
 // author: Smit Patel
+import { format } from "date-fns";
 import React from "react";
+import { Link } from "react-router-dom";
 
-const BlogCard = () => {
+const BlogCard = ({
+    title,
+    date,
+    image,
+    id,
+}: {
+    title: string;
+    date: string;
+    image: string;
+    id: number;
+}) => {
     return (
-        <div className="w-full">
+        <Link to={`/blogs/${id}`} className="w-full">
+        <div >
             <div className="w-full h-96 overflow-hidden rounded-xl">
                 <img
                     className="object-cover h-full w-full"
-                    src="/new_york.jpg"
-                    alt="New York"
+                    src={image}
+                    alt={title}
                 />
             </div>
             <h4 className="font-semibold tracking-tight my-4">
-                10 European ski destinations you should visit this winter
+                {title}
             </h4>
-            <p className="text-grey">Jan 12, 2024</p>
+            <p className="text-grey">{format(new Date(date), 'MM-dd-yyyy')}</p>
         </div>
+        </Link>
     );
 };
 
