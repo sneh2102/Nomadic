@@ -1,4 +1,5 @@
-// src/controllers/blogController.ts
+// author: Heli Desai
+
 import { PrismaClient } from '@prisma/client';
 import express from 'express';
 

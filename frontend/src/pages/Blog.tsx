@@ -1,3 +1,4 @@
+// Author: Heli Desai
 import React from 'react';
 import HeroSections from '../components/blog/HeroSections';
 import PopularTopics from '../components/blog/PopularTopics';

@@ -1,3 +1,4 @@
+// Author: Heli Desai
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import BlogDetails from '../components/blog/BlogDetail';

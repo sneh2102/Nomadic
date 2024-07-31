@@ -1,3 +1,4 @@
+// Author: Heli Desai
 import React from 'react';
 
 interface StarRatingProps {
