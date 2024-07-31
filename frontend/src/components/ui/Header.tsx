@@ -26,16 +26,16 @@ const Header = (props: HeaderProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-
+    const { userId } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : ""
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
         navigate('/');
-      };
+    };
     useEffect(() => {
         const token = getToken();
         setIsLoggedIn(!!token);
-      }, []);
+    }, []);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
     };
@@ -60,7 +60,7 @@ const Header = (props: HeaderProps) => {
     }, []);
     return (
         <nav
-            className="bg-transparent text-white p-4 flex justify-between fixed w-full z-50 transition-colors duration-300"
+            className="fixed z-50 flex justify-between w-full p-4 text-white transition-colors duration-300 bg-transparent"
             ref={navRef}
         >
             <div className="flex items-center">
@@ -68,14 +68,14 @@ const Header = (props: HeaderProps) => {
                     <div className="w-24 mr-2">
                         <Link to="/">
                             <img
-                                className="h-full w-full"
+                                className="w-full h-full"
                                 src="/logo_white.png"
                                 alt="Palm Logo"
                             />
                         </Link>
                     </div>
                 </div>
-                <ul className="gap-4 hidden md:flex">
+                <ul className="hidden gap-4 md:flex">
                     <li>
                         <Link to="/">Home</Link>
                     </li>
@@ -92,7 +92,7 @@ const Header = (props: HeaderProps) => {
                 </ul>
             </div>
             <div>
-                <div className="md:hidden block">
+                <div className="block md:hidden">
                     <IconButton onClick={toggleDrawer}>
                         <Menu
                             sx={{
@@ -102,13 +102,13 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                  {isLoggedIn?(<TransparentButton to="/"  variant="contained" onClick={handleLogout}>
+                    {isLoggedIn ? (<TransparentButton to="/" variant="contained" onClick={handleLogout}>
                         Logout
-                    </TransparentButton>):(
+                    </TransparentButton>) : (
                         <TransparentButton to="/signup" variant="contained">
-                        Sign In / Register
-                    </TransparentButton>
-                    )}  
+                            Sign In / Register
+                        </TransparentButton>
+                    )}
                 </div>
                 <Drawer open={open} onClose={toggleDrawer} anchor="right">
                     <Box sx={{ width: 250 }} role="presentation">
@@ -133,6 +133,10 @@ const Header = (props: HeaderProps) => {
                                 {
                                     text: "Manage Listings",
                                     href: "/manage",
+                                },
+                                {
+                                    text: "History",
+                                    href: `/history/${userId}`,
                                 }
                             ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>

@@ -5,6 +5,7 @@ import Recommendations from '../components/history/Recommendations'
 import Header from '../components/ui/Header'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Box } from '@mui/material'
+import Footer from '../components/ui/Footer'
 
 
 const HistoryPage = () => {
@@ -19,6 +20,8 @@ const HistoryPage = () => {
                 <br />
                 <UserHistory />
                 <Recommendations />
+                <br />
+                <Footer />
             </ChakraProvider>
         </div>
     )
