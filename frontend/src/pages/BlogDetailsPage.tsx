@@ -9,7 +9,23 @@ import { useAuth } from '../Context/Context'; // Adjust the import path as neede
 
 const BlogDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { blogDetail, blogDetailLoading, blogDetailError } = useBlogDetail(id || '');
+  const { blogDetail, blogDetailLoading, blogDetailError, addCommentMutation } = useBlogDetail(id || '');
+  const handleCommentSubmit = async ({
+    name,
+    comment,
+    rating,
+  }: {
+    name: string;
+    comment: string;
+    rating: number;
+  }) => {
+    try {
+      await addCommentMutation.mutateAsync({ name, comment, ratings: rating });
+    } catch (error) {
+      console.error('Failed to add comment:', error);
+    }
+  }
+  console.log(blogDetail);
 
   if (blogDetailLoading) return <div className="text-center mt-10">Loading...</div>;
 
@@ -20,6 +36,8 @@ const BlogDetailsPage: React.FC = () => {
     <MainLayout>
       <main>
         <BlogDetails blogDetail={blogDetail} />
+          <CommentForm onSubmit={handleCommentSubmit}/>
+          <CommentList comments={blogDetail.comments}/>
       </main>
     </MainLayout>
   );
