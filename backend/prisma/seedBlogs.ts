@@ -89,7 +89,9 @@ const generateBlogContent = (city: string, index: number) => {
   - [Exploring the Wonders of ${city}](#)
   - [A Journey through ${city}](#)
 
-  ![Beautiful Landscape](${`https://picsum.photos/600/400?random=${index + 400}`})
+  ![Beautiful Landscape](${`https://picsum.photos/600/400?random=${
+    index + 400
+  }`})
 `;
 };
 
@@ -134,10 +136,3 @@ export const seedBlogs = async (): Promise<void> => {
 
   console.log("Seeding finished.");
 };
-
-seedBlogs().catch((e) => {
-  console.error(e);
-  process.exit(1);
-}).finally(async () => {
-  await prisma.$disconnect();
-});
