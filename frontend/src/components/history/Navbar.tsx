@@ -48,6 +48,10 @@ const Navbar = () => {
                                 </Box>
                                 <Box mx="3">
 
+                                    History
+                                </Box>
+                                <Box mx="3">
+
                                     <Input placeholder="Search"></Input>
                                 </Box>
                                 <Box mx="3">
@@ -100,7 +104,10 @@ const Navbar = () => {
 
                                             Contact us
                                         </Box>
+                                        <Box mx="3">
 
+                                            History
+                                        </Box>
 
                                     </Flex>
                                 </DrawerContent>

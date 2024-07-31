@@ -22,7 +22,7 @@ const Recommendations: React.FC = () => {
             setLoading(false)
         })
     }, [])
-
+    console.log("cards", cards)
     if (loading) return <Center my="5">Loading...</Center>
     return (
         <Box w="95%" m="auto">
@@ -83,7 +83,7 @@ const Recommendations: React.FC = () => {
                                                 </Flex>
                                                 <Flex alignItems="center" justifyContent="center">
                                                     <RxLapTimer />
-                                                    <Text ml="1">10 days 9 nights</Text>
+                                                    <Text ml="1">{card.duration} days</Text>
                                                 </Flex>
                                                 <Flex alignItems="center" justifyContent="center">
                                                     <FaStar />
@@ -95,7 +95,7 @@ const Recommendations: React.FC = () => {
 
                                         <Text fontWeight="bolder" fontSize="2xl" mb="5">{card.location}</Text>
                                         <Flex justifyContent="space-between" alignItems=" center" m="auto">
-                                            <Button onClick={() => navigate('/booktrip')}>Book Now</Button>
+                                            <Button onClick={() => navigate(`/tours/${card.id}`)}>Book Now</Button>
                                             <Text ml="1">${card.price}</Text>
                                         </Flex>
                                     </Box>
