@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
-
+const AuthContext = createContext(null);
 interface FilterContextType {
   freeCancelationAvailable: string;
   setFreeCancelationAvailable: (filter: string) => void;
@@ -23,4 +23,26 @@ export const useFilter = () => {
     throw new Error('useFilter must be used within a FilterProvider');
   }
   return context;
+};
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+
+    const login = (userData) => {
+        setUser(userData);
+    };
+
+    const logout = () => {
+        setUser(null);
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => {
+    return useContext(AuthContext);
 };

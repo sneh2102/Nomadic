@@ -70,6 +70,31 @@ CREATE TABLE "Bookings" (
     CONSTRAINT "Bookings_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "BlogPost" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "thumbnail" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "BlogPost_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Comment" (
+    "id" SERIAL NOT NULL,
+    "comment" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "blogPostId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
@@ -87,3 +112,6 @@ ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_tourPackageId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_blogPostId_fkey" FOREIGN KEY ("blogPostId") REFERENCES "BlogPost"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
