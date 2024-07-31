@@ -1,3 +1,4 @@
+// author: Parth Patel
 import { LockOutlined } from "@mui/icons-material";
 import {
   Container,
@@ -30,7 +31,7 @@ const LoginPage = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       setError("")
-      console.log("Data:", data)
+      console.log(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/login`)
       const response = await fetch(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/login`, {
         method: 'POST',
         headers: {
@@ -39,10 +40,9 @@ const LoginPage = () => {
         body: JSON.stringify(data)
       });
       const result = await response.json();
-      console.log("result", result);
-      localStorage.setItem('user', JSON.stringify({ userId: result.userDetails.id, email: result.userDetails.email }));
-
+      console.log("result:::", result);
       if (response.ok) {
+        localStorage.setItem('user', JSON.stringify({ userId: result.userDetails.id, email: result.userDetails.email }));
         localStorage.setItem('token', result.token);
         console.log("Login successful.")
         navigate('/')
@@ -50,7 +50,6 @@ const LoginPage = () => {
       else {
         setError(result.error)
       }
-      console.log("On Submit called")
       console.log(result.error)
     }
     catch (error) {
@@ -100,7 +99,7 @@ const LoginPage = () => {
                       value: true,
                       message: "Email is required"
                     }, pattern: {
-                      value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
+                      value: /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/,
                       message: "Invalid email format"
                     }
                   })

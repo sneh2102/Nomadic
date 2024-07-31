@@ -14,6 +14,8 @@ import React, { useEffect, useRef, useState } from "react";
 import TransparentButton from "./TransparentButton";
 import { Link } from "react-router-dom";
 import { displayPartsToString } from "typescript";
+import { useNavigate } from 'react-router-dom';
+import { getToken } from "../../utils/authUtils";
 
 interface HeaderProps {
     showScrollAnimation?: boolean;
@@ -21,7 +23,19 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
     const [open, setOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
 
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        navigate('/');
+      };
+    useEffect(() => {
+        const token = getToken();
+        setIsLoggedIn(!!token);
+      }, []);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
     };
@@ -84,9 +98,13 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                    <TransparentButton to="/signup" variant="contained">
+                  {isLoggedIn?(<TransparentButton to="/"  variant="contained" onClick={handleLogout}>
+                        Logout
+                    </TransparentButton>):(
+                        <TransparentButton to="/signup" variant="contained">
                         Sign In / Register
                     </TransparentButton>
+                    )}  
                 </div>
                 <Drawer open={open} onClose={toggleDrawer} anchor="right">
                     <Box sx={{ width: 250 }} role="presentation">
