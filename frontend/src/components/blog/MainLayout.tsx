@@ -2,11 +2,15 @@ import React from 'react';
 import Navbar from '../ui/Header';
 import Footer from '../ui/Footer';
 
-const MainLayout: React.FC = ({ children }) => {
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+const MainLayout: React.FC<MainLayoutProps> = (props) => {
   return (
     <div className="main-layout">
-      <Navbar showScrollAnimation={true}/>
-      {children}
+      <Navbar/>
+        {props.children}
       <Footer />
     </div>
   );

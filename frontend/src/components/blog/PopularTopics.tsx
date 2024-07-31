@@ -1,69 +1,71 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import './PopularTopics.css';
 import ArticlesSection from './ArticlesSection';
-import {useNavigate} from "react-router-dom";
-
-const articles = [
-  { id:1, category: 'Family Holidays', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:2,category: 'Beaches', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:3,category: 'Adventure travel', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-    {  id:4,category: 'Art and culture', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:5,category: 'Air travel', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:6,category: 'Adventure travel', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-    {  id:7,category: 'Art and culture', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:8,category: 'Air travel', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:9,category: 'Explore', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-{  id:10,category: 'Family Holidays', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:11,category: 'Beaches', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:12,category: 'Explore', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-{  id:13,category: 'Beaches', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-  {  id:14,category: 'Explore', date: '08/08/2024', title: 'Lorem ipsum dolor', content: 'Lorem ipsum dolor sit amet et delectus accommodare his.', image: '/assets/placeholder.jpeg' },
-
-];
-const ITEMS_PER_PAGE = 6;
+import useBlogs from "../../hooks/useBlogs";
+import { format } from 'date-fns';
+import { useBlogCategories } from '../../hooks/useBlogCategories';
+import useFilteredBlogs from '../../hooks/useFilteredBlog'; // Verify correct file path
+import { Pagination } from '@mui/material';
 
 const PopularTopics: React.FC = () => {
-  const [filteredCategory, setFilteredCategory] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const params = new URLSearchParams(useLocation().search);
+  const categoryQuery = params.get('category');
+  const pageQuery = params.get('page');
+  const navigate = useNavigate();
+
+  const { blogs = [], blogsLoading, blogsError } = useBlogs({
+    page: pageQuery,
+    category: categoryQuery,
+  });
+  const { blogCategories, blogCategoriesError } = useBlogCategories();
+
 
   const handleCategoryClick = (category: string) => {
-    setFilteredCategory(category);
-    setCurrentPage(1); // Reset to first page on category change
+    params.set('category', category);
+    params.delete('page');
+    navigate({ search: params.toString() }, {replace: true});
   };
 
-  const handleCardClick = (id: number) => {
-    navigate(`/blog/${id}`); // Navigate to the blog page with the article id
+  const handleCardClick : any = (id: number) => {
+    navigate(`/blogs/${id}`); // Navigate to the detailed blog page
   };
 
-  const filteredArticles = filteredCategory
-    ? articles.filter(article => article.category === filteredCategory)
-    : articles;
-
-  const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentArticles = filteredArticles.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const handlePageClick = (page: number) => {
-    setCurrentPage(page);
+    params.set('page', page.toString());
+    navigate({ search: params.toString() }, {replace: true});
   };
+
+  if (blogsLoading) return <div>Loading...</div>;
+  if (blogsError) return <div>Error loading blog</div>;
+  if (blogCategoriesError) return <div>Error loading categories</div>;
 
   return (
     <section className="popular-topics">
-      <ArticlesSection onCategoryClick={handleCategoryClick} />
+      <ArticlesSection blogCategories={blogCategories} onCategoryClick={handleCategoryClick} />
       <div className="topics-container">
-        {currentArticles.map((article, index) => (
-          <div className="topic-card" key={index} onClick={() => handleCardClick(article.id)}>
-            <img src={article.image} alt={article.title} />
+        {blogs.data.map((blog, index) => (
+          <div className="topic-card" key={index} onClick={() => handleCardClick(blog.id)}>
+            <img src={blog.thumbnail} alt={blog.title} />
             <div className="card-content">
-              <p>{article.date}</p>
-              <h3>{article.title}</h3>
-              <p>{article.content}</p>
+              <p>{format(new Date(blog.createdAt), "dd-MM-yyyy")}</p>
+              <h3>{blog.title}</h3>
+              <p>{blog.category}</p>
+              <p>{blog.description}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="pagination">
+      <Pagination count={blogs.meta.totalPages} page={pageQuery ? parseInt(pageQuery) : 1 }
+                  onChange={(event, page) => handlePageClick(page)}
+      sx={{
+    '& > .MuiPagination-ul': {
+      justifyContent: 'center',
+    },
+  }}
+      />
+      {/* <div className="pagination">
         {[...Array(totalPages)].map((_, index) => (
           <button
             key={index}
@@ -73,7 +75,7 @@ const PopularTopics: React.FC = () => {
             {index + 1}
           </button>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 };

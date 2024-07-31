@@ -1,48 +1,66 @@
 import React, { useState } from 'react';
+import StarRating from './StarRating';
+import { useComments } from '../../hooks/useComments';
 
-const CommentForm = ({ addComment }) => {
-    const [commentData, setCommentData] = useState({ name: '', comment: '' });
+const CommentForm: React.FC<{ blogPostId: string }> = ({ blogPostId }) => {
+    const [name, setName] = useState('');
+    const [comment, setComment] = useState('');
+    const [rating, setRating] = useState(0);
+    const { addComment } = useComments(blogPostId);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setCommentData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (commentData.name && commentData.comment) {
-            addComment(commentData);
-            setCommentData({ name: '', comment: '' });  // Reset form after submission
-        } else {
-            alert('Please fill in both fields.');
+        if (!blogPostId) {
+            console.error("blogPostId is required");
+            return;
+        }
+        const newComment = { blogPostId, name, comment };
+        try {
+            await addComment(newComment);
+            setName('');
+            setComment('');
+            setRating(0);
+        } catch (error) {
+            console.error("Failed to add comment:", error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mt-6">
+        <form className="max-w-lg mx-auto bg-white p-6 shadow-md rounded-md" onSubmit={handleSubmit}>
+            <h2 className="text-2xl font-bold mb-4">Leave a Comment</h2>
             <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+                    Name
+                </label>
                 <input
                     type="text"
-                    name="name"
-                    value={commentData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    required
-                    className="px-4 py-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                    id="name"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
             </div>
             <div className="mb-4">
+                <label htmlFor="comment" className="block text-gray-700 font-bold mb-2">
+                    Comment
+                </label>
                 <textarea
-                    name="comment"
-                    value={commentData.comment}
-                    onChange={handleInputChange}
-                    placeholder="Your Comment"
-                    required
-                    className="px-4 py-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
-                    rows="4"
+                    id="comment"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                 ></textarea>
             </div>
-            <button type="submit" className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+            <div className="mb-4">
+                <label htmlFor="rating" className="block text-gray-700 font-bold mb-2">
+                    Rating
+                </label>
+                <StarRating rating={rating} onRatingChange={setRating} />
+            </div>
+            <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            >
                 Submit
             </button>
         </form>

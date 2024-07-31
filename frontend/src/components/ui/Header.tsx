@@ -66,11 +66,15 @@ const Header = (props: HeaderProps) => {
                         <Link to="/">Home</Link>
                     </li>
                     <li>
+                        <Link to="/blogs">Blogs</Link>
+                    </li>
+                    <li>
                         <Link to="/faq">FAQ</Link>
                     </li>
                     <li>
                         <Link to="/contactus">Contact Us</Link>
                     </li>
+
                 </ul>
             </div>
             <div>
@@ -95,6 +99,10 @@ const Header = (props: HeaderProps) => {
                                 {
                                     text: "Home",
                                     href: "/",
+                                },
+                                {
+                                    text: "Blogs",
+                                    href: "/blogs",
                                 },
                                 {
                                     text: "FAQ",
