@@ -87,7 +87,7 @@ export const updateTourCategory = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to update tour category: ' + JSON.stringify(error) });
     }
 }
-
+//Author : Sneh Patel
 export const getEveryTourCategory = async (req: Request, res: Response) => {
     try {
         const tourCategories = await prisma.tourCategory.findMany();
@@ -98,7 +98,7 @@ export const getEveryTourCategory = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to fetch tour categories: ' + JSON.stringify(error) });
     }
 }
-
+//Author : Sneh Patel
 export const deleteTourCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -114,7 +114,7 @@ export const deleteTourCategory = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to delete tour category: ' + JSON.stringify(error) });
     }
 }
-
+//Author : Sneh Patel
 export const getTourCategoryById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -128,7 +128,7 @@ export const getTourCategoryById = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to fetch tour category: ' + JSON.stringify(error) });
     }
 }
-
+//Author : Sneh Patel
 export const getTourCategoryTours = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
