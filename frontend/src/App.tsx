@@ -14,7 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResetPassword from "./pages/ResetPassword";
 import ScrollToTop from "./utils/ScrollToTop";
-import { AuthProvider } from "./Context/Context"; // Ensure correct import path
+import { AuthProvider, ContextProvider } from "./Context/Context"; // Ensure correct import path
 import { Toaster } from "react-hot-toast";
 import { Box } from "@mui/material";
 import Manage_Listing from "./pages/Manger_Dashboard/Manage_Listing";
@@ -27,10 +27,11 @@ import BlogDetailsPage from "./pages/BlogDetailsPage";
 function App() {
     return (
         <div>
-                <Router>
-                    <ToastContainer />
+            <ContextProvider>
+            <Router>
+            <ToastContainer />
                     <Routes>
-                        <Route path="/search" element={<SearchPage />} />
+                    <Route path="/search" element={<SearchPage />} />
                         <Route path="/faq" element={<FAQPage />} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/manage" element={<Manage_Listing/>}/>
@@ -53,6 +54,7 @@ function App() {
                     </Routes>
                 </Router>
                 <Toaster />
+                </ContextProvider>
         </div>
     );
 }

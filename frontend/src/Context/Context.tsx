@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useContext } from 'react';
 const AuthContext = createContext(null);
 interface FilterContextType {
   freeCancelationAvailable: string;
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout , useFilter}}>
             {children}
         </AuthContext.Provider>
     );

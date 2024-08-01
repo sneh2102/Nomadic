@@ -1,4 +1,4 @@
-// author: Smit Patel
+// author: Smit Patel, Sneh Patel
 // src/controllers/tourPackageController.ts
 import { Request, Response } from "express";
 import { prismaClient as prisma } from "../server";
@@ -195,7 +195,7 @@ export const getTourPackageById = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Failed to retrieve tour package" });
     }
 };
-
+//Author : Sneh Patel
 // Update a tour package by ID
 export const updateTourPackageById = async (req: Request, res: Response) => {
     try {
@@ -240,6 +240,7 @@ export const updateTourPackageById = async (req: Request, res: Response) => {
     }
 };
 
+//Author : Sneh Patel
 // Delete a tour package by ID
 export const deleteTourPackageById = async (req: Request, res: Response) => {
     try {
@@ -255,7 +256,8 @@ export const deleteTourPackageById = async (req: Request, res: Response) => {
         res.status(500).json({ error: error });
     }
 };
-
+//Author : Sneh Patel
+// Get all tour categories
 export const getAllFreeCancelationAvailableTourPackages = async (req: Request, res: Response) => {
     try {
         const tourPackages = await prisma.tourPackage.findMany({
@@ -269,6 +271,7 @@ export const getAllFreeCancelationAvailableTourPackages = async (req: Request, r
     }
 }
 
+//Author : Sneh Patel
 export const getAllNonFreeCancelationAvailableTourPackages = async (req: Request, res: Response) => {
     try {
         const tourPackages = await prisma.tourPackage.findMany({
