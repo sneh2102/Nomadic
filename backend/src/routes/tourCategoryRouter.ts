@@ -1,4 +1,4 @@
-// author: Smit Patel
+// author: Smit Patel, Sneh Patel
 import express from 'express';
 import { createTourCategory, deleteTourCategory, getAllTourCategories, getEveryTourCategory, updateTourCategory, getTourCategoryById } from '../controllers/tourCategoryController';
 import { get } from 'http';

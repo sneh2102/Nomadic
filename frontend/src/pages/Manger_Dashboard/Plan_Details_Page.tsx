@@ -157,12 +157,12 @@ const PlanDetails: React.FC = () => {
         endDate: new Date(editedTour?.endDate || '').toISOString()
       };
       try{
-      const data = await axios.put(`http://localhost:8000/api/v1/tours/${id}`, payload);
+      const data = await axios.put(URL + `/api/v1/tours/${id}`, payload);
       toast.success("Tour details saved successfully!");
 
       navigate('/manage');
       }catch(error){
-        toast.success("Failed to save tour details!");
+        toast.error("Failed to save tour details!");
       }
     }
   };

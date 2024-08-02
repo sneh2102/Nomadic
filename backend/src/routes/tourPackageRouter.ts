@@ -1,4 +1,4 @@
-// author: Smit Patel
+// author: Smit Patel, Sneh Patel
 // src/routes/tourPackageRouter.ts
 import express from 'express';
 import {

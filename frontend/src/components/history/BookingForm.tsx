@@ -52,7 +52,7 @@ const BookingForm = ({ tourPackage }: { tourPackage: TourPackage }) => {
         try {
             await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/booking`, payload).then((response) => {
                 if (response.data.success) {
-                    toast.success("SignUp Successful!", {
+                    toast.success("Booking Successful!", {
                         position: "top-center",
                         autoClose: 2000
                     });

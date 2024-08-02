@@ -25,6 +25,7 @@ import {
     ShieldOutlined,
     ShoppingCartOutlined,
 } from "@mui/icons-material";
+import useBlogs from "../hooks/useBlogs";
 import LearningCard from "./ui/LearningCard";
 import TourCard from "./ui/TourCard";
 import TestimonialCard from "./ui/TestimonialCard";
@@ -39,7 +40,6 @@ import { useLocations } from "../hooks/useLocations";
 import { Link } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import { add, format } from "date-fns";
-import { l } from "vite/dist/node/types.d-aGj9QkWt";
 
 const RecommendedTourList = (props: { tours: TourList }) => {
     const settings: Settings = {
@@ -111,6 +111,11 @@ const Home = () => {
         minDuration: null,
         pageSize: "10",
     });
+    const { blogs } = useBlogs({
+        page: null,
+        category: null,
+        pageSize: 3
+      });
     const { locations } = useLocations();
     const [selectedLocation, setSelectedLocation] = useState<string>(
         locations?.[0].city || ""
@@ -247,8 +252,8 @@ const Home = () => {
                         </p>
                         <form>
                             <div className="flex flex-col w-full p-2 text-black bg-white rounded-md h-35 md:h-24 md:rounded-full md:flex-row">
-                                <div className="flex items-end gap-1 pl-8 mb-3 mr-4 basis-10/12 flex-col md:flex-row">
-                                    <div className="md:basis-6/12 w-full">
+                                <div className="flex flex-col items-end gap-1 pl-8 mb-3 mr-4 basis-10/12 md:flex-row">
+                                    <div className="w-full md:basis-6/12">
                                         <div className="text-sm font-medium">
                                             Location
                                         </div>
@@ -393,7 +398,7 @@ const Home = () => {
                                     Best Price Guarantee
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                We ensure the lowest prices for your dream vacations, or we'll match the difference!
+                                    We ensure the lowest prices for your dream vacations, or we'll match the difference!
                                 </p>
                             </div>
                             <div className="flex flex-col items-center w-full max-w-80">
@@ -407,7 +412,7 @@ const Home = () => {
                                     Easy & Quick Booking
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                Effortless and fast booking process to get you on your way without any hassle.
+                                    Effortless and fast booking process to get you on your way without any hassle.
                                 </p>
                             </div>
                             <div className="flex flex-col items-center w-full max-w-80">
@@ -421,7 +426,7 @@ const Home = () => {
                                     Customer Care 24/7
                                 </h4>
                                 <p className="tracking-tighter text-center text-grey">
-                                Round-the-clock support to assist you anytime, anywhere.
+                                    Round-the-clock support to assist you anytime, anywhere.
                                 </p>
                             </div>
                         </div>
@@ -435,7 +440,7 @@ const Home = () => {
                                     What our customers are saying us?
                                 </h3>
                                 <p className="mt-8 mb-6 text-grey xl:mb-20">
-                                Our customers rave about their seamless booking experiences and unforgettable trips. They appreciate our commitment to offering the best prices and our 24/7 customer support, making their travel planning stress-free and enjoyable. Hear directly from our satisfied travelers and see why they keep coming back!
+                                    Our customers rave about their seamless booking experiences and unforgettable trips. They appreciate our commitment to offering the best prices and our 24/7 customer support, making their travel planning stress-free and enjoyable. Hear directly from our satisfied travelers and see why they keep coming back!
                                 </p>
                                 <div className="flex flex-col items-center gap-8 xl:gap-32 xl:flex-row">
                                     <div>
@@ -463,10 +468,10 @@ const Home = () => {
                             </div>
                             <div className="xl:basis-8/12 max-w-[900px]">
                                 <Slider {...testimonialSliderSettings}>
-                                    <TestimonialCard name="John Doe" designation="Software Engineer" review="I had an amazing experience booking my vacation through this website. The process was quick and easy, and the customer support team was incredibly helpful. Highly recommend!"/>
-                                    <TestimonialCard name="Jane Smith" designation="Marketing Manager" review="This is my go-to site for all my travel needs. They offer the best prices, and their 24/7 customer care ensures I'm always taken care of. Five stars!"/>
-                                    <TestimonialCard name="Emily Johnson" designation="Teacher" review="Planning a trip has never been this hassle-free! The booking was straightforward, and I felt supported throughout my entire journey. A wonderful service!"/>
-                                    <TestimonialCard name="Michael Brown" designation="Sales Executive" review="I was impressed with the level of service and the ease of booking my holiday. The customer care team was always available to answer my questions, making the entire experience smooth and enjoyable."/>
+                                    <TestimonialCard name="John Doe" designation="Software Engineer" review="I had an amazing experience booking my vacation through this website. The process was quick and easy, and the customer support team was incredibly helpful. Highly recommend!" />
+                                    <TestimonialCard name="Jane Smith" designation="Marketing Manager" review="This is my go-to site for all my travel needs. They offer the best prices, and their 24/7 customer care ensures I'm always taken care of. Five stars!" />
+                                    <TestimonialCard name="Emily Johnson" designation="Teacher" review="Planning a trip has never been this hassle-free! The booking was straightforward, and I felt supported throughout my entire journey. A wonderful service!" />
+                                    <TestimonialCard name="Michael Brown" designation="Sales Executive" review="I was impressed with the level of service and the ease of booking my holiday. The customer care team was always available to answer my questions, making the entire experience smooth and enjoyable." />
                                 </Slider>
                             </div>
                         </div>
@@ -481,9 +486,15 @@ const Home = () => {
                             Here's our latest blogs
                         </p>
                         <div className="flex flex-col gap-12 mx-4 my-12 md:flex-row md:mx-0">
-                            <BlogCard />
-                            <BlogCard />
-                            <BlogCard />
+                            {blogs?.data.map((blog:any) => (
+                                <BlogCard
+                                    key={blog.id}
+                                    id={blog.id}
+                                    title={blog.title}
+                                    date={blog.createdAt}
+                                    image={blog.thumbnail}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -516,7 +527,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-20">
+            <div >
                 <Footer />
             </div>
         </div>

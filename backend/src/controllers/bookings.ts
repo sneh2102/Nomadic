@@ -11,7 +11,6 @@ class BookingController {
             // Ensure `id` is a number
             // const userId = Number(id);
 
-            console.log("totalCost", typeof totalCost.toString());
 
             const newBooking = await prisma.bookings.create({
                 data: {
@@ -19,15 +18,17 @@ class BookingController {
                     note,
                     noOfPeople: noOfPeople.toString(),
                     tourPackage: {
-                        connect: { id: Number(tourPackageId) }, 
+                        connect: { id: Number(tourPackageId) },
                     }
                     ,
                     user: {
-                        connect: { id: Number(id) }, 
+                        connect: { id: Number(id) },
                     },
                 },
             });
-            res.status(201).json({ success: true, data: newBooking });  
+            console.log("newBooking", newBooking);
+
+            res.status(201).json({ success: true, data: newBooking });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 res.status(500).json({ error: error.message });
