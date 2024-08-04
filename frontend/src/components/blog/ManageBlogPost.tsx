@@ -8,9 +8,6 @@ import { toast } from 'react-hot-toast';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useBlogCategories from '../../hooks/useBlogCategories';
-import Header from '../ui/Header';
-import Footer from '../ui/Footer';
 
 
 const categories = ['Travel', 'Food', 'Lifestyle', 'Fashion', 'Fitness', 'Health', 'Technology', 'Business', 'Entertainment', 'Sports'];
@@ -54,7 +51,6 @@ const BlogManager: React.FC = () => {
     setBlogPost({ ...blogPost, [name]: value });
   };
 
-  import { SelectChangeEvent } from '@mui/material';
   
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const name = event.target.name as keyof typeof blogPost;
