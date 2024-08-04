@@ -25,6 +25,7 @@ import Blog from "./pages/Blog";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import { BucketList } from "./components/bucketlist/BucketList";
 import { Wishlist } from "./pages/Wishlist";
+import BlogManagement from "./pages/Manger_Dashboard/ManageBlog";
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                         <Route path="/manage/add-tour" element={<AddTourPage/>} />
                         <Route path="/manage/plan-details/:id" element={<PlanDetails/>}/>
                         <Route path="/manage/create-package" element={<CreateTourPackage/>}/>
+                        <Route path="/manage/blog" element={<BlogManagement/>}/>
                         <Route path="/contactus" element={<ContactUsPage />} />
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/signup" element={<SignUpPage/>}/>

@@ -59,10 +59,10 @@ export async function getAllBlogPosts(req: Request, res: Response) {
 }
 
 export async function createBlogPost(req: Request, res: Response) {
-  const { title, content, category, description, thumbnail } = req.body;
+  const { title, content, category, description, thumbnail,userId } = req.body;
   try {
     const blog = await prisma.blogPost.create({
-      data: { title, content, category, description, thumbnail },
+      data: { title, content, category, description, thumbnail, userId},
     });
     res.status(201).json(blog);
   } catch (error: unknown) {

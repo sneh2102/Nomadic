@@ -92,3 +92,24 @@ export const deleteBlog = async (id: string) => {
         throw error;
     }
 };
+
+export const addBlog = async (data: { title: string; content: string; category?: string }) => {
+    const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog`;
+    console.log("Adding new blog to URL:", url);
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Adding new blog failed:", error);
+        throw error;
+    }
+};

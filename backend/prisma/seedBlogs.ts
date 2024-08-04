@@ -96,6 +96,15 @@ const generateBlogContent = (city: string, index: number) => {
 };
 
 export const seedBlogs = async (): Promise<void> => {
+  const user = await prisma.user.create({
+    data: {
+        first_name: "John",
+        last_name: "Doe",
+        email: "john1@doe.com",
+        password: "123",
+        resetToken: "123",
+    },
+  });
   const blogPromises: Promise<BlogPost>[] = [];
   for (let i = 0; i < 1000; i++) {
     const city = faker.location.city();
@@ -104,7 +113,7 @@ export const seedBlogs = async (): Promise<void> => {
     const thumbnail = `https://picsum.photos/600/800?random=${i + 2}`;
     const description = `Explore the breathtaking ${city}, known for its stunning landscapes, rich cultural history, and delicious cuisine. Discover the cultural and culinary delights of this region.`;
     const category = categories[Math.floor(Math.random() * categories.length)];
-
+    const userId = user.id;
     blogPromises.push(
       prisma.blogPost.create({
         data: {
@@ -113,6 +122,7 @@ export const seedBlogs = async (): Promise<void> => {
           category,
           thumbnail,
           description,
+          userId,
         },
       })
     );
