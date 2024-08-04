@@ -2,7 +2,7 @@
 export const getBlogs = async ({
     page,
     category,
-    pageSize
+    pageSize,
 }: {
     page: string | null;
     category: string | null;
@@ -93,7 +93,14 @@ export const deleteBlog = async (id: string) => {
     }
 };
 
-export const addBlog = async (data: { title: string; content: string; category?: string }) => {
+export const addBlog = async (data: {
+    title: string;
+    content: string;
+    category: string;
+    description: string;
+    thumbnail: string;
+    userId: number;
+}) => {
     const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog`;
     console.log("Adding new blog to URL:", url);
     try {
@@ -102,7 +109,7 @@ export const addBlog = async (data: { title: string; content: string; category?:
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

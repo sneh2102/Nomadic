@@ -1,14 +1,12 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import axios from 'axios';
 import {
   Box, Button, Container, TextField, Typography, Grid, MenuItem, Select, FormControl, InputLabel,
   SelectChangeEvent
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import SaveIcon from '@mui/icons-material/Save';
-import DeleteIcon from '@mui/icons-material/Delete';
+import useBlog from '../../hooks/useBlogs';
 
 
 const categories = ['Travel', 'Food', 'Lifestyle', 'Fashion', 'Fitness', 'Health', 'Technology', 'Business', 'Entertainment', 'Sports'];
@@ -18,34 +16,25 @@ export interface BlogPost {
   title: string;
   content: string;
   category: string;
-  thumbnail: string;
+  thumbnail_url: string;
   description: string;
 }
 
 const BlogManager: React.FC = () => {
   const URL = import.meta.env.VITE_BASE_API_URL;
   const navigate = useNavigate();
+  const {addBlogMutation} = useBlog({
+    page: null,
+    category: null,
+    pageSize: null
+  });
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: '',
     content: '',
     category: '',
-    thumbnail: '',
+    thumbnail_url: '',
     description: '',
   });
-
-  useEffect(() => {
-    const fetchBlogPost = async (id: number) => {
-      try {
-        const response = await axios.get(`${URL}/api/v1/blogPosts/${id}`);
-        setBlogPost(response.data);
-      } catch (error) {
-        console.error('Failed to fetch blog post', error);
-      }
-    };
-
-    // Uncomment and replace 123 with actual ID to fetch when needed
-    // fetchBlogPost(123);
-  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -61,43 +50,27 @@ const BlogManager: React.FC = () => {
     });
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setBlogPost({ ...blogPost, thumbnail: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${URL}/api/v1/blogPosts`, blogPost);
-      toast.success('Blog post created successfully!');
-      navigate('/blog');
+      await addBlogMutation.mutateAsync({
+        title: blogPost.title,
+        content: blogPost.content,
+        category: blogPost.category,
+        description: blogPost.description,
+        thumbnail: blogPost.thumbnail_url,
+        userId: 1,
+      })
+      toast.success('Blog post created/updated successfully');
+      navigate('/manage/blog');
     } catch (error) {
       console.error("Failed to create/update blog post:", error);
       toast.error('Failed to create/update blog post. Please try again.');
     }
   };
-
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`${URL}/api/v1/blogPosts/${id}`);
-      toast.success('Blog post deleted successfully!');
-      navigate('/blog');
-    } catch (error) {
-      console.error("Failed to delete blog post:", error);
-      toast.error('Failed to delete blog post. Please try again.');
-    }
-  };
-
   return (
     <>
     <Container component="main" maxWidth="md">
-      <Box sx={{ mt: 10, mb: 20 }}>
+      <Box sx={{pt: 20, mb: 20 }}>
         <Typography variant="h4" gutterBottom>
           Manage Blog Post
         </Typography>
@@ -156,16 +129,15 @@ const BlogManager: React.FC = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" component="label" style={{ background: "#2F365F", color: 'white' }}>
-              Upload Thumbnail
-              <input type="file" hidden onChange={handleFileChange} />
-              <PhotoCamera style={{ marginLeft: '10px' }} />
-            </Button>
-            {blogPost.thumbnail && (
-              <Box mt={2}>
-                <img src={blogPost.thumbnail} alt="Thumbnail" style={{ width: "100%", height: '300px', objectFit: "contain" }} />
-              </Box>
-            )}
+            <TextField
+              fullWidth
+              required
+              id="thumbnail_url"
+              label="Thumbnail URL"
+              name="thumbnail_url"
+              value={blogPost.thumbnail_url}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={12}>
             <Button
@@ -179,20 +151,6 @@ const BlogManager: React.FC = () => {
               Save Blog Post
             </Button>
           </Grid>
-          {blogPost.id && (
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<DeleteIcon />}
-                onClick={() => handleDelete(blogPost.id)}
-                fullWidth
-                style={{ background: "#D32F2F", color: 'white' }}
-              >
-                Delete Blog Post
-              </Button>
-            </Grid>
-          )}
         </Grid>
       </Box>
     </Container>
