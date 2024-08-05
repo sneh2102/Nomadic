@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const UpdateBlogForm = () => {
+    const { userId } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : ""
     const { blogId } = useParams();
     const { blogDetail, blogDetailLoading, updateBlogMutation } =
         useBlogDetail(blogId);
@@ -21,7 +22,7 @@ const UpdateBlogForm = () => {
                 category: blog.category,
                 description: blog.description,
                 thumbnail: blog.thumbnail_url,
-                userId: 1,
+                userId: userId,
             });
             toast.success("Blog post updated successfully");
             navigate("/manage/blog");

@@ -8,6 +8,7 @@ import BlogForm, { BlogPost } from "../../components/blog/BlogForm";
 import Footer from "../../components/ui/Footer";
 
 const AddBlogForm: React.FC = () => {
+    const { userId } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : ""
     const navigate = useNavigate();
     const { addBlogMutation } = useBlog({
         page: null,
@@ -23,7 +24,7 @@ const AddBlogForm: React.FC = () => {
                 category: blog.category,
                 description: blog.description,
                 thumbnail: blog.thumbnail_url,
-                userId: 1,
+                userId: userId,
             });
             toast.success("Blog post created/updated successfully");
             navigate("/manage/blog");
