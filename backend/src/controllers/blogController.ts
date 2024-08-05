@@ -80,11 +80,11 @@ export async function createBlogPost(req: Request, res: Response) {
 
 export async function updateBlogPost(req: Request, res: Response) {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content, category, description, thumbnail, userId } = req.body;
   try {
     const blog = await prisma.blogPost.update({
       where: { id: parseInt(id) },
-      data: { title, content },
+      data: { title, content, category, description, thumbnail, userId },
     });
     res.json(blog);
   } catch (error: unknown) {

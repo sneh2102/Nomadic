@@ -55,7 +55,14 @@ export const getBlogById = async (id: string) => {
     }
 };
 
-export const updateBlog = async (id: string, data: any) => {
+export const updateBlog = async (id: string, data: {
+    title: string;
+    content: string;
+    category: string;
+    description: string;
+    thumbnail: string;
+    userId: number;
+}) => {
     const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog/${id}`;
     console.log("Updating blog by ID from URL:", url);
     try {

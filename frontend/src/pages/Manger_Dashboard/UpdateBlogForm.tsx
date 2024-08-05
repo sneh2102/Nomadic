@@ -1,0 +1,53 @@
+import React from "react";
+import BlogForm, { BlogPost } from "../../components/blog/BlogForm";
+import Header from "../../components/ui/Header";
+import { Container } from "@mui/material";
+import Footer from "../../components/ui/Footer";
+import useBlogDetail from "../../hooks/useBlogDetail";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+const UpdateBlogForm = () => {
+    const {blogId} = useParams();
+    const {blogDetail, blogDetailLoading, updateBlogMutation} = useBlogDetail(blogId)
+    const navigate = useNavigate();
+
+    const handleSubmit = async (blog: BlogPost) => {
+        try {
+            await updateBlogMutation.mutateAsync({
+                title: blog.title,
+                content: blog.content,
+                category: blog.category,
+                description: blog.description,
+                thumbnail: blog.thumbnail_url,
+                userId: 1,
+            });
+            toast.success("Blog post updated successfully");
+            navigate("/manage/blog");
+        } catch (error) {
+            console.error("Failed to create/update blog post:", error);
+        }
+    };
+    if (blogDetailLoading) {
+        return <div>Loading...</div>;
+    }
+    return (
+        <>
+            <Header />
+            <Container component="main" maxWidth="md">
+                <BlogForm page_title="Update blog" onSubmit={handleSubmit} blog={{
+                    category: blogDetail.category,
+                    content: blogDetail.content,
+                    description: blogDetail.description,
+                    thumbnail_url: blogDetail.thumbnail,
+                    title: blogDetail.title
+                }}
+                button_text={"Update blog"}
+                />
+            </Container>
+            <Footer />
+        </>
+    );
+};
+
+export default UpdateBlogForm;
