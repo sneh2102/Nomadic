@@ -13,6 +13,8 @@ export interface Tour {
     startDate: string;
     endDate: string;
     duration: number;
+    averageRating: number;
+    totalReviews: number;
 }
 
 export interface TourMetaData {
