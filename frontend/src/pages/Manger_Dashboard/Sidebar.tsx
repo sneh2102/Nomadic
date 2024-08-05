@@ -5,7 +5,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ListIcon from '@mui/icons-material/List';
 import { grey } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-import { useFilter } from '../../context/Context';
+import { useFilter } from '../../Context/Context';
 
 const ManagerDashboardsidebar: React.FC = () => {
   const navigate = useNavigate();

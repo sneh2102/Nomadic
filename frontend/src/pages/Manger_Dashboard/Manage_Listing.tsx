@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ManagerDashboardsidebar from './Sidebar';
-import { useFilter } from '../../context/Context';
+import { useFilter } from '../../Context/Context';
 import Footer from './Footer';
 import Header from '../../components/ui/Header';
 import { Tour } from './Add_Tours'
