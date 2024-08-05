@@ -1,5 +1,5 @@
 // Author: Heli Desai
-import { addBlog, getBlogs } from "../services/blogServie";
+import { addBlog, deleteBlog, getBlogs } from "../services/blogServie";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useBlog = ({
@@ -13,7 +13,7 @@ const useBlog = ({
 }) => {
     const queryClient = useQueryClient();
     const blogQuery = useQuery({
-        queryKey: ["blogs", page, category],
+        queryKey: ["blogs", page, category, pageSize],
         queryFn: async () => {
             return await getBlogs({
                 page,
@@ -43,11 +43,25 @@ const useBlog = ({
         }
     });
 
+    const deleteBlogMutation = useMutation({
+        mutationFn: async (id: string) => {
+            await deleteBlog(id);
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({
+                exact: false,
+                queryKey: ["blogs"],
+            });
+            blogQuery.refetch();
+        },
+    });
+
     return {
         blogs: blogQuery.data,
         blogsLoading: blogQuery.isLoading,
         blogsError: blogQuery.error,
         addBlogMutation,
+        deleteBlogMutation,
     };
 };
 

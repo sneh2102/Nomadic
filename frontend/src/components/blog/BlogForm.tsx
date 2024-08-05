@@ -12,7 +12,8 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { ChangeEvent, useState } from "react";
-import { set } from "date-fns";
+import { Link } from "react-router-dom";
+import { ArrowLeft, ChevronLeft } from "@mui/icons-material";
 
 export interface BlogPost {
     id?: number;
@@ -38,6 +39,7 @@ const categories = [
 interface BlogFormProps {
     page_title: string;
     button_text: string;
+    showBackButton?: boolean;
     blog?: BlogPost;
     onSubmit: (data: BlogPost) => Promise<void>;
 }
@@ -85,6 +87,7 @@ const BlogForm: React.FC<BlogFormProps> = (props) => {
 
     return (
         <Box sx={{ pt: 20, mb: 20 }}>
+            {props.showBackButton && <Link to="/manage/blog" style={{ textDecoration: "none" }}><ChevronLeft /> Go back</Link>}
             <Typography variant="h4" gutterBottom>
                 {props.page_title}
             </Typography>

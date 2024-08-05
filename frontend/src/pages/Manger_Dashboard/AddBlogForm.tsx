@@ -36,7 +36,7 @@ const AddBlogForm: React.FC = () => {
         <>
             <Header />
             <Container component="main" maxWidth="md">
-                <BlogForm page_title="Create new blog" onSubmit={handleSubmit} button_text={"Save"}/>
+                <BlogForm showBackButton={true} page_title="Create new blog" onSubmit={handleSubmit} button_text={"Save"}/>
             </Container>
             <Footer />
         </>

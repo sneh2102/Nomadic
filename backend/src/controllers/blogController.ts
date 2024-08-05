@@ -6,7 +6,9 @@ import { Prisma } from "@prisma/client";
 
 export async function getAllBlogPosts(req: Request, res: Response) {
   try {
-    const { category, page, limit = 6 } = req.query;
+    const { category, page, limit: limitQ = 6 } = req.query;
+    const limit = typeof limitQ === "string" ? parseInt(limitQ) : 6;
+    console.log({limit});
     const filter: Prisma.BlogPostWhereInput = {};
     if (category) {
       filter.category = {
@@ -47,6 +49,7 @@ export async function getAllBlogPosts(req: Request, res: Response) {
       },
     });
   } catch (error: unknown) {
+    console.error(error);
     if (error instanceof Error) {
       res
         .status(500)
@@ -107,7 +110,9 @@ export async function deleteBlogPost(req: Request, res: Response) {
     await prisma.blogPost.delete({
       where: { id: parseInt(id) },
     });
-    res.status(204).send();
+    res.status(200).json({
+      message: "Blog post deleted successfully",
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       res
