@@ -2,8 +2,6 @@
 import { Request,Response } from "express";
 import { prismaClient } from "../server";
 import {compareSync, hashSync} from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import { JWT_SECRET } from "../secret";
 
 export const resetpassword = async(req:Request, res:Response) => {
 try{

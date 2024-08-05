@@ -83,6 +83,9 @@ const Header = (props: HeaderProps) => {
                         <Link to="/blogs">Blogs</Link>
                     </li>
                     <li>
+                        <Link to="/wishlist">Bucket List</Link>
+                    </li>
+                    <li>
                         <Link to="/faq">FAQ</Link>
                     </li>
                     <li>
