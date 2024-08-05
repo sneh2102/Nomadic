@@ -1,3 +1,5 @@
+// Author: Meer Patel
+
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -81,9 +83,9 @@ export default function FAQ() {
 
     const handleChange =
         (panel: string) =>
-        (event: React.SyntheticEvent, newExpanded: boolean) => {
-            setExpanded(newExpanded ? panel : false);
-        };
+            (event: React.SyntheticEvent, newExpanded: boolean) => {
+                setExpanded(newExpanded ? panel : false);
+            };
 
     return (
         <>

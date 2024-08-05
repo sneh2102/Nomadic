@@ -1,3 +1,6 @@
+// Author: Meer Patel
+
+
 import React from "react";
 import FAQ from "../components/FAQ";
 
