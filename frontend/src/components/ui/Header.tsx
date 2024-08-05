@@ -93,7 +93,7 @@ const Header = (props: HeaderProps) => {
             href: "/wishlist",
         },
         {
-            text: "History",
+            text: "Booking history",
             href: `/history/${userId}`,
         },
     ];
@@ -145,10 +145,13 @@ const Header = (props: HeaderProps) => {
                             <li>
                                 <Link to="/blogs">Blogs</Link>
                             </li>
-                            {userRole === "USER" && (
+                            {userRole === "USER" && (<>
                                 <li>
                                     <Link to="/wishlist">Bucket List</Link>
                                 </li>
+                                <li>
+                                <Link to={`/history/${userId}`}>Booking history</Link>
+                            </li></>
                             )}
                             <li>
                                 <Link to="/faq">FAQ</Link>
