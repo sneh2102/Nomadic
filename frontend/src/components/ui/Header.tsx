@@ -2,6 +2,7 @@
 import { Menu } from "@mui/icons-material";
 import {
     Box,
+    Button,
     Divider,
     Drawer,
     IconButton,
@@ -28,11 +29,18 @@ const Header = (props: HeaderProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-    const { userId } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : ""
+    const { userId } = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user") as string)
+        : "";
+    console.log("UserId:::", userId);
+    const userRole = userId && getRole();
+    console.log("Role:::", userRole);
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("user");
         setIsLoggedIn(false);
-        navigate('/');
+        navigate("/");
     };
     useEffect(() => {
         const token = getToken();
@@ -63,6 +71,59 @@ const Header = (props: HeaderProps) => {
             }
         });
     }, []);
+
+    const guestNavItems = [
+        {
+            text: "Home",
+            href: "/",
+        },
+        {
+            text: "Blogs",
+            href: "/blogs",
+        },
+        {
+            text: "FAQ",
+            href: "/faq",
+        },
+        {
+            text: "Contact Us",
+            href: "/contactus",
+        },
+    ];
+
+    const userNavItems = [
+        ...guestNavItems,
+        {
+            text: "Bucket List",
+            href: "/wishlist",
+        },
+        {
+            text: "Booking history",
+            href: `/history/${userId}`,
+        },
+    ];
+
+    const managerNavItems = [
+        {
+            text: "Manage Listings",
+            href: "/manage",
+        },
+        {
+            text: "Manage Blogs",
+            href: "/manage/blog",
+        },
+        {
+            text: "Analytics",
+            href: "/analytics",
+        },
+    ];
+
+    const navItems =
+        userRole === "MANAGER"
+            ? managerNavItems
+            : userRole === "USER"
+              ? userNavItems
+              : guestNavItems;
     return (
         <nav
             className="fixed z-50 flex justify-between w-full p-4 text-white transition-colors duration-300 bg-transparent"
@@ -80,21 +141,10 @@ const Header = (props: HeaderProps) => {
                         </Link>
                     </div>
                 </div>
-                <ul className="hidden gap-4 md:flex">
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/blogs">Blogs</Link>
-                    </li>
+                    <ul className="hidden gap-4 md:flex">
+                {getToken() && <>
                     <li>
                         <Link to="/wishlist">Bucket List</Link>
-                    </li>
-                    <li>
-                        <Link to="/faq">FAQ</Link>
-                    </li>
-                    <li>
-                        <Link to="/contactus">Contact Us</Link>
                     </li>
                     {role==="USER" && <>
                         <li>
@@ -102,20 +152,36 @@ const Header = (props: HeaderProps) => {
                             
                             </li>
                     </>
-}
-                    
-                    {role === "ADMIN" && <>
-                    <li>
-                        <Link to="/manage">Manage Listings</Link>
-                        </li>
-                    <li>
-                        <Link to={`/analytics`}>Analytics</Link>
-                    </li>
-                    <li>
-                        <Link to={`/manage/blog`}>Add Blogs</Link>
-                    </li>
-                    </>
                     }
+                {role === "ADMIN" && <>
+                <li>
+                    <Link to="/manage">Manage Listings</Link>
+                    </li>
+                <li>
+                    <Link to={`/analytics`}>Analytics</Link>
+                </li>
+                <li>
+                    <Link to={`/manage/blog`}>Add Blogs</Link>
+                </li>
+                </>
+                }
+                
+                </>
+
+                }
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/blogs">Blogs</Link>
+                    </li>
+                    <li>
+                        <Link to="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                        <Link to="/contactus">Contact Us</Link>
+                    </li>
+                    
 
                 </ul>
             </div>
@@ -130,9 +196,15 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                    {isLoggedIn ? (<TransparentButton to="/" variant="contained" onClick={handleLogout}>
-                        Logout
-                    </TransparentButton>) : (
+                    {isLoggedIn ? (
+                        <TransparentButton
+                            to="/"
+                            variant="contained"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </TransparentButton>
+                    ) : (
                         <TransparentButton to="/signup" variant="contained">
                             Sign In / Register
                         </TransparentButton>
@@ -187,6 +259,26 @@ const Header = (props: HeaderProps) => {
                                     </Link>
                                 </ListItem>
                             ))}
+                            <div className="p-4">
+                                {isLoggedIn ? (
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        fullWidth
+                                        to="/signup"
+                                        variant="contained"
+                                        component={Link}
+                                    >
+                                        Sign In / Register
+                                    </Button>
+                                )}
+                            </div>
                         </List>
                     </Box>
                 </Drawer>

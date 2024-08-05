@@ -28,6 +28,7 @@ import UpdateBlogForm from './pages/Manger_Dashboard/UpdateBlogForm';
 import ManageBlogList from './pages/Manger_Dashboard/ManageBlogList';
 import Protected from './utils/Protected';
 import { getRole } from './utils/authUtils';
+import ScrollToTop from './utils/ScrollToTop';
 
 function App() {
     const role=getRole();
@@ -65,6 +66,7 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
                     </Routes>
+                    <ScrollToTop />
                 </Router>
                 <Toaster />
             </ContextProvider>
