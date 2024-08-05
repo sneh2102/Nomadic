@@ -6,7 +6,9 @@ import { Prisma } from "@prisma/client";
 
 export async function getAllBlogPosts(req: Request, res: Response) {
   try {
-    const { category, page, limit = 6 } = req.query;
+    const { category, page, limit: limitQ = 6 } = req.query;
+    const limit = typeof limitQ === "string" ? parseInt(limitQ) : 6;
+    console.log({limit});
     const filter: Prisma.BlogPostWhereInput = {};
     if (category) {
       filter.category = {
@@ -30,6 +32,7 @@ export async function getAllBlogPosts(req: Request, res: Response) {
         thumbnail: true,
         category: true,
         createdAt: true,
+        userId: true,
       },
     });
 
@@ -46,6 +49,7 @@ export async function getAllBlogPosts(req: Request, res: Response) {
       },
     });
   } catch (error: unknown) {
+    console.error(error);
     if (error instanceof Error) {
       res
         .status(500)
@@ -59,10 +63,10 @@ export async function getAllBlogPosts(req: Request, res: Response) {
 }
 
 export async function createBlogPost(req: Request, res: Response) {
-  const { title, content, category, description, thumbnail } = req.body;
+  const { title, content, category, description, thumbnail,userId } = req.body;
   try {
     const blog = await prisma.blogPost.create({
-      data: { title, content, category, description, thumbnail },
+      data: { title, content, category, description, thumbnail, userId},
     });
     res.status(201).json(blog);
   } catch (error: unknown) {
@@ -80,11 +84,11 @@ export async function createBlogPost(req: Request, res: Response) {
 
 export async function updateBlogPost(req: Request, res: Response) {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content, category, description, thumbnail, userId } = req.body;
   try {
     const blog = await prisma.blogPost.update({
       where: { id: parseInt(id) },
-      data: { title, content },
+      data: { title, content, category, description, thumbnail, userId },
     });
     res.json(blog);
   } catch (error: unknown) {
@@ -106,7 +110,9 @@ export async function deleteBlogPost(req: Request, res: Response) {
     await prisma.blogPost.delete({
       where: { id: parseInt(id) },
     });
-    res.status(204).send();
+    res.status(200).json({
+      message: "Blog post deleted successfully",
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       res
@@ -183,3 +189,23 @@ export const getBlogCategories = async (req: Request, res: Response) => {
     }
   }
 };
+
+export async function getBlogPostByUserId(req: Request, res: Response) {
+  const { userId } = req.params;
+  try {
+    const blogPost = await prisma.blogPost.findMany({
+      where: { userId: parseInt(userId) },
+    });
+    res.status(200).json(blogPost);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res
+        .status(500)
+        .json({ error: "Failed to fetch blog post: " + error.message });
+    } else {
+      res
+        .status(500)
+        .json({ error: "Failed to fetch blog post due to an unknown error" });
+    }
+  }
+}
