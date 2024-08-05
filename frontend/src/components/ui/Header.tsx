@@ -15,8 +15,9 @@ import React, { useEffect, useRef, useState } from "react";
 import TransparentButton from "./TransparentButton";
 import { Link } from "react-router-dom";
 import { displayPartsToString } from "typescript";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { getRole, getToken } from "../../utils/authUtils";
+
 
 interface HeaderProps {
     showScrollAnimation?: boolean;
@@ -24,6 +25,7 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
     const [open, setOpen] = useState(false);
+    const [role, setRole] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -43,6 +45,9 @@ const Header = (props: HeaderProps) => {
     useEffect(() => {
         const token = getToken();
         setIsLoggedIn(!!token);
+        const role =getRole();
+        setRole(role);
+
     }, []);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
@@ -136,44 +141,48 @@ const Header = (props: HeaderProps) => {
                         </Link>
                     </div>
                 </div>
-                <ul className="hidden gap-4 md:flex">
-                    {userRole !== "MANAGER" && (
-                        <>
-                            <li>
-                                <Link to="/">Home</Link>
+                    <ul className="hidden gap-4 md:flex">
+                {getToken() && <>
+                    <li>
+                        <Link to="/wishlist">Bucket List</Link>
+                    </li>
+                    {role==="USER" && <>
+                        <li>
+                            <Link to={`/history/${userId}`}>History</Link>
+                            
                             </li>
-                            <li>
-                                <Link to="/blogs">Blogs</Link>
-                            </li>
-                            {userRole === "USER" && (<>
-                                <li>
-                                    <Link to="/wishlist">Bucket List</Link>
-                                </li>
-                                <li>
-                                <Link to={`/history/${userId}`}>Booking history</Link>
-                            </li></>
-                            )}
-                            <li>
-                                <Link to="/faq">FAQ</Link>
-                            </li>
-                            <li>
-                                <Link to="/contactus">Contact Us</Link>
-                            </li>
-                        </>
-                    )}
-                    {userRole === "MANAGER" && (
-                        <>
-                            <li>
-                                <Link to="/manage">Manage Listing</Link>
-                            </li>
-                            <li>
-                                <Link to="/manage/blog">Manage blogs</Link>
-                            </li>
-                            <li>
-                                <Link to="/analytics">Analytics</Link>
-                            </li>
-                        </>
-                    )}
+                    </>
+                    }
+                {role === "ADMIN" && <>
+                <li>
+                    <Link to="/manage">Manage Listings</Link>
+                    </li>
+                <li>
+                    <Link to={`/analytics`}>Analytics</Link>
+                </li>
+                <li>
+                    <Link to={`/manage/blog`}>Add Blogs</Link>
+                </li>
+                </>
+                }
+                
+                </>
+
+                }
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/blogs">Blogs</Link>
+                    </li>
+                    <li>
+                        <Link to="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                        <Link to="/contactus">Contact Us</Link>
+                    </li>
+                    
+
                 </ul>
             </div>
             <div>
@@ -204,7 +213,38 @@ const Header = (props: HeaderProps) => {
                 <Drawer open={open} onClose={toggleDrawer} anchor="right">
                     <Box sx={{ width: 250 }} role="presentation">
                         <List>
-                            {navItems.map((menu, index) => (
+                            {[
+                                {
+                                    text: "Home",
+                                    href: "/",
+                                },
+                                {
+                                    text: "Blogs",
+                                    href: "/blogs",
+                                },
+                                {
+                                    text: "FAQ",
+                                    href: "/faq",
+                                },
+                                {
+                                    text: "Contact Us",
+                                    href: "/contactus",
+                                },
+                                {
+                                    text: "Manage Listings",
+                                    href: "/manage",
+                                },
+                                {
+                                    text: "Analytics",
+                                    href: "/analytics",
+
+                                },
+                                {
+                                    text: "Add Blogs",
+                                    href: "/manage/blog",
+                                }
+
+                            ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
                                     <Link
                                         to={menu.href}

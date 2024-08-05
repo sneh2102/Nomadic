@@ -5,6 +5,9 @@ import aboutUs from "../assets/AboutUs.png";
 import contactUs from "../assets/ContactUs.webp";
 import Footer from "../components/ui/Footer";
 import Header from "../components/ui/Header";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { set } from "date-fns";
 
 const Section = styled("section")({
     padding: "2rem 0",
@@ -49,6 +52,35 @@ const AboutUsGrid = styled(Grid)({
 });
 
 const ContactUsPage: React.FC = () => {
+    const URL = import.meta.env.VITE_BASE_API_URL;
+    const [formData, setFormData] = React.useState({
+        name: "",
+        email: "",
+        message: "",
+    });
+
+    const validate = () => {
+        return formData.name !== "" && formData.email !== "" && formData.message !== "";
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log(formData);
+        if (validate()) {
+            try {
+                const data = axios.post(`${URL}/api/v1/contact`, formData);
+                toast.success("Email sent successfully");
+            } catch (error) {
+                toast.error("Failed to send email");
+            }
+        } else {
+            toast.error("Please fill out all fields");
+        }
+    };
     return (
         <>
             <div className="h-[85px]">
@@ -62,27 +94,18 @@ const ContactUsPage: React.FC = () => {
                                 About Us
                             </StyledTypography>
                             <AboutUsText variant="body1">
+                                <strong>Welcome to Nomadic!</strong>
+                                <br/>
+                                <br/>
                                 <span>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Facilis autem quibusdam
-                                    minus obcaecati, tempora dolores temporibus
-                                    ratione nisi amet possimus numquam provident
-                                    voluptate consequuntur eveniet eligendi
-                                    dicta vel voluptates neque soluta reiciendis
-                                    a dignissimos sunt! Provident in minus
-                                    perspiciatis, temporibus numquam veniam
-                                    dolor facere accusamus voluptatibus
-                                </span>{" "}
-                                doloribus neque tenetur <br /> <br />
-                                saepe recusandae sapiente autem mollitia
-                                deserunt fuga officia asperiores. Similique
-                                consectetur aliquid ab hic beatae! Hic,
-                                voluptatibus vero iusto earum magni eum
-                                accusantium dolores quae? Sunt quaerat odit
-                                veritatis temporibus quos exercitationem
-                                eligendi, velit doloremque! Id, autem hic
-                                blanditiis dicta quia illum sint sit nobis ut
-                                dolorem.
+                                At Nomadic, we believe that travel is more than just a journey—it's an adventure waiting to unfold. We are a passionate team dedicated to curating unforgettable travel experiences that inspire and connect people from around the world.
+                                </span>
+                               <br /> <br />
+                               <strong>Our Mission</strong>
+                                <br/>
+                                <br/>
+                                <span></span>
+                                Our mission is to make travel accessible, enjoyable, and enriching for everyone. We strive to offer personalized tours and travel packages that cater to diverse interests, from thrilling adventures to serene getaways. Whether you’re a seasoned traveler or embarking on your first trip, Nomadic is here to guide you every step of the way.
                             </AboutUsText>
                         </Grid>
                         <Grid
@@ -128,6 +151,7 @@ const ContactUsPage: React.FC = () => {
                             <ContactUsText variant="body1">
                                 Please fill out the form below to contact us.
                             </ContactUsText>
+                            <br />
                             <form noValidate autoComplete="off">
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
@@ -136,14 +160,19 @@ const ContactUsPage: React.FC = () => {
                                             label="Name"
                                             variant="outlined"
                                             required
+                                            name="name"
+                                            onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             fullWidth
+                                            type="email"
                                             label="Email"
                                             variant="outlined"
                                             required
+                                            name="email"
+                                            onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -154,6 +183,8 @@ const ContactUsPage: React.FC = () => {
                                             multiline
                                             rows={4}
                                             required
+                                            name="message"
+                                            onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -161,6 +192,7 @@ const ContactUsPage: React.FC = () => {
                                             variant="contained"
                                             color="primary"
                                             type="submit"
+                                            onClick={handleSubmit}
                                         >
                                             Submit
                                         </Button>
