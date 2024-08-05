@@ -46,7 +46,6 @@ const SignUpPage = () => {
       body: JSON.stringify(data)
     });
     const result = await response.json();
-    console.log("Result:::", result);
     if (!response.ok) {
       setError(result.error);
       return;
