@@ -1,3 +1,4 @@
+// Author: Sneh Patel
 import { Prisma, Wishlist } from "@prisma/client";
 import { Request, Response } from "express";
 import { prismaClient as prisma } from "../server";
