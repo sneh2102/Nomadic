@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+  MANAGER
+}
+
 model User {
   id               Int       @id @default(autoincrement())
   first_name       String
@@ -23,10 +29,12 @@ model User {
   resetTokenExpiry DateTime?
   createdAt        DateTime  @default(now())
   reviews          Review[]
-
+  role       Role     @default(USER)
   @@map("user")
   Bookings Bookings[]
 }
+
+
 
 model TourCategory {
   id           Int           @id @default(autoincrement())
@@ -71,15 +79,15 @@ model Review {
 }
 
 model Bookings {
-  id                    Int        @id @default(autoincrement())
-  noOfPeople            String?
-  totalCost             String?
-  note                  String?    @default("")
-  tourPackage           TourPackage @relation(fields: [tourPackageId], references: [id])
-  tourPackageId         Int
-  createdAt             DateTime   @default(now())
-  userId                Int
-  user                  User       @relation(fields: [userId], references: [id])
+  id             Int         @id @default(autoincrement())
+  noOfPeople     String?
+  totalCost      String?
+  note           String?     @default("")
+  tourPackage    TourPackage @relation(fields: [tourPackageId], references: [id])
+  tourPackageId  Int
+  createdAt      DateTime    @default(now())
+  userId         Int
+  user           User        @relation(fields: [userId], references: [id])
 }
 
 model BlogPost {

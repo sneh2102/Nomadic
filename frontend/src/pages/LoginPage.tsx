@@ -16,6 +16,7 @@ import ButtonThemeWrapper from "../components/ui/ButtonThemeWrapper";
 import { useForm } from "react-hook-form";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
+import { getRole } from "../utils/authUtils";
 
 type FormValues = {
   email: string,
@@ -41,8 +42,10 @@ const LoginPage = () => {
       const result = await response.json();
       console.log("result:::", result);
       if (response.ok) {
-        localStorage.setItem('user', JSON.stringify({ userId: result.userDetails.id, email: result.userDetails.email }));
+        localStorage.setItem('user', JSON.stringify({ userId: result.userDetails.id, email: result.userDetails.email, role:result.userDetails.role }));
         localStorage.setItem('token', result.token);
+        localStorage.setItem('role',result.userDetails.role);
+        console.log("Role::::",getRole())
         console.log("Login successful.")
         navigate('/')
       }

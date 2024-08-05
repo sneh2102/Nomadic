@@ -7,6 +7,7 @@ export const signUp = async(req:Request, res:Response) => {
     try {
         const {fname,email,password,lname} = req.body;
         let user = await prismaClient.user.findFirst({where: { email }})
+        const role = 'USER';
         if(user){
             console.log("User already exists")
             return res.status(400).json({"error": "User already exists!!!"});
@@ -16,7 +17,8 @@ export const signUp = async(req:Request, res:Response) => {
                 first_name:fname,
                 last_name:lname,
                 email,
-                password: hashSync(password,10)
+                password: hashSync(password,10),
+                role: role
             }
         });
         res.json(user);
