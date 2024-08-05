@@ -6,7 +6,6 @@ import MainLayout from '../components/blog/MainLayout';
 import CommentList from '../components/blog/CommentList';
 import CommentForm from '../components/blog/CommentForm';
 import useBlogDetail from '../hooks/useBlogDetail';
-import { useAuth } from '../Context/Context'; // Adjust the import path as needed
 
 const BlogDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();

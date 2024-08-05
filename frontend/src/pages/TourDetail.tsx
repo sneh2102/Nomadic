@@ -1,10 +1,12 @@
+//Author : Vyansi Diyora
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Typography, Button, Grid, Paper, Box, Container,
   CircularProgress, Card, CardMedia, CardContent, Chip,
   styled, Avatar, Rating, ThemeProvider, createTheme,
-  List, ListItem, Divider, Fade, IconButton, Tooltip
+  List, ListItem, Divider, Fade, IconButton
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -12,8 +14,9 @@ import EventIcon from '@mui/icons-material/Event';
 import HotelIcon from '@mui/icons-material/Hotel';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import HikingIcon from '@mui/icons-material/Hiking';
-import AddIcon from '@mui/icons-material/Add';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import axios from 'axios';
 import BookingForm from '../components/history/BookingForm';
@@ -48,6 +51,7 @@ const theme = createTheme({
   },
 });
 
+
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: '100%',
   margin: theme.spacing(2, 0),
@@ -55,7 +59,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: '16px',
   overflow: 'hidden',
   marginTop:'0px',
- 
+  position: 'relative',
 }));
 
 const StyledCardMedia = styled(CardMedia)({
@@ -140,10 +144,10 @@ export interface TourPackage {
     createdAt: string;
     userId: number;
     user: {
-      id: number
-      first_name: string,
-      last_name: string
-    }
+      id: number;
+      first_name: string;
+      last_name: string;
+    };
   }>;
 }
 
@@ -152,14 +156,63 @@ export function TourDetail() {
   const [tourPackage, setTourPackage] = useState<TourPackage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [wishlist, setWishlist] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [wishListId, setWishListId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const data = localStorage.getItem('user');
+    if (data) {
+      setUserId(JSON.parse(data).userId);
+    }
+  }, []);
+
+  const checkWishlist = async () => {
+    console.log('Checking wishlist:', userId, tourPackage?.id);
+    try {
+      const response = await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/wishlist/check`, {
+        userId: userId,
+        tourPackageId: tourPackage.id,
+      });
+      setWishlist(response.data.message === true);
+      if (response.data.message === true) {
+        setWishListId(response.data.id);
+
+      }
+      console.log('Wishlist:', wishlist);
+      console.log('wishlist:', wishListId);
+    } catch (error) {
+      console.error('Error checking wishlist:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchTourPackage = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/tours/${id}`);
-        setTourPackage(response.data);
+        const response = await axios.get(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/tours/${id}`).then( (res) =>{ 
+          console.log("qwerty",res.data);
+          
+          setTourPackage(res.data)
+          axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/wishlist/check`, {
+            userId: userId,
+            tourPackageId: res.data.id,
+          }).then((response) => {
+console.log("ssss",response.data);
+
+            setWishlist(response.data.message === true);
+            if (response.data.message === true) {
+              setWishListId(response.data.id);
+              
+            }
+          })
+        }
+        );
+        ;
         setLoading(false);
+        // Check if the tour is in the wishlist after fetching the tour package
+        await checkWishlist();
+    
       } catch (error) {
         console.error('Error fetching tour package:', error);
         setError('Failed to fetch tour package data. Please try again later.');
@@ -168,7 +221,33 @@ export function TourDetail() {
     };
 
     fetchTourPackage();
-  }, [id]);
+  }, [id, userId]);
+
+
+  const handleAddToWishlist = async () => {
+    try {
+      console.log('Wishlist:', wishlist);
+      console.log('wishlist:', wishListId);
+      if (wishlist) {
+        // Remove from wishlist
+        await axios.delete(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/wishlist/${wishListId}`);
+        checkWishlist();
+        console.log('Removed from wishlist');
+      } else {
+        // Add to wishlist
+        console.log('Adding to wishlist', tourPackage?.id, userId);
+
+        await axios.post(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/wishlist`, {
+          tourPackageId: tourPackage?.id,
+          userId: userId,
+        });
+        checkWishlist();
+        console.log('Added to wishlist');
+      }
+    } catch (error) {
+      console.error('Error updating wishlist:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -212,6 +291,22 @@ export function TourDetail() {
               </Box>
               <Rating value={4.5} readOnly precision={0.5} />
             </OverlayContent>
+            <IconButton
+              color="secondary"
+              aria-label="add to wishlist"
+              sx={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                backgroundColor: 'white',
+                '&:hover': {
+                  backgroundColor: 'white',
+                },
+              }}
+              onClick={handleAddToWishlist}
+            >
+              {wishlist ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon color="error" />}
+            </IconButton>
           </Box>
           <CardContent>
             <Grid container spacing={3} alignItems="center">
@@ -312,15 +407,6 @@ export function TourDetail() {
             </Grid>
           </Grid>
           <BookingForm tourPackage={tourPackage} />
-          {/* <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            startIcon={<SendIcon />}
-            sx={{ mt: 3 }}
-          >
-            Book Your Adventure Now
-          </Button> */}
         </StyledPaper>
 
         <Fade in={true} timeout={1000}>
@@ -330,7 +416,6 @@ export function TourDetail() {
                 <Typography variant="h4" component="h2" sx={{ mt: 2, color: 'text.primary', fontWeight: 700 }}>
                   Customer Reviews
                 </Typography>
-              
               </Box>
             </Box>
             <List>

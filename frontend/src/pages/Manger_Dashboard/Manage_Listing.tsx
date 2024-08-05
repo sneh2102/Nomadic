@@ -45,7 +45,7 @@ const Manage_Listing: React.FC = () => {
             name,
             startDate,
             endDate: enddate,
-            freeCancelationAvailable: freeCancelationAvailable === 'all' ? undefined : freeCancelationAvailable === "active" ? true : false,
+            freeCancelationAvailable: freeCancelationAvailable === "active" ? true : freeCancelationAvailable === 'inactive' ? false : undefined ,
           },
         });
         setListings(response.data.data);
