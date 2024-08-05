@@ -174,7 +174,7 @@ const ReviewForm: React.FC = () => {
             </StyledPaper>
           </Fade>
         </Container>
-        <Footer/>
+        <Footer/>                     
       </ThemeProvider>
     </>
   );

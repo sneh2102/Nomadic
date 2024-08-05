@@ -1,4 +1,4 @@
-// author: Smit Patel
+// author: Smit Patel,vyansi
 // src/controllers/tourPackageController.ts
 import { Request, Response } from "express";
 import { prismaClient as prisma } from "../server";
@@ -168,6 +168,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
 };
 
 // Get a single tour package by ID
+//
 export const getTourPackageById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
