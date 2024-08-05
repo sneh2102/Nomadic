@@ -142,6 +142,15 @@ const Header = (props: HeaderProps) => {
                     </div>
                 </div>
                     <ul className="hidden gap-4 md:flex">
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                        <Link to="/contactus">Contact Us</Link>
+                    </li>
                 {getToken() && <>
                     <li>
                         <Link to="/wishlist">Bucket List</Link>
@@ -153,6 +162,9 @@ const Header = (props: HeaderProps) => {
                             </li>
                     </>
                     }
+                    <li>
+                        <Link to="/blogs">Blogs</Link>
+                    </li>
                 {role === "ADMIN" && <>
                 <li>
                     <Link to="/manage">Manage Listings</Link>
@@ -169,18 +181,6 @@ const Header = (props: HeaderProps) => {
                 </>
 
                 }
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/blogs">Blogs</Link>
-                    </li>
-                    <li>
-                        <Link to="/faq">FAQ</Link>
-                    </li>
-                    <li>
-                        <Link to="/contactus">Contact Us</Link>
-                    </li>
                     
 
                 </ul>

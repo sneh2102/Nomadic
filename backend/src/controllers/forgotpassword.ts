@@ -34,7 +34,7 @@ try{
         from: process.env.MAIL_USERNAME,
         to: email,
         subject: 'Password Reset',
-        text: `You requested a password reset. Use the following token to reset your password: http://localhost:5173/reset-password/${resetToken}`
+        text: `You requested a password reset. Use the following token to reset your password: https://csci-5709-g10.netlify.app/reset-password/${resetToken}`
       };
 
       await transporter.sendMail(mailOptions);
