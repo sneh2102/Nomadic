@@ -92,6 +92,7 @@ function App() {
                             element={<BlogDetailsPage />}
                         />
                     </Routes>
+                    <ScrollToTop />
                 </Router>
                 <Toaster />
             </ContextProvider>
