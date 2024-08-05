@@ -13,7 +13,6 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResetPassword from './pages/ResetPassword';
-import { AuthProvider, ContextProvider } from './context/Context'; 
 import { Toaster } from 'react-hot-toast';
 import Manage_Listing from './pages/Manger_Dashboard/Manage_Listing';
 import AddTourPage from './pages/Manger_Dashboard/Add_Tours';
@@ -29,6 +28,7 @@ import ManageBlogList from './pages/Manger_Dashboard/ManageBlogList';
 import Protected from './utils/Protected';
 import { getRole } from './utils/authUtils';
 import ScrollToTop from './utils/ScrollToTop';
+import { ContextProvider } from './Context/Context';
 
 function App() {
     const role=getRole();
