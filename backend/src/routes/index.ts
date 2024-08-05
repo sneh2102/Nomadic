@@ -12,6 +12,8 @@ import bookingRouter from './bookingRoute';
 import BlogRouter from "./blogRouter";
 import commentRouter from "./commentRouter";
 import analyticsRouter from './analyticsRouter';
+import wishListRouter from "./wishlistRouter";
+
 
 const rootRouter: Router = Router();
 
@@ -27,6 +29,7 @@ rootRouter.use('/v1', BlogRouter)
 rootRouter.use('/v1', commentRouter)
 rootRouter.use('/v1', analyticsRouter)
 rootRouter.use('/v1', TourLocationRouter)
+rootRouter.use('/v1', wishListRouter)
 
 
 export default rootRouter;

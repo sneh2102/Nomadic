@@ -1,6 +1,7 @@
+//Author : Vyansi Diyora
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Box, Button, Container, Rating, TextField, Typography,
   Paper, Snackbar, Alert, CircularProgress, Fade,
@@ -66,6 +67,7 @@ const StyledRatingBox = styled(Box)(({ theme }) => ({
 }));
 
 const ReviewForm: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { tourPackageId, userId } = location.state || { tourPackageId: null, userId: null };
 
@@ -97,6 +99,7 @@ const ReviewForm: React.FC = () => {
         message: 'Review submitted successfully!',
         severity: 'success',
       });
+      navigate(`/history/${userId}`);
       setRating(null);
       setComment('');
     } catch (error) {
@@ -174,7 +177,7 @@ const ReviewForm: React.FC = () => {
             </StyledPaper>
           </Fade>
         </Container>
-        <Footer/>
+        <Footer />
       </ThemeProvider>
     </>
   );

@@ -41,13 +41,13 @@ const ManagerDashboardsidebar: React.FC = () => {
           <ListItemIcon sx={{ color: 'white' }}>
             <AnalyticsIcon />
           </ListItemIcon>
-          <ListItemText primary="Cancleable" />
+          <ListItemText primary="Cancelable" />
         </ListItem>
         <ListItem button onClick={() => handleNavigation('inactive', '/manage')}>
           <ListItemIcon sx={{ color: 'white' }}>
             <AnalyticsIcon />
           </ListItemIcon>
-          <ListItemText primary="None Cancleable" />
+          <ListItemText primary="None Cancelable" />
         </ListItem>
       </List>
     </Box>
