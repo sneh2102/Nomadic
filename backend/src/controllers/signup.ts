@@ -2,7 +2,7 @@
 import { Request,Response } from "express";
 import { prismaClient } from "../server";
 import {hashSync} from 'bcrypt';
-
+/* Signup process : Check first user exists and if it is not there then add it to database */
 export const signUp = async(req:Request, res:Response) => {
     try {
         const {fname,email,password,lname,role} = req.body;
