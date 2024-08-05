@@ -25,28 +25,30 @@ import Blog from "./pages/Blog";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import { BucketList } from "./components/bucketlist/BucketList";
 import { Wishlist } from "./pages/Wishlist";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function App() {
     return (
         <div>
             <ContextProvider>
-            <Router>
-            <ToastContainer />
+                <Router>
+                    <ToastContainer />
                     <Routes>
-                    <Route path="/search" element={<SearchPage />} />
+                        <Route path="/search" element={<SearchPage />} />
                         <Route path="/faq" element={<FAQPage />} />
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/manage" element={<Manage_Listing/>}/>
-                        <Route path="/manage/add-tour" element={<AddTourPage/>} />
-                        <Route path="/manage/plan-details/:id" element={<PlanDetails/>}/>
-                        <Route path="/manage/create-package" element={<CreateTourPackage/>}/>
+                        <Route path="/manage" element={<Manage_Listing />} />
+                        <Route path="/manage/add-tour" element={<AddTourPage />} />
+                        <Route path="/manage/plan-details/:id" element={<PlanDetails />} />
+                        <Route path="/manage/create-package" element={<CreateTourPackage />} />
                         <Route path="/contactus" element={<ContactUsPage />} />
-                        <Route path="/login" element={<LoginPage/>}/>
-                        <Route path="/signup" element={<SignUpPage/>}/>
-                        <Route path="/forgotpassword" element={<ForgotPasswordPage/>}/>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignUpPage />} />
+                        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
                         <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/history/:id" element={<HistoryPage />} />
                         <Route path="/reviews" element={<ReviewForm />} />
+                        <Route path="/analytics" element={<AnalyticsPage />} />
                         <Route path="/tours/:id" element={<TourDetail />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
@@ -57,7 +59,7 @@ function App() {
                     </Routes>
                 </Router>
                 <Toaster />
-                </ContextProvider>
+            </ContextProvider>
         </div>
     );
 }

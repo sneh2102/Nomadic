@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+// Author: Meer Patel
+
 import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { RxLapTimer } from "react-icons/rx";
