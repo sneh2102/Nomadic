@@ -2,6 +2,7 @@
 import { Menu } from "@mui/icons-material";
 import {
     Box,
+    Button,
     Divider,
     Drawer,
     IconButton,
@@ -14,8 +15,8 @@ import React, { useEffect, useRef, useState } from "react";
 import TransparentButton from "./TransparentButton";
 import { Link } from "react-router-dom";
 import { displayPartsToString } from "typescript";
-import { useNavigate } from 'react-router-dom';
-import { getToken } from "../../utils/authUtils";
+import { useNavigate } from "react-router-dom";
+import { getRole, getToken } from "../../utils/authUtils";
 
 interface HeaderProps {
     showScrollAnimation?: boolean;
@@ -26,11 +27,18 @@ const Header = (props: HeaderProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-    const { userId } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : ""
+    const { userId } = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user") as string)
+        : "";
+    console.log("UserId:::", userId);
+    const userRole = userId && getRole();
+    console.log("Role:::", userRole);
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("user");
         setIsLoggedIn(false);
-        navigate('/');
+        navigate("/");
     };
     useEffect(() => {
         const token = getToken();
@@ -58,6 +66,59 @@ const Header = (props: HeaderProps) => {
             }
         });
     }, []);
+
+    const guestNavItems = [
+        {
+            text: "Home",
+            href: "/",
+        },
+        {
+            text: "Blogs",
+            href: "/blogs",
+        },
+        {
+            text: "FAQ",
+            href: "/faq",
+        },
+        {
+            text: "Contact Us",
+            href: "/contactus",
+        },
+    ];
+
+    const userNavItems = [
+        ...guestNavItems,
+        {
+            text: "Bucket List",
+            href: "/wishlist",
+        },
+        {
+            text: "Booking history",
+            href: `/history/${userId}`,
+        },
+    ];
+
+    const managerNavItems = [
+        {
+            text: "Manage Listings",
+            href: "/manage",
+        },
+        {
+            text: "Manage Blogs",
+            href: "/manage/blog",
+        },
+        {
+            text: "Analytics",
+            href: "/analytics",
+        },
+    ];
+
+    const navItems =
+        userRole === "MANAGER"
+            ? managerNavItems
+            : userRole === "USER"
+              ? userNavItems
+              : guestNavItems;
     return (
         <nav
             className="fixed z-50 flex justify-between w-full p-4 text-white transition-colors duration-300 bg-transparent"
@@ -76,22 +137,43 @@ const Header = (props: HeaderProps) => {
                     </div>
                 </div>
                 <ul className="hidden gap-4 md:flex">
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/blogs">Blogs</Link>
-                    </li>
-                    <li>
-                        <Link to="/wishlist">Bucket List</Link>
-                    </li>
-                    <li>
-                        <Link to="/faq">FAQ</Link>
-                    </li>
-                    <li>
-                        <Link to="/contactus">Contact Us</Link>
-                    </li>
-
+                    {userRole !== "MANAGER" && (
+                        <>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/blogs">Blogs</Link>
+                            </li>
+                            {userRole === "USER" && (<>
+                                <li>
+                                    <Link to="/wishlist">Bucket List</Link>
+                                </li>
+                                <li>
+                                <Link to={`/history/${userId}`}>Booking history</Link>
+                            </li></>
+                            )}
+                            <li>
+                                <Link to="/faq">FAQ</Link>
+                            </li>
+                            <li>
+                                <Link to="/contactus">Contact Us</Link>
+                            </li>
+                        </>
+                    )}
+                    {userRole === "MANAGER" && (
+                        <>
+                            <li>
+                                <Link to="/manage">Manage Listing</Link>
+                            </li>
+                            <li>
+                                <Link to="/manage/blog">Manage blogs</Link>
+                            </li>
+                            <li>
+                                <Link to="/analytics">Analytics</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
             <div>
@@ -105,9 +187,15 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className="hidden md:block">
-                    {isLoggedIn ? (<TransparentButton to="/" variant="contained" onClick={handleLogout}>
-                        Logout
-                    </TransparentButton>) : (
+                    {isLoggedIn ? (
+                        <TransparentButton
+                            to="/"
+                            variant="contained"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </TransparentButton>
+                    ) : (
                         <TransparentButton to="/signup" variant="contained">
                             Sign In / Register
                         </TransparentButton>
@@ -116,32 +204,7 @@ const Header = (props: HeaderProps) => {
                 <Drawer open={open} onClose={toggleDrawer} anchor="right">
                     <Box sx={{ width: 250 }} role="presentation">
                         <List>
-                            {[
-                                {
-                                    text: "Home",
-                                    href: "/",
-                                },
-                                {
-                                    text: "Blogs",
-                                    href: "/blogs",
-                                },
-                                {
-                                    text: "FAQ",
-                                    href: "/faq",
-                                },
-                                {
-                                    text: "Contact Us",
-                                    href: "/contactus",
-                                },
-                                {
-                                    text: "Manage Listings",
-                                    href: "/manage",
-                                },
-                                {
-                                    text: "History",
-                                    href: `/history/${userId}`,
-                                }
-                            ].map((menu, index) => (
+                            {navItems.map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
                                     <Link
                                         to={menu.href}
@@ -156,6 +219,26 @@ const Header = (props: HeaderProps) => {
                                     </Link>
                                 </ListItem>
                             ))}
+                            <div className="p-4">
+                                {isLoggedIn ? (
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        fullWidth
+                                        to="/signup"
+                                        variant="contained"
+                                        component={Link}
+                                    >
+                                        Sign In / Register
+                                    </Button>
+                                )}
+                            </div>
                         </List>
                     </Box>
                 </Drawer>

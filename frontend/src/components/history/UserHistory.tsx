@@ -1,5 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+// Author: Meer Patel
+
 import React, { useState, useEffect } from "react";
 import {
     Box,

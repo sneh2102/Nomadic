@@ -24,6 +24,7 @@ import Blog from "./pages/Blog";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import { BucketList } from "./components/bucketlist/BucketList";
 import { Wishlist } from "./pages/Wishlist";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import AddBlogForm from "./pages/Manger_Dashboard/AddBlogForm";
 import UpdateBlogForm from "./pages/Manger_Dashboard/UpdateBlogForm";
 import ManageBlogList from "./pages/Manger_Dashboard/ManageBlogList";
@@ -73,6 +74,7 @@ function App() {
                         <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/history/:id" element={<HistoryPage />} />
                         <Route path="/reviews" element={<ReviewForm />} />
+                        <Route path="/analytics" element={<AnalyticsPage />} />
                         <Route path="/tours/:id" element={<TourDetail />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
