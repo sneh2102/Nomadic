@@ -1,11 +1,9 @@
-// TourCard.jsx
 import React from 'react';
 import { 
   Card, 
   CardContent, 
   CardMedia, 
   Typography, 
-  Box,
   Chip,
   Button,
   CardActions,
@@ -17,8 +15,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-export const TourCard = ({ tour, onRemove }) => {
-    const navigate = useNavigate();
+export const TourCard = ({ tour, wishlistId, onRemove }) => {
+  const navigate = useNavigate();
+
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <CardMedia
@@ -56,10 +55,10 @@ export const TourCard = ({ tour, onRemove }) => {
         </Stack>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between', px: 2, py: 1 }}>
-        <Button size="small" color="primary" onClick={()=>{navigate(`/tours/${tour.id}`)}}>
+        <Button size="small" onClick={() => navigate(`/tours/${tour.id}`)}>
           View Details
         </Button>
-        <Button size="small" color="secondary" onClick={() => onRemove(tour.id)}>
+        <Button size="small" color="secondary" onClick={() => onRemove(wishlistId)}>
           Remove
         </Button>
       </CardActions>
