@@ -26,7 +26,7 @@ import BlogDetailsPage from "./pages/BlogDetailsPage";
 import { BucketList } from "./components/bucketlist/BucketList";
 import { Wishlist } from "./pages/Wishlist";
 import BlogManagement from "./pages/Manger_Dashboard/ManageBlog";
-import ManageBlogList from "./pages/ManageBlogList";
+import ManageBlogList from "./pages/Manger_Dashboard/ManageBlogList";
 
 function App() {
     return (
