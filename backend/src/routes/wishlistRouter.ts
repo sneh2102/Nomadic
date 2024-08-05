@@ -1,6 +1,3 @@
-import e from "express";
-import {  } from "../controllers/wishListController";
-
 const {Router} = require('express');
 const {createWishList, getWishList, deleteWishList, checkWishList} = require('../controllers/wishListController');
 const wishListRouter = Router();
