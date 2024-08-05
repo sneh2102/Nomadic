@@ -24,7 +24,7 @@ const LearningCard = (props: LearningCardProps) => {
                 <div className="text-4xl font-bold my-4 mb-10">
                     {props.title}
                 </div>
-                <Button variant="contained" size="large" component={Link} to="/blog">
+                <Button variant="contained" size="large" component={Link} to="/blogs">
                     <span className="py-1 px-2">Learn More</span>
                 </Button>
             </div>
