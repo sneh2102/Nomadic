@@ -5,7 +5,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ListIcon from '@mui/icons-material/List';
 import { grey } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-import { useFilter } from '../../Context/Context';
+import { useFilter } from '../../context/Context';
 
 const ManagerDashboardsidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ManagerDashboardsidebar: React.FC = () => {
           <ListItemIcon sx={{ color: 'white' }}>
             <AddIcon />
           </ListItemIcon>
-          <ListItemText primary="Add Tour Package" />
+          <ListItemText primary="Add Tour Category" />
         </ListItem>
         <ListItem button onClick={() => navigate('/manage/add-tour')}>
           <ListItemIcon sx={{ color: 'white' }}>

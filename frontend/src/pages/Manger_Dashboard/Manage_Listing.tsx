@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ManagerDashboardsidebar from './Sidebar';
-import { useFilter } from '../../Context/Context';
+import { useFilter } from '../../context/Context';
 import Footer from './Footer';
 import Header from '../../components/ui/Header';
 import { Tour } from './Add_Tours'
@@ -128,7 +128,7 @@ const Manage_Listing: React.FC = () => {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, flexDirection: { xs: 'column', md: 'row' }, p: 0, m: 0, width: '100%', marginTop: "10px" }}>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   <TextField
-                    label="City"
+                    label="Location"
                     type='text'
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -182,7 +182,7 @@ const Manage_Listing: React.FC = () => {
                         <TableCell style={{ background: "#2F365F", color: 'white' }}>Start Date</TableCell>
                         <TableCell style={{ background: "#2F365F", color: 'white' }}>End Date</TableCell>
                         <TableCell style={{ background: "#2F365F", color: 'white' }}>Price</TableCell>
-                        <TableCell style={{ background: "#2F365F", color: 'white' }}>City</TableCell>
+                        <TableCell style={{ background: "#2F365F", color: 'white' }}>Location</TableCell>
                         <TableCell style={{ background: "#2F365F", color: 'white' }}>Cancelation</TableCell>
                         <TableCell style={{ background: "#2F365F", color: 'white' }}>Actions</TableCell>
                       </TableRow>

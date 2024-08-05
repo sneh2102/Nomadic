@@ -15,7 +15,8 @@ import TransparentButton from "./TransparentButton";
 import { Link } from "react-router-dom";
 import { displayPartsToString } from "typescript";
 import { useNavigate } from 'react-router-dom';
-import { getToken } from "../../utils/authUtils";
+import { getRole, getToken } from "../../utils/authUtils";
+
 
 interface HeaderProps {
     showScrollAnimation?: boolean;
@@ -23,6 +24,7 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
     const [open, setOpen] = useState(false);
+    const [role, setRole] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -35,6 +37,9 @@ const Header = (props: HeaderProps) => {
     useEffect(() => {
         const token = getToken();
         setIsLoggedIn(!!token);
+        const role =getRole();
+        setRole(role);
+
     }, []);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
@@ -91,6 +96,26 @@ const Header = (props: HeaderProps) => {
                     <li>
                         <Link to="/contactus">Contact Us</Link>
                     </li>
+                    {role==="USER" && <>
+                        <li>
+                            <Link to={`/history/${userId}`}>History</Link>
+                            
+                            </li>
+                    </>
+}
+                    
+                    {role === "ADMIN" && <>
+                    <li>
+                        <Link to="/manage">Manage Listings</Link>
+                        </li>
+                    <li>
+                        <Link to={`/analytics`}>Analytics</Link>
+                    </li>
+                    <li>
+                        <Link to={`/manage/blog`}>Add Blogs</Link>
+                    </li>
+                    </>
+                    }
 
                 </ul>
             </div>
@@ -138,9 +163,15 @@ const Header = (props: HeaderProps) => {
                                     href: "/manage",
                                 },
                                 {
-                                    text: "History",
-                                    href: `/history/${userId}`,
+                                    text: "Analytics",
+                                    href: "/analytics",
+
+                                },
+                                {
+                                    text: "Add Blogs",
+                                    href: "/manage/blog",
                                 }
+
                             ].map((menu, index) => (
                                 <ListItem key={menu.text} disablePadding>
                                     <Link

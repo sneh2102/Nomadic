@@ -22,6 +22,8 @@ import axios from 'axios';
 import BookingForm from '../components/history/BookingForm';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
+import { getToken } from '../utils/authUtils';
+import { toast } from 'react-toastify';
 
 const theme = createTheme({
   palette: {
@@ -159,8 +161,11 @@ export function TourDetail() {
   const [wishlist, setWishlist] = useState<boolean>(false);
   const [userId, setUserId] = useState<number | null>(null);
   const [wishListId, setWishListId] = useState<number | null>(null);
+  const [token, setToken] = useState();
 
   useEffect(() => {
+    const token = getToken();
+    setToken(token as any);
     const data = localStorage.getItem('user');
     if (data) {
       setUserId(JSON.parse(data).userId);
@@ -247,6 +252,7 @@ console.log("ssss",response.data);
     } catch (error) {
       console.error('Error updating wishlist:', error);
     }
+  
   };
 
   if (loading) {
@@ -291,6 +297,8 @@ console.log("ssss",response.data);
               </Box>
               <Rating value={4.5} readOnly precision={0.5} />
             </OverlayContent>
+            {getToken() && 
+
             <IconButton
               color="secondary"
               aria-label="add to wishlist"
@@ -307,6 +315,7 @@ console.log("ssss",response.data);
             >
               {wishlist ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon color="error" />}
             </IconButton>
+}
           </Box>
           <CardContent>
             <Grid container spacing={3} alignItems="center">

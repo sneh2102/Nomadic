@@ -2,11 +2,11 @@
 export const getToken = () => {
     const token = localStorage.getItem('token');
     console.log("Token:::",token);
-    return token || null;
+    return token || '';
   };
 
 export const getRole = () => {
     const role = localStorage.getItem('role');
     console.log("Role:::",role);
-    return role || null;
+    return role || '';
   };
