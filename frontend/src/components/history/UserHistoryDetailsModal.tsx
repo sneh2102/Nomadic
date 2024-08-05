@@ -1,5 +1,7 @@
+// Author: Meer Patel
+
+
 import { Box, Button, Center, Image, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
 import {
     Modal,
     ModalOverlay,
