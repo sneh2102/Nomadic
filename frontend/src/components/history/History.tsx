@@ -1,3 +1,5 @@
+// Author: Meer Patel
+
 import React from 'react';
 import { Flex, Box, Heading, Image, Text } from '@chakra-ui/react';
 import { MdOutlineLocationOn } from "react-icons/md";

@@ -1,4 +1,4 @@
-import React from 'react'
+// Author: Meer Patel
 import { Box, Flex, Input, Image, useDisclosure, Button } from "@chakra-ui/react"
 // import { Input } from '@mui/material'
 import { IoSettingsSharp } from "react-icons/io5";
