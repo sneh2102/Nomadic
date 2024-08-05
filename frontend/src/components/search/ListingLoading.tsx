@@ -30,7 +30,7 @@ const ListingLoadingItem = (props: ListingProps) => {
             </div>
             <div className="basis-2/12 md:text-end flex flex-col justify-between">
                 <div>
-                    <Rating size="small" name="read-only" value={5} readOnly />
+                    <Rating size="small" name="read-only" value={0} readOnly />
                     <div className="text-sm text-gray"><Skeleton variant="text" /></div>
                 </div>
                 <div>

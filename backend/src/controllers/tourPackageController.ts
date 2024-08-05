@@ -129,6 +129,37 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
             orderBy: { [String(sortBy)]: sortOrder === "asc" ? "asc" : "desc" },
             skip: skip,
             take: take,
+            include: {
+                reviews: {
+                    select: {
+                        rating: true,
+                    },
+                },
+            }
+        });
+
+        const modifiedResult = tourPackages.map((pckg) => {
+            const totalReviews = pckg.reviews.length;
+            const averageRating = totalReviews
+                ? pckg.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+                : 0;
+            return {
+                id: pckg.id,
+                name: pckg.name,
+                location: pckg.location,
+                city: pckg.city,
+                price: pckg.price,
+                image: pckg.image,
+                freeCancelationAvailable: pckg.freeCancelationAvailable,
+                startDate: pckg.startDate,
+                endDate: pckg.endDate,
+                duration: pckg.duration,
+                tourCategoryId: pckg.tourCategoryId,
+                accommodationDetails: pckg.accommodationDetails,
+                activities: pckg.activities,
+                averageRating,
+                totalReviews,
+            };
         });
         const freeCancelationAvailableCount = await prisma.tourPackage.count({
             where: {
@@ -153,7 +184,7 @@ export const getAllTourPackages = async (req: Request, res: Response) => {
         const total = await prisma.tourPackage.count({ where: filters });
 
         res.status(200).json({
-            data: tourPackages,
+            data: modifiedResult,
             meta: {
                 total,
                 page: Number(page),
