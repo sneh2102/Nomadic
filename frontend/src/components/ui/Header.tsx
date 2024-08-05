@@ -151,6 +151,9 @@ const Header = (props: HeaderProps) => {
                     <li>
                         <Link to="/contactus">Contact Us</Link>
                     </li>
+                    <li>
+                    <Link to="/blogs">Blogs</Link>
+                    </li>
                 {getToken() && <>
                     <li>
                         <Link to="/wishlist">Bucket List</Link>
@@ -162,9 +165,6 @@ const Header = (props: HeaderProps) => {
                             </li>
                     </>
                     }
-                    <li>
-                        <Link to="/blogs">Blogs</Link>
-                    </li>
                 {role === "ADMIN" && <>
                 <li>
                     <Link to="/manage">Manage Listings</Link>
