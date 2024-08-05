@@ -24,7 +24,7 @@ const cities: City[] = [
   {city: "UAE", location: "Dubai"},
 ];
 
-const getRandomImage = (id: number): string => `https://picsum.photos/250?random=${id}`;
+const getRandomImage = (id: number): string => `https://picsum.photos/1200?random=${id}`;
 
 const getRandomBoolean = (): boolean => Math.random() < 0.5;
 

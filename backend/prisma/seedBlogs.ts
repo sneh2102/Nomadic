@@ -110,7 +110,7 @@ export const seedBlogs = async (): Promise<void> => {
     const city = faker.location.city();
     const content = generateBlogContent(city, i);
     const title = `Discover the ${city} 🌟`;
-    const thumbnail = `https://picsum.photos/600/800?random=${i + 2}`;
+    const thumbnail = `https://picsum.photos/1200/1000?random=${i + 2}`;
     const description = `Explore the breathtaking ${city}, known for its stunning landscapes, rich cultural history, and delicious cuisine. Discover the cultural and culinary delights of this region.`;
     const category = categories[Math.floor(Math.random() * categories.length)];
     const userId = user.id;
