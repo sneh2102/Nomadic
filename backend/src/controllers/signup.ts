@@ -5,9 +5,8 @@ import {hashSync} from 'bcrypt';
 
 export const signUp = async(req:Request, res:Response) => {
     try {
-        const {fname,email,password,lname} = req.body;
+        const {fname,email,password,lname,role} = req.body;
         let user = await prismaClient.user.findFirst({where: { email }})
-        const role = 'USER';
         if(user){
             console.log("User already exists")
             return res.status(400).json({"error": "User already exists!!!"});

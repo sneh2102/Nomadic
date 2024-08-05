@@ -7,10 +7,14 @@ import {
   Grid,
   TextField,
   Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel
 } from "@mui/material";
 import ButtonThemeWrapper from '../components/ui/ButtonThemeWrapper';
 import { Link, useNavigate } from "react-router-dom";
-import { Form, useForm } from "react-hook-form";
+import { Form, useForm,Controller } from "react-hook-form";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import { useState } from "react";
@@ -22,7 +26,8 @@ type FormValues = {
   lname: string,
   email: string,
   password: string,
-  confirmPassword: string
+  confirmPassword: string,
+  role: string
 }
 
 
@@ -31,13 +36,14 @@ const SignUpPage = () => {
   // const [name, setName] = useState("");
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  const form = useForm<FormValues>({ defaultValues: { fname: "", lname: "", email: "", password: "", confirmPassword: "" } })
-  const { register, watch, handleSubmit, formState } = form;
+  const form = useForm<FormValues>({defaultValues: { fname: "", lname: "", email: "", password: "", confirmPassword: "", role: "CLIENT" },});
+  const { register, watch, handleSubmit, control, formState } = form;
   const [error, setError] = useState("");
   const { errors } = formState;
   const navigate = useNavigate();
   const onSubmit = async (data: FormValues) => {
     setError("")
+    console.log("Data:::",data);
     const response = await fetch(`${(import.meta as any).env.VITE_BASE_API_URL}/api/v1/signUp`, {
       method: 'POST',
       headers: {
@@ -46,7 +52,7 @@ const SignUpPage = () => {
       body: JSON.stringify(data)
     });
     const result = await response.json();
-    console.log("Result:::", result);
+    // console.log("Result:::", result);
     if (!response.ok) {
       setError(result.error);
       return;
@@ -174,6 +180,29 @@ const SignUpPage = () => {
                       })}
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <InputLabel id="role-label">Role *</InputLabel>
+                      <Controller
+                        name="role"
+                        control={control}
+                        defaultValue="CLIENT"
+                        render={({ field }) => (
+                          <Select
+                            labelId="role-label"
+                            id="role"
+                            label="Role *"
+                            {...field}
+                          >
+                            <MenuItem value="CLIENT">Client</MenuItem>
+                            <MenuItem value="MANAGER">Manager</MenuItem>
+                          </Select>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                
+                
                 </Grid>
                 {error && <Typography variant="body2" color={"red"}>{error}</Typography>}
                 <Button type="submit"
