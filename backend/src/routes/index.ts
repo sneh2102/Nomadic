@@ -13,6 +13,7 @@ import BlogRouter from "./blogRouter";
 import commentRouter from "./commentRouter";
 import analyticsRouter from './analyticsRouter';
 import wishListRouter from "./wishlistRouter";
+import contactRouter from './contactController';
 
 
 const rootRouter: Router = Router();
@@ -30,6 +31,7 @@ rootRouter.use('/v1', commentRouter)
 rootRouter.use('/v1', analyticsRouter)
 rootRouter.use('/v1', TourLocationRouter)
 rootRouter.use('/v1', wishListRouter)
+rootRouter.use('/v1', contactRouter)
 
 
 export default rootRouter;
