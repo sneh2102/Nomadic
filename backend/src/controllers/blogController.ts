@@ -30,6 +30,7 @@ export async function getAllBlogPosts(req: Request, res: Response) {
         thumbnail: true,
         category: true,
         createdAt: true,
+        userId: true,
       },
     });
 
@@ -183,3 +184,23 @@ export const getBlogCategories = async (req: Request, res: Response) => {
     }
   }
 };
+
+export async function getBlogPostByUserId(req: Request, res: Response) {
+  const { userId } = req.params;
+  try {
+    const blogPost = await prisma.blogPost.findMany({
+      where: { userId: parseInt(userId) },
+    });
+    res.status(200).json(blogPost);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res
+        .status(500)
+        .json({ error: "Failed to fetch blog post: " + error.message });
+    } else {
+      res
+        .status(500)
+        .json({ error: "Failed to fetch blog post due to an unknown error" });
+    }
+  }
+}

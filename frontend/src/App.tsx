@@ -25,9 +25,9 @@ import Blog from "./pages/Blog";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import { BucketList } from "./components/bucketlist/BucketList";
 import { Wishlist } from "./pages/Wishlist";
-import ManageBlogList from "./pages/ManageBlogList";
 import AddBlogForm from "./pages/Manger_Dashboard/AddBlogForm";
 import UpdateBlogForm from "./pages/Manger_Dashboard/UpdateBlogForm";
+import ManageBlogList from "./pages/Manger_Dashboard/ManageBlogList";
 
 function App() {
     return (
