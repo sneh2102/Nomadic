@@ -2,7 +2,7 @@
 export const getBlogs = async ({
     page,
     category,
-    pageSize
+    pageSize,
 }: {
     page: string | null;
     category: string | null;
@@ -55,7 +55,14 @@ export const getBlogById = async (id: string) => {
     }
 };
 
-export const updateBlog = async (id: string, data: any) => {
+export const updateBlog = async (id: string, data: {
+    title: string;
+    content: string;
+    category: string;
+    description: string;
+    thumbnail: string;
+    userId: number;
+}) => {
     const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog/${id}`;
     console.log("Updating blog by ID from URL:", url);
     try {
@@ -89,6 +96,34 @@ export const deleteBlog = async (id: string) => {
         return await response.json();
     } catch (error) {
         console.error("Deleting blog by ID failed:", error);
+        throw error;
+    }
+};
+
+export const addBlog = async (data: {
+    title: string;
+    content: string;
+    category: string;
+    description: string;
+    thumbnail: string;
+    userId: number;
+}) => {
+    const url = `${import.meta.env.VITE_BASE_API_URL}/api/v1/blog`;
+    console.log("Adding new blog to URL:", url);
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Adding new blog failed:", error);
         throw error;
     }
 };
